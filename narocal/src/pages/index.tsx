@@ -11,7 +11,7 @@ export default function Home() {
       <h1 className="text-3xl font-bold underline">
       Hello world!
       </h1>
-      <h3 className='text-slate-500 hover:text-secondary '>Test</h3>
+      <h3 className='text-slate-500 hover:text-secondary '>Testt</h3>
     </>
   )
 }
