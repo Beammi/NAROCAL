@@ -13,11 +13,11 @@ module.exports = {
       primary: '#000000',
       secondary: '#AA5E7F',
       background: '#FEFEFE',
-      emphasize: '#00337C',
+      accent: '#00337C',
       alternative: '#FFFFFF',
       mock: '#D9D9D9',
     },
     extend: {},
   },
-  plugins: [],
+  plugins: [require("daisyui")],
 }
