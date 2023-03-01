@@ -9,15 +9,16 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    colors: {
-      primary: '#000000',
-      secondary: '#AA5E7F',
-      background: '#FEFEFE',
-      accent: '#00337C',
-      alternative: '#FFFFFF',
-      mock: '#D9D9D9',
+    extend: {
+      colors: {
+        primary: '#000000',
+        secondary: '#AA5E7F',
+        background: '#FEFEFE',
+        accent: '#00337C',
+        alternative: '#FFFFFF',
+        mock: '#D9D9D9',
+      },
     },
-    extend: {},
   },
   plugins: [require("daisyui")],
 }
