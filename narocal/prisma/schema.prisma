@@ -10,21 +10,54 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Product {
-  id        Int     @id @default(autoincrement())
-  title     String
-  content   String?
-  published Boolean @default(false)
-  author    VendorUser?   @relation(fields: [authorId], references: [id])
-  authorId  Int?
+enum Role{
+  VENDOR
+  CUSTOMER
+  ADMIN
 }
 
-model VendorUser {
-  id        Int     @id @default(autoincrement())
-  email     String  @unique
-  name      String?
+model Product {
+  id          Int       @id @default(autoincrement())
+  title       String
+  content     String?
+  published   Boolean   @default(false)
+  author      Vendor?   @relation(fields: [authorId], references: [id])
+  authorId    Int?
+  categories  Category[]
+}
+
+model Category {
+  id        Int    @id @default(autoincrement())
+  name      String
   products  Product[]
+}
+
+
+model Vendor{
+  id            Int       @id @default(autoincrement())
+  email         String    @unique
+  name          String?
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @updatedAt @map(name: "updated_at")
-  @@map(name: "users")
+  role          Role      @default(VENDOR)     
+  profile       VendorProfile?
+  isAdmin       Boolean   @default(false)
+  products      Product[]
+}
+
+model VendorProfile{
+  id     Int    @id @default(autoincrement())
+  bio    String
+  user   Vendor   @relation(fields: [userId], references: [id])
+  userId Int    @unique
+}
+
+model Customer{
+  id            Int       @id @default(autoincrement())
+  email         String    @unique
+  name          String?
+  createdAt     DateTime  @default(now()) @map(name: "created_at")
+  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+  role          Role      @default(CUSTOMER)
+  isAdmin       Boolean   @default(false)
 }
