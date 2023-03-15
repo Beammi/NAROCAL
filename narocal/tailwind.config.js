@@ -20,5 +20,21 @@ module.exports = {
       },
     },
   },
-  plugins: [require("daisyui")],
+  plugins: [require("daisyui"),
+              require('@tailwindcss/typography'),],
+
+  daisyui: {
+    themes:[
+      {
+        mytheme: {
+          "primary": '#000000',
+          "secondary": '#AA5E7F',
+          "background": '#FEFEFE',
+          "accent": '#00337C',
+          "alternative": '#FFFFFF',
+          "mock": '#D9D9D9',
+        },
+      },
+    ],
+  },
 }

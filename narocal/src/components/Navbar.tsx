@@ -14,8 +14,8 @@ function Navbar(){
             </div>
             <div className="flex-none">
                 <ul className="menu menu-horizontal px-3">
-                    <li><a className="text-alternative" href="/login">Log in</a></li>
-                    <li><a className="text-alternative">Register</a></li>
+                    <li><a className="text-alternative hover:bg-secondary" href="/login">Log in</a></li>
+                    <li><a className="text-alternative hover:bg-secondary">Register</a></li>
                 </ul>
 
             </div>
