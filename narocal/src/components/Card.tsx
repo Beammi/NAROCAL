@@ -2,8 +2,8 @@ import Image from "next/image"
 import P from "../components/text/P"
 
 interface ICard {
-  image: string | any
-  imageAlt: string
+  image?: string | any
+  imageAlt?: string
   title: string
   body: string
 }
