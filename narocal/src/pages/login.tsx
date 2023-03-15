@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
 import Navbar from '@/components/Navbar'
-
+import P from "@/components/text/P"
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Login() {
@@ -17,17 +17,17 @@ export default function Login() {
 
                 <div className='flex flex-col md:flex-row'>
                   <div>
-                    <p className='text-base xs:text-xs'>Username/Email</p>
+                    <P text='Username/Email' style='text-base xs:text-xs'/>
                     <input type="email"
                         className="w-full h-3 p-6 border border-mock rounded-md placeholder:font-light max-w-xs font-medium peer"
                         placeholder="Enter your user/email address" />
-                    <p className="mt-2 invisible peer-invalid:visible text-secondary text-sm xs:text-xs">Please provide a valid email address.</p>
+                    <P text='Please provide a valid email address.' style='mt-2 invisible peer-invalid:visible text-secondary lg:text-xs'/>
                   </div>
                 </div>
 
                 <div className='flex flex-col md:flex-row'>
                   <div>
-                    <p className='text-base pb-1 xs:text-xs'>Password</p>
+                    <P text='Password' style='text-base pb-1 xs:text-xs'/>
                       <input type="text"
                         className="w-full h-3 p-6 border border-mock rounded-md placeholder:font-light max-w-xs font-medium"
                         placeholder="Password" />
