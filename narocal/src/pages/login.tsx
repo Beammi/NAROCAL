@@ -5,6 +5,7 @@ import styles from '@/styles/Home.module.css'
 import Navbar from '@/components/Navbar'
 import P from "@/components/text/P"
 import prisma from 'lib/prisma'
+import { supabase } from 'lib/supabaseClient';
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Login() {
