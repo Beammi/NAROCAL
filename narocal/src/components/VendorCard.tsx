@@ -22,7 +22,7 @@ const VendorCard: React.FunctionComponent<VendorCard> = ({
 }) => {
     return (
         <>
-            <div className="card lg:card-side bg-base-100 shadow-xl w-5/6 rounded-xl">
+            <div className="card lg:card-side shadow-xl w-5/6 rounded-xl bg-background my-4 ml-16">
                 <figure><img src={image} alt="Album"/></figure>
                 <div className="card-body bg-background rounded-xl">
                     <h2 className="card-title">{name}</h2>
