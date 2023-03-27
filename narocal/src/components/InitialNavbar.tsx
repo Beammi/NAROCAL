@@ -6,7 +6,7 @@ interface INavBar {
   text: string
 }
 
-function Navbar(){
+function InitialNavbar(){
     return(
         <div className="navbar bg-primary">
             <div className="flex-1">
@@ -15,7 +15,7 @@ function Navbar(){
             <div className="flex-none">
                 <ul className="menu menu-horizontal px-3">
                     <li><a className="text-alternative hover:bg-secondary" href="/login">Log in</a></li>
-                    <li><a className="text-alternative hover:bg-secondary" href="/register">Register</a></li>
+                    <li><a className="text-alternative hover:bg-secondary" href="/role">Register</a></li>
                 </ul>
 
             </div>
@@ -23,4 +23,4 @@ function Navbar(){
     )
 }
 
-export default Navbar
+export default InitialNavbar
