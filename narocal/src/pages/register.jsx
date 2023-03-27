@@ -2,16 +2,15 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
-import Navbar from '@/components/Navbar'
+import InitialNavbar from '@/components/InitialNavbar'
 import P from "@/components/text/P"
-import prisma from 'lib/prisma'
 import { supabase } from 'lib/supabaseClient';
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Register(){
     return(
         <>
-        <Navbar></Navbar>
+        <InitialNavbar></InitialNavbar>
         <div className='flex items-center justify-center min-h-screen bg-secondary'>
         <div className='relative flex flex-col m-6 bg-background shadow-2xl rounded-2xl md:flex md:flex-row md:space-y-0 md:m-0 md:mx-auto'>
           <div className='p-6 md:p-10'>

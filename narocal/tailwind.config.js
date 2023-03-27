@@ -17,6 +17,7 @@ module.exports = {
         accent: '#00337C',
         alternative: '#FFFFFF',
         mock: '#D9D9D9',
+        test: '#F9F3F3',
       },
     },
   },
