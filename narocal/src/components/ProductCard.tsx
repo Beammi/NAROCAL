@@ -17,7 +17,7 @@ const ProductCard: React.FunctionComponent<ProductCard> = ({
     return (
         <>
             <figure className="bg-slate-100 rounded-xl p-8 dark:bg-slate-800">
-                <img className="w-24 h-24 rounded-full mx-auto" src={image} alt="" width="384" height="512" />
+                <img className="w-24 h-24 rounded-full mx-auto mb-6" src={image} alt="" width="384" height="550" />
                 <div className="pt-6 space-y-4">
                     <blockquote>
                     <div className="font-bold text-xl mb-2">{title}</div>
