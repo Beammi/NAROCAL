@@ -31,6 +31,10 @@ export default function Auth() {
     }
     setLoading(false)
   }
+
+  const sendMagicLink = () =>{
+    alert("Magic Link sent to your email")
+  }
   
   return (
       <>
@@ -46,37 +50,29 @@ export default function Auth() {
                     <form className="form-widget" onSubmit={handleLogin}>
                       <div>
                         <input
-                          // className="inputField"
                           type="email"
                           placeholder="Your email"
                           value={ email }
                           required={true}
                           onChange={(e) => setEmail(e.target.value)}
-                          className="inputField"
+                          className="inputField peer input w-full max-w-xs"
                         />
                         <P text='Please provide a valid email address.' style='mt-2 invisible peer-invalid:visible text-secondary lg:text-xs'/>
 
+                        {/* Send Magic Link Button */}
+                        <div className='flex flex-row pt-4 items-stretch md:items-center sm:items-center'>
+                          <button className='btn btn-outline btn-secondary button block' disabled={loading}>
+                          {loading ? <span>Loading</span> : <span>Send magic link</span>}
+                    
+                          </button>
+                        </div>
                       </div>
                     
                     </form>
                   </div>
-                </div>
-
-                <div className='flex flex-row pt-4 items-stretch md:items-center sm:items-center'>
-                  <button className='btn btn-secondary' 
-                    disabled={loading}
-                  >
-                    {loading ? <span>Loading</span> : <span>Send magic link</span>}
-                  </button>
-                  {/* <a className='text-secondary p-6 underline xs:text-xs' href='/'>Forget Password</a> */}
-                </div>
-                
-          </div>
-            
-        </div>
-        
-        
-        
+                </div>                
+          </div>            
+        </div>        
       </div>
           
     </>
