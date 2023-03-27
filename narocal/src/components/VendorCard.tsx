@@ -1,5 +1,6 @@
 import Image from "next/image"
 import P from "../components/text/P"
+import ProfilePicTemp from "../pages/assets/profile_pic_temp.png"
 
 interface VendorCard {
   image?: string | any
@@ -22,8 +23,8 @@ const VendorCard: React.FunctionComponent<VendorCard> = ({
 }) => {
     return (
         <>
-            <div className="card lg:card-side shadow-xl w-5/6 rounded-xl bg-background my-4 ml-16">
-                <figure><img src={image} alt="Album"/></figure>
+            <div className="card lg:card-side shadow-xl w-5/6 rounded-xl bg-background my-2 ml-16">
+                <figure><Image className="mx-8" src={ProfilePicTemp} alt="product pic temp" width={100}/></figure>
                 <div className="card-body bg-background rounded-xl">
                     <h2 className="card-title">{name}</h2>
                     <p>Languages: {language}</p>
@@ -33,7 +34,7 @@ const VendorCard: React.FunctionComponent<VendorCard> = ({
                         <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" />
                         <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" />
                         <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" />
-                        <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" checked />
+                        <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400"  />
                         <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" />
                     </div>
                 </div>

@@ -11,6 +11,8 @@ function App({ Component, pageProps }) {
     <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
       <Component {...pageProps} />
     </SessionContextProvider>
+
+    
   )
 }
 export default App;
