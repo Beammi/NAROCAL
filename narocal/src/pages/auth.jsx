@@ -16,6 +16,7 @@ export default function Auth() {
   const handleLogin = async (event) => {
     event.preventDefault()
 
+
     setLoading(true)
     const { error } = await supabase.auth.signInWithOtp({ 
       email,
@@ -32,9 +33,7 @@ export default function Auth() {
     setLoading(false)
   }
 
-  const sendMagicLink = () =>{
-    alert("Magic Link sent to your email")
-  }
+
   
   return (
       <>
