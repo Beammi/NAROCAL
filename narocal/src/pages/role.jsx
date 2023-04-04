@@ -6,9 +6,15 @@ import InitialNavbar from '@/components/InitialNavbar'
 import P from "@/components/text/P"
 import { supabase } from 'lib/supabaseClient';
 const inter = Inter({ subsets: ['latin'] })
+import { useState } from "react"
 
 export default function Role(){
-    return(
+  const [role, setRole] = useState('Customer')
+
+  const radioOnChange = () =>{
+    alert(role)
+  }
+  return(
         <>
         <InitialNavbar></InitialNavbar>
         <div className='flex items-center justify-center min-h-screen bg-secondary'>
@@ -18,15 +24,36 @@ export default function Role(){
 
                 
                 <div className='flex flex-col md:flex-row p-4'>
-                    <input type="radio" name="radio-regis" id="vendor" className='flex flex-col md:flex-row radio radio-secondary space-x-2' />
+                  <div className='flex flex-col md:flex-row p-4'>
+                    <input type="radio" 
+                    name="radio-regis" 
+                    id="vendor" 
+                    // checked={role === "Vendor" } 
+                    onChange={(e) => setRole("vendor")} 
+                    value={ role } 
+                    className='flex flex-col md:flex-row radio radio-secondary space-x-2' />
                     <label htmlFor="vendor" className='flex flex-col md:flex-row md:pl-4 text-secondary'>Vendor</label>
+                  </div>
+                  <div className='flex flex-col md:flex-row p-4'>
+                    <input type="radio" 
+                    name='radio-regis' 
+                    id="customer" 
+                    // checked={role === "Customer" } 
+                    onChange={(e) => setRole("customer")} 
+                    value={ role } 
+                    className='flex flex-col md:flex-row radio radio-secondary'/>
+                    <label htmlFor="customer" className='flex flex-col md:flex-row md:pl-4 text-secondary'>Customer</label>
+                  </div>
+                    
                 </div>
-                <div className='flex flex-col md:flex-row p-4'>
+
+                {/* <div className='flex flex-col md:flex-row p-4'>
                     <input type="radio" name='radio-regis' checked id="customer" className='flex flex-col md:flex-row radio radio-secondary'/>
                     <label htmlFor="customer" className='flex flex-col md:flex-row md:pl-4 text-secondary'>Customer</label>
-                </div>
+                </div> */}
+
                 <div className='flex flex-row pt-4 items-stretch md:items-center sm:items-center'>
-                  <button className='btn btn-secondary'>Finish</button>
+                  <button className='btn btn-secondary' onClick={radioOnChange}>Finish</button>
                 </div>
                 <div className='mt-2 border-b border-mock'></div>
 

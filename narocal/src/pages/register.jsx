@@ -8,7 +8,8 @@ import { supabase } from 'lib/supabaseClient';
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Register(){
-    return(
+
+  return(
         <>
         <InitialNavbar></InitialNavbar>
         <div className='flex items-center justify-center min-h-screen bg-secondary'>
