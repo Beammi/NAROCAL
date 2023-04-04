@@ -8,6 +8,7 @@ interface ProductCard {
   imageAlt?: string
   title: string
   body: string
+  price?: string
 }
 
 const ProductCard: React.FunctionComponent<ProductCard> = ({
@@ -15,16 +16,17 @@ const ProductCard: React.FunctionComponent<ProductCard> = ({
   imageAlt,
   title,
   body,
+  price
 }) => {
 
     return (
         <>
             <figure className="bg-slate-100 rounded-xl p-8 dark:bg-slate-800">
-                <Image src={ProductPicTemp} alt="product pic temp" width={120}/>
+                <Image src={ProductPicTemp} alt="product pic temp" width={140}/>
                 <div className="pt-6 space-y-4">
                     <blockquote>
-                    <div className="font-bold text-xl mb-2">{title}</div>
-                    <p className="text-lg font-medium">
+                    <div className="font-bold text-base w-40">{title}</div>
+                    <p className="font-medium text-sm w-40">
                         {body}
                     </p>
                     </blockquote>
