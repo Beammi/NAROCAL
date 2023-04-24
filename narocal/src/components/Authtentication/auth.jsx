@@ -12,8 +12,10 @@ import {SetStateAction, useRef, useState,useEffect} from 'react';
 export default function Auth() {
   const [loading, setLoading] = useState(false)
   const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
-  const handleLogin = async (event) => {
+
+  const handleLoginOtp = async (event) => {
     event.preventDefault()
 
 
@@ -33,6 +35,26 @@ export default function Auth() {
     setLoading(false)
   }
 
+  const handleLoginPassword = async (event) => {
+    event.preventDefault()
+
+
+    setLoading(true)
+    const { error } = await supabase.auth.signIn({ 
+      email,
+      password,
+      options: {
+        emailRedirectTo: 'http://localhost:3000/role'
+      }
+    })
+
+    if (error) {
+      alert(error.error_description || error.message)
+    } else {
+      alert('Check your email for the login link!')
+    }
+    setLoading(false)
+  }
 
   
   return (
@@ -46,7 +68,7 @@ export default function Auth() {
                 <div className='flex flex-col md:flex-row'>
                   <div>
                     <P text='Email' style='text-base xs:text-xs'/>
-                    <form className="form-widget" onSubmit={handleLogin}>
+                    <form className="form-widget" onSubmit={handleLoginOtp}>
                       <div>
                         <input
                           type="email"
