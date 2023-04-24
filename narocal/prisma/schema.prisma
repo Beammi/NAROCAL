@@ -1,65 +1,134 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-generator client {
-  provider = "prisma-client-js"
-  // previewFeatures = ["multiSchema"]
+datasource db {
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  directUrl         = env("DIRECT_URL")
+  schemas           = ["public"]
 }
 
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-  // directURL = env("DIRECT_URL")
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
 }
 
 enum Role{
   VENDOR
   CUSTOMER
   ADMIN
+  @@schema("public")
+
+}
+
+model User {
+  id              Int     @id     
+  orders          Order[]
+  customerProfile CustomerProfile?
+  vendorProfile   VendorProfile?
+  role            Role            
+  email           String          
+  address         String?
+  @@schema("public") // or @@schema("public")
+}
+
+model CustomerProfile {
+  id     Int    @id @default(autoincrement())
+  bio    String?
+  image  String?
+  user   User   @relation(fields: [userId], references: [id])
+  userId Int    @unique
+  @@schema("public")
+}
+
+model VendorProfile{
+  id          Int    @id @default(autoincrement())
+  bio         String?
+  image       String?
+  shpRate     Int
+  // languages Language[]
+  languages   String[]
+  currencies  Currency[]
+  user        User   @relation(fields: [userId], references: [id])
+  userId      Int    @unique
+  products    Product[]
+  @@schema("public")
+}
+
+model Currency{
+  id          Int             @id @default(autoincrement())
+  currency    String
+  rate        Int
+  vendor      VendorProfile   @relation(fields: [vendorId], references: [id])
+  vendorId    Int             @unique
+  @@schema("public")
+}
+
+model Order {
+  id          Int       @id
+  user        User      @relation(fields: [userId], references: [id])
+  userId      Int       @unique
+  customerId  Int
+  vendorId    Int
+  status      String
+  contact     String
+  shipment    Shipment?
+
+  @@schema("public")
+}
+
+model Shipment{
+  id              Int     @id
+  vendorAddress   String
+  customerAddress String
+  vendorContact   String
+  customerContact String
+  trackingNo      String
+  order           Order   @relation(fields: [shipId], references: [id])
+  shipId          Int     @unique
+
+  @@schema("public")
 }
 
 model Product {
   id          Int       @id @default(autoincrement())
-  title       String
-  content     String?
+  name        String
+  description String
+  brand       String
+  category    String
+  country     String
+  code        String?
+  model       String?
+  color       String?
+  gender      String?
   published   Boolean   @default(false)
-  author      Vendor?   @relation(fields: [authorId], references: [id])
-  authorId    Int?
-  categories  Category[]
-}
-
-model Category {
-  id        Int    @id @default(autoincrement())
-  name      String
-  products  Product[]
+  author      VendorProfile?   @relation(fields: [authorId], references: [id])
+  authorId    Int
+  @@schema("public")
 }
 
 
-model Vendor{
-  id            Int       @id @default(autoincrement())
-  email         String    @unique
-  name          String?
-  createdAt     DateTime  @default(now()) @map(name: "created_at")
-  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
-  role          Role      @default(VENDOR)     
-  profile       VendorProfile?
-  isAdmin       Boolean   @default(false)
-  products      Product[]
-}
+// model Vendor{
+//   id            Int       @id @default(autoincrement())
+//   email         String    @unique
+//   name          String?
+//   createdAt     DateTime  @default(now()) @map(name: "created_at")
+//   updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+//   role          Role      @default(VENDOR)     
+//   // profile       VendorProfile?
+//   isAdmin       Boolean   @default(false)
+//   products      Product[]
+//   @@schema("public")
+// }
 
-model VendorProfile{
-  id     Int    @id @default(autoincrement())
-  bio    String
-  user   Vendor   @relation(fields: [userId], references: [id])
-  userId Int    @unique
-}
 
-model Customer{
-  id            Int       @id @default(autoincrement())
-  email         String    @unique
-  name          String?
-  createdAt     DateTime  @default(now()) @map(name: "created_at")
-  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
-  role          Role      @default(CUSTOMER)
-  isAdmin       Boolean   @default(false)
-}
+
+// model Customer{
+//   id            Int       @id @default(autoincrement())
+//   email         String    @unique
+//   name          String?
+//   createdAt     DateTime  @default(now()) @map(name: "created_at")
+//   updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+//   role          Role      @default(CUSTOMER)
+//   isAdmin       Boolean   @default(false)
+//   @@schema("public")
+// }

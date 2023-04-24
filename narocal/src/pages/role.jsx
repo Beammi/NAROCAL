@@ -6,13 +6,36 @@ import InitialNavbar from '@/components/InitialNavbar'
 import P from "@/components/text/P"
 import { supabase } from 'lib/supabaseClient';
 const inter = Inter({ subsets: ['latin'] })
-import { useState } from "react"
+import { useState, useEffect } from "react"
+
 
 export default function Role(){
   const [role, setRole] = useState('Customer')
+  const [session, setSession] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [username, setUsername] = useState(null)
+  const [website, setWebsite] = useState(null)
+  const [avatar_url, setAvatarUrl] = useState(null)
+
+  useEffect(() => {
+    async function getProfile() {
+      setLoading(true)
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        setSession(session)
+      })
+  
+      supabase.auth.onAuthStateChange((_event, session) => {
+        setSession(session)
+      })
+      var user = session
+      setLoading(false)
+    }
+
+    getProfile()
+  }, [])
 
   const radioOnChange = () =>{
-    alert(role)
+    alert(role+session.user.email)
   }
   return(
         <>
@@ -72,3 +95,4 @@ export default function Role(){
     
 
 }
+
