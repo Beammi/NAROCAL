@@ -22,7 +22,7 @@ const ProductCard: React.FunctionComponent<ProductCard> = ({
     return (
         <>
             <figure className="bg-slate-100 rounded-xl p-8 dark:bg-slate-800">
-                <Image src={ProductPicTemp} alt="product pic temp" width={140}/>
+                <Image src={ProductPicTemp} alt="product pic temp" width={180}/>
                 <div className="pt-6 space-y-4">
                     <blockquote>
                     <div className="font-bold text-base w-40">{title}</div>

@@ -7,6 +7,9 @@ module.exports = {
  
     // Or if using `src` directory:
     "./src/**/*.{js,ts,jsx,tsx}",
+
+    // for flowbite
+    "./node_modules/flowbite/**/*.js",
   ],
   theme: {
     extend: {
@@ -22,7 +25,8 @@ module.exports = {
     },
   },
   plugins: [require("daisyui"),
-              require('@tailwindcss/typography'),],
+              require('@tailwindcss/typography'),
+              require('flowbite/plugin'),],
 
   daisyui: {
     themes:[
