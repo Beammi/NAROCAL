@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
 
-export default function ProductPage(){
+export default function ProductsOfVendor(){
     const router = useRouter();
     return(
         <div>
-            <h1>For products</h1>
+            <h1>Products that vendor has</h1>
         </div>
     );
 }
