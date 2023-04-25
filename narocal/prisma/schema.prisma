@@ -53,6 +53,7 @@ model VendorProfile{
   userId      Int    @unique
   products    Product[]
   payment     Payment?
+  rating      Int?
   @@schema("public")
 }
 
