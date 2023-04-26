@@ -35,7 +35,7 @@ model CustomerProfile {
   id     Int    @id @default(autoincrement())
   bio    String?
   image  String?
-  payment Payment?
+  payment Payment[]
   user   User   @relation(fields: [userId], references: [id])
   userId Int    @unique
   @@schema("public")
@@ -52,7 +52,7 @@ model VendorProfile{
   user        User   @relation(fields: [userId], references: [id])
   userId      Int    @unique
   products    Product[]
-  payment     Payment?
+  payment     Payment[]
   rating      Int?
   @@schema("public")
 }
@@ -111,35 +111,10 @@ model Product {
 
 model Payment{
   id  Int @id @default(autoincrement())
+  status   String
   customer CustomerProfile  @relation(fields: [cusPayId], references: [id])
   vendor   VendorProfile    @relation(fields: [venPayId], references: [id])
   cusPayId    Int @unique
   venPayId    Int @unique
   @@schema("public")
 }
-
-// model Vendor{
-//   id            Int       @id @default(autoincrement())
-//   email         String    @unique
-//   name          String?
-//   createdAt     DateTime  @default(now()) @map(name: "created_at")
-//   updatedAt     DateTime  @updatedAt @map(name: "updated_at")
-//   role          Role      @default(VENDOR)     
-//   // profile       VendorProfile?
-//   isAdmin       Boolean   @default(false)
-//   products      Product[]
-//   @@schema("public")
-// }
-
-
-
-// model Customer{
-//   id            Int       @id @default(autoincrement())
-//   email         String    @unique
-//   name          String?
-//   createdAt     DateTime  @default(now()) @map(name: "created_at")
-//   updatedAt     DateTime  @updatedAt @map(name: "updated_at")
-//   role          Role      @default(CUSTOMER)
-//   isAdmin       Boolean   @default(false)
-//   @@schema("public")
-// }
