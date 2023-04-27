@@ -21,7 +21,9 @@ enum Role{
 }
 
 model User {
-  id              Int     @id     
+  id              Int     @id
+  firstname       String
+  lastname        String     
   orders          Order[]
   customerProfile CustomerProfile?
   vendorProfile   VendorProfile?
@@ -75,7 +77,7 @@ model Order {
   status      String
   contact     String
   shipment    Shipment?
-
+  updatedAt   DateTime @default(now())
   @@schema("public")
 }
 
@@ -88,7 +90,7 @@ model Shipment{
   trackingNo      String
   order           Order   @relation(fields: [shipId], references: [id])
   shipId          Int     @unique
-
+  createdAt       DateTime @default(now())
   @@schema("public")
 }
 
@@ -103,6 +105,7 @@ model Product {
   model       String?
   color       String?
   gender      String?
+  createdAt   DateTime  @default(now())
   published   Boolean   @default(false)
   author      VendorProfile?   @relation(fields: [authorId], references: [id])
   authorId    Int
@@ -112,6 +115,7 @@ model Product {
 model Payment{
   id  Int @id @default(autoincrement())
   status   String
+  updatedAt DateTime @default(now())
   customer CustomerProfile  @relation(fields: [cusPayId], references: [id])
   vendor   VendorProfile    @relation(fields: [venPayId], references: [id])
   cusPayId    Int @unique
