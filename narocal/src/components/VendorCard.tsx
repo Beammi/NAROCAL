@@ -23,13 +23,13 @@ const VendorCard: React.FunctionComponent<VendorCard> = ({
 }) => {
     return (
         <>
-            <div className="card lg:card-side shadow-xl w-5/6 rounded-xl bg-background my-2 ml-16">
-                <figure><Image className="mx-8" src={ProfilePicTemp} alt="product pic temp" width={100}/></figure>
+            <div className="card lg:card-side sm:card-compact shadow-xl w-5/6 rounded-xl bg-background my-2 ml-16">
+                <figure><Image className="mx-8 sm:pt-2" src={ProfilePicTemp} alt="product pic temp" width={100}/></figure>
                 <div className="card-body bg-background rounded-xl">
-                    <h2 className="card-title">{name}</h2>
-                    <p>Languages: {language}</p>
-                    <p>Exchange Rate: {exchange_rate}</p>
-                    <p>Shopping Rate: {shopping_rate}</p>
+                    <h2 className="card-title sm:text-ellipsis sm:text-xs md:text-xl">{name}</h2>
+                    <p className="sm:text-ellipsis sm:text-xs md:text-base">Languages: {language}</p>
+                    <p className="sm:text-ellipsis sm:text-xs md:text-base">Exchange Rate: {exchange_rate}</p>
+                    <p className="sm:text-ellipsis sm:text-xs md:text-base">Shopping Rate: {shopping_rate}</p>
                     <div className="card-actions justify-start rating">
                         <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" />
                         <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" />
