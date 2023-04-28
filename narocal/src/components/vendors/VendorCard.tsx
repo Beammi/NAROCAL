@@ -1,9 +1,8 @@
 import Image from "next/image"
-import P from "../components/text/P"
-import ProfilePicTemp from "../pages/assets/profile_pic_temp.png"
-import Link from 'next/link'
-import { Url } from "url"
-
+import P from "../text/P"
+import ProfilePicTemp from "../../pages/assets/profile_pic_temp.png"
+import Link from "next/link"
+// import { Url } from "url"
 
 interface VendorCard {
   image?: string | any
