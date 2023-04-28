@@ -5,7 +5,7 @@ import { Inter } from "@next/font/google"
 import styles from "@/styles/Home.module.css"
 import InitialNavbar from "@/components/InitialNavbar"
 import ProductCard from "@/components/ProductCard"
-import VendorCard from "@/components/VendorCard"
+import VendorCard from "@/components/vendors/VendorCard"
 import Hero from "@/components/Hero"
 const inter = Inter({ subsets: ["latin"] })
 import Login from "./login"
