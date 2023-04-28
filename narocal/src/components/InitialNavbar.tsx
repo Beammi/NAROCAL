@@ -61,7 +61,7 @@ function InitialNavbar(){
                 </div>
 
                 <div className="navbar-center">
-                    <a className="btn btn-ghost normal-case text-l text-alternative" href="/">NAROCAL</a>
+                    <a className="btn btn-ghost normal-case text-lg text-alternative" href="/">NAROCAL</a>
                 </div>
 
                 {/* <div className="flex-none"> */}
@@ -97,15 +97,20 @@ function InitialNavbar(){
                     </li>
 
                     <li tabIndex={0} className="dropdown dropdown-hover">
-                        <span>CLOTHING</span>
+                        {/* <span>CLOTHING</span> */}
+                        <a href="/clothing/clothing">CLOTHING</a>
 
-                        <div className="dropdown-content card card-compact w-96 rounded-box bg-base-200 p-2 z-10 grid grid-cols-3">
+                        <div className="dropdown-content card card-compact w-96 rounded-box bg-base-200 p-2 z-10 flex flex-row items-start">
                             <div>
                                 <ul>
-                                    <li className="text-lg font-medium"><a>Clothing</a></li>
-                                    <li><a>Submenu_1</a></li>
-                                    <li><a>Submenu_2</a></li>
-                                    <li><a>Submenu_3</a></li>
+                                    <li className="text-lg font-medium"><a href="/clothing/clothing">Clothing</a></li>
+                                    <li><a href="/clothing/shirts">Shirts</a></li>
+                                    <li><a>Polo shirt</a></li>
+                                    <li><a>Coat</a></li>
+                                    <li><a>Jeans</a></li>
+                                    <li><a>Shorts</a></li>
+                                    <li><a>Suit</a></li>
+                                    <li><a>Pants</a></li>
                                 </ul>
                             </div>
                             <div>

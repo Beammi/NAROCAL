@@ -19,6 +19,8 @@ const ProductCard: React.FunctionComponent<ProductCard> = ({
   price
 }) => {
 
+
+
     return (
         <>
             <figure className="bg-slate-100 rounded-xl p-8 dark:bg-slate-800">
