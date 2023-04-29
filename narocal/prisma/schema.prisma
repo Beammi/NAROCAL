@@ -22,8 +22,8 @@ enum Role{
 
 model User {
   id              Int     @id
-  firstname       String
-  lastname        String     
+  firstname       String?
+  lastname        String?    
   orders          Order[]
   customerProfile CustomerProfile?
   vendorProfile   VendorProfile?
