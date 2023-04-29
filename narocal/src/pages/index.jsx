@@ -8,10 +8,11 @@ import ProductCard from "@/components/ProductCard"
 import VendorCard from "@/components/vendors/VendorCard"
 import Hero from "@/components/Hero"
 const inter = Inter({ subsets: ["latin"] })
-import Login from "./login"
-import Account from "../components/account"
-import { SetStateAction, useRef, useState, useEffect } from "react"
-import { supabase } from "lib/supabaseClient"
+// import Login from "./login"
+// import Account from "../components/account"
+// import { SetStateAction, useRef, useState, useEffect } from "react"
+// import { supabase } from "lib/supabaseClient"
+// import { GetServerSideProps } from 'next'
 
 export default function Home() {
   const vendors = [
@@ -125,3 +126,12 @@ export default function Home() {
     </>
   )
 }
+
+
+// export const getServerSideProps = async () => {
+//   const res = await fetch('http://localhost:3001/feed')
+//   const feed = await res.json()
+//   return {
+//     props: { feed },
+//   }
+// }
