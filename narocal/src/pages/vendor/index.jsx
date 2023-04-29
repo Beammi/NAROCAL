@@ -1,10 +1,12 @@
-import VendorNavBar from '@/components/VendorNavBar'
+import VendorNavBar from '@/components/vendors/VendorNavBar'
 import Image from "next/image"
 import P from "@/components/text/P"
 import ProductCard from "@/components/ProductCard"
 import ProfileVendorMock from "../../pages/assets/vendor_profile_mock.png"
 import Link from 'next/link'
-import VendorCard from '@/components/VendorCard'
+import VendorCard from '@/components/vendors/VendorCard'
+import { getAllVendors } from '../../../dummy-data'
+import VendorList from '@/components/vendors/VendorList'
 
 
 export default function VendorsMain(){
@@ -16,6 +18,7 @@ export default function VendorsMain(){
         {id: "4", name: "Miyawaki Sakura", language: ["English ","Japanese "], exchange_rate: "1 pound = 40 Baht", shopping_rate: "250 Baht"},
         {id: "5", name: "John Doe", language: ["English ","Chinese "], exchange_rate: "1 Yuan = 0.55 Baht", shopping_rate: "250 Baht"}
     ]
+    const allVendors = getAllVendors();
     return(
         <div>
             <VendorNavBar></VendorNavBar>
@@ -30,6 +33,8 @@ export default function VendorsMain(){
                                 ))}
                                 
                         </ul>
+                        {/* <VendorList vendors = {allVendors}/> */}
+
                     </div>
                     
                 </div>

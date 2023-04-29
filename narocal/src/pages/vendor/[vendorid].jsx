@@ -1,4 +1,4 @@
-import VendorNavBar from '@/components/VendorNavBar'
+import VendorNavBar from '@/components/vendors/VendorNavBar'
 import Image from "next/image"
 import P from "@/components/text/P"
 import ProductCard from "@/components/ProductCard"

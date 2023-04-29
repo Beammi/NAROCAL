@@ -7,15 +7,18 @@ import P from "@/components/text/P"
 import { supabase } from 'lib/supabaseClient';
 const inter = Inter({ subsets: ['latin'] })
 import { useState, useEffect } from "react"
+import Link from 'next/link'
+
 
 
 export default function Role(){
   const [role, setRole] = useState('Customer')
   const [session, setSession] = useState(null)
   const [loading, setLoading] = useState(true)
-  const [username, setUsername] = useState(null)
-  const [website, setWebsite] = useState(null)
+  const [user, setUser] = useState([])
+  const [fetchError, setfetchError] = useState(null)
   const [avatar_url, setAvatarUrl] = useState(null)
+   
 
   useEffect(() => {
     async function getProfile() {
@@ -30,15 +33,41 @@ export default function Role(){
       var user = session
       setLoading(false)
     }
+    async function getPublicUser() {
+      
+      const { data, error } = await supabase.from('User').select()
 
-    getProfile()
+      if(error){
+        setfetchError("Can't find User")
+        setUser(null)
+        console.log(error)
+      }
+      if(data){
+        setUser(data)
+        setfetchError(null)
+      }
+
+    }
+
+    getProfile();
+    getPublicUser();
   }, [])
 
   const radioOnChange = () =>{
-    alert(role+session.user.email)
+    if(user.role=="CUSTOMER"){
+      <Link href="/customer"></Link>
+    }
+    if(user.role=="VENDOR"){
+      <Link href="/vendor"></Link>
+    }
   }
   return(
         <>
+        <ul>
+        {user.map((country) => (
+          <li key={country.email}>{country.role}</li>
+        ))}
+      </ul>
         <InitialNavbar></InitialNavbar>
         <div className='flex items-center justify-center min-h-screen bg-secondary'>
         <div className='relative flex flex-col m-6 bg-background shadow-2xl rounded-2xl md:flex md:flex-row md:space-y-0 md:m-0 md:mx-auto'>
@@ -69,7 +98,10 @@ export default function Role(){
                 </div>
 
                 <div className='flex flex-row pt-4 items-stretch md:items-center sm:items-center'>
-                  <button className='btn btn-secondary' onClick={radioOnChange}>Finish</button>
+                  <Link href={{pathname:'/[slug]', query: {slug: role}}}>
+                    <button className='btn btn-secondary' onClick={radioOnChange}>Finish</button>
+                  </Link>
+                  
                 </div>
                 <div className='mt-2 border-b border-mock'></div>
 
