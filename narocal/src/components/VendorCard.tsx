@@ -28,7 +28,7 @@ const VendorCard: React.FunctionComponent<VendorCard> = ({
     return (
         <>
             <Link href={{pathname:'/vendor/[slug]', query: {slug: link}}}>
-                <div className="card lg:card-side sm:card-compact shadow-xl md:w5/6 rounded-xl bg-background p-4 m-4">
+                <div className="card lg:card-side sm:card-compact shadow-xl md:w-5/6 rounded-xl bg-background p-4 m-4">
                     <figure><Image className="mx-8 sm:pt-2" src={ProfilePicTemp} alt="product pic temp" width={100}/></figure>
                     <div className="card-body bg-background rounded-xl">
                         <h2 className="card-title sm:text-ellipsis sm:text-xs md:text-xl">{name}</h2>

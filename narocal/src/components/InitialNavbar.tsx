@@ -76,138 +76,169 @@ function InitialNavbar(){
             </div>
 
             <div className="navbar bg-primary text-alternative hidden md:flex">
+                <div className="navbar-start"></div>
+                <div className="navbar-center">
+                    <ul className="menu menu-horizontal rounded-box mx-auto">
 
-                <ul className="menu menu-horizontal rounded-box mx-auto">
+                        <li tabIndex={0} className="dropdown dropdown-hover">
+                            <span>BRANDS</span>
 
-                    <li tabIndex={0} className="dropdown dropdown-hover">
-                        <span>BRANDS</span>
-
-                        <div className="dropdown-content menu card card-compact w-64 rounded-box bg-base-200 p-2 z-10 grid grid-cols-1">
-                            <div>
-                                <ul>
-                                    <li className="text-lg font-medium"><a>BRANDS</a></li>
-                                    <li><a>Submenu_1</a></li>
-                                    <li><a>Submenu_2</a></li>
-                                    <li><a>Submenu_3</a></li>
-                                    <li><a>Submenu_4</a></li>
-                                    <li><a>Submenu_5</a></li>
-                                </ul>
+                            <div className="dropdown-content menu card card-compact w-64 rounded-box bg-base-200 p-2 z-10 grid grid-cols-1">
+                                <div>
+                                    <ul>
+                                        <li className="text-lg font-medium"><a>BRANDS</a></li>
+                                        <li><a>Submenu_1</a></li>
+                                        <li><a>Submenu_2</a></li>
+                                        <li><a>Submenu_3</a></li>
+                                        <li><a>Submenu_4</a></li>
+                                        <li><a>Submenu_5</a></li>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                    </li>
+                        </li>
 
-                    <li tabIndex={0} className="dropdown dropdown-hover">
-                        {/* <span>CLOTHING</span> */}
-                        <a href="/clothing/clothing">CLOTHING</a>
+                        <li tabIndex={0} className="dropdown dropdown-hover">
+                            {/* <span>CLOTHING</span> */}
+                            <a href="/clothing/clothing">CLOTHING</a>
 
-                        <div className="dropdown-content card card-compact w-96 rounded-box bg-base-200 p-2 z-10 flex flex-row items-start">
-                            <div>
-                                <ul>
-                                    <li className="text-lg font-medium"><a href="/clothing/clothing">Clothing</a></li>
-                                    <li><a href="/clothing/shirts">Shirts</a></li>
-                                    <li><a>Polo shirt</a></li>
-                                    <li><a>Coat</a></li>
-                                    <li><a>Jeans</a></li>
-                                    <li><a>Shorts</a></li>
-                                    <li><a>Suit</a></li>
-                                    <li><a>Pants</a></li>
-                                </ul>
+                            <div className="dropdown-content card card-compact w-96 rounded-box bg-base-200 p-2 z-10 flex flex-row items-start">
+                                <div>
+                                    <ul>
+                                        <li className="text-lg font-medium"><a href="/clothing/clothing">Clothing</a></li>
+                                        <li><a href="/clothing/shirts">Shirts</a></li>
+                                        <li><a>Polo shirt</a></li>
+                                        <li><a>Coat</a></li>
+                                        <li><a>Jeans</a></li>
+                                        <li><a>Shorts</a></li>
+                                        <li><a>Suit</a></li>
+                                        <li><a>Pants</a></li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <ul>
+                                        <li className="text-lg font-medium"><a>Active Wear</a></li>
+                                        <li><a>Submenu_1</a></li>
+                                        <li><a>Submenu_2</a></li>
+                                        <li><a>Submenu_3</a></li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <ul>
+                                        <li className="text-lg font-medium"><a>Clothing Brands</a></li>
+                                        <li><a>Submenu_1</a></li>
+                                        <li><a>Submenu_2</a></li>
+                                        <li><a>Submenu_3</a></li>
+                                    </ul>
+                                </div>
+                                
                             </div>
-                            <div>
-                                <ul>
-                                    <li className="text-lg font-medium"><a>Active Wear</a></li>
-                                    <li><a>Submenu_1</a></li>
-                                    <li><a>Submenu_2</a></li>
-                                    <li><a>Submenu_3</a></li>
-                                </ul>
+                        </li>
+
+                        <li tabIndex={0} className="dropdown dropdown-hover">
+                            <span>SHOES</span>
+
+                            <div className="dropdown-content card card-compact w-72 rounded-box bg-base-200 p-2 z-10 grid grid-cols-2">
+                                <div>
+                                    <ul>
+                                        <li className="text-lg font-medium"><a>Shoes</a></li>
+                                        <li><a>Submenu_1</a></li>
+                                        <li><a>Submenu_2</a></li>
+                                        <li><a>Submenu_3</a></li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <ul>
+                                        <li className="text-lg font-medium"><a>Shoes Brands</a></li>
+                                        <li><a>Submenu_1</a></li>
+                                        <li><a>Submenu_2</a></li>
+                                        <li><a>Submenu_3</a></li>
+                                    </ul>
+                                </div>
+                                
                             </div>
-                            <div>
-                                <ul>
-                                    <li className="text-lg font-medium"><a>Clothing Brands</a></li>
-                                    <li><a>Submenu_1</a></li>
-                                    <li><a>Submenu_2</a></li>
-                                    <li><a>Submenu_3</a></li>
-                                </ul>
+                        </li>
+
+                        <li tabIndex={0} className="dropdown dropdown-hover">
+                            <span>ACCESSORIES</span>
+
+                            <div className="dropdown-content card card-compact w-72 rounded-box bg-base-200 p-2 z-10 grid grid-cols-2">
+                                <div>
+                                    <ul>
+                                        <li className="text-lg font-medium"><a>Accessories</a></li>
+                                        <li><a>Submenu_1</a></li>
+                                        <li><a>Submenu_2</a></li>
+                                        <li><a>Submenu_3</a></li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <ul>
+                                        <li className="text-lg font-medium"><a>Accessories Brands</a></li>
+                                        <li><a>Submenu_1</a></li>
+                                        <li><a>Submenu_2</a></li>
+                                        <li><a>Submenu_3</a></li>
+                                    </ul>
+                                </div>
+                                
                             </div>
+                        </li>
+
+                        <li tabIndex={0} className="dropdown dropdown-hover">
+                            <span>FOOD</span>
+
+                            <div className="dropdown-content card card-compact w-72 rounded-box bg-base-200 p-2 z-10 grid grid-cols-2">
+                                <div>
+                                    <ul>
+                                        <li className="text-lg font-medium"><a>Snacks</a></li>
+                                        <li><a>Submenu_1</a></li>
+                                        <li><a>Submenu_2</a></li>
+                                        <li><a>Submenu_3</a></li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <ul>
+                                        <li className="text-lg font-medium"><a>Processed Food</a></li>
+                                        <li><a>Submenu_1</a></li>
+                                        <li><a>Submenu_2</a></li>
+                                        <li><a>Submenu_3</a></li>
+                                    </ul>
+                                </div>
+                                
+                            </div>
+                        </li>
+
+                        
+
+                    </ul>
+
+                </div>
+
+                <div className="navbar-end">
+                    <div className="my-3 w-4/5">
+                        <div className="relative flex w-full flex-wrap items-stretch">
+                            <input
+                            type="text"
+                            className="relative m-0 block w-5/6 flex-auto rounded border border-solid border-neutral-600 bg-transparent bg-clip-padding px-4 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-600 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-300 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
+                            placeholder="Search"
+                            aria-label="Search"
+                            aria-describedby="button-addon2" />
                             
+                            <span
+                            className="input-group-text flex items-center whitespace-nowrap rounded px-3 py-1.5 text-center text-base font-normal text-neutral-700 dark:text-neutral-200"
+                            id="basic-addon2">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                                className="h-5 w-5">
+                                <path
+                                fill-rule="evenodd"
+                                d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
+                                clip-rule="evenodd" />
+                            </svg>
+                            </span>
                         </div>
-                    </li>
-
-                    <li tabIndex={0} className="dropdown dropdown-hover">
-                        <span>SHOES</span>
-
-                        <div className="dropdown-content card card-compact w-72 rounded-box bg-base-200 p-2 z-10 grid grid-cols-2">
-                            <div>
-                                <ul>
-                                    <li className="text-lg font-medium"><a>Shoes</a></li>
-                                    <li><a>Submenu_1</a></li>
-                                    <li><a>Submenu_2</a></li>
-                                    <li><a>Submenu_3</a></li>
-                                </ul>
-                            </div>
-                            <div>
-                                <ul>
-                                    <li className="text-lg font-medium"><a>Shoes Brands</a></li>
-                                    <li><a>Submenu_1</a></li>
-                                    <li><a>Submenu_2</a></li>
-                                    <li><a>Submenu_3</a></li>
-                                </ul>
-                            </div>
-                            
-                        </div>
-                    </li>
-
-                    <li tabIndex={0} className="dropdown dropdown-hover">
-                        <span>ACCESSORIES</span>
-
-                        <div className="dropdown-content card card-compact w-72 rounded-box bg-base-200 p-2 z-10 grid grid-cols-2">
-                            <div>
-                                <ul>
-                                    <li className="text-lg font-medium"><a>Accessories</a></li>
-                                    <li><a>Submenu_1</a></li>
-                                    <li><a>Submenu_2</a></li>
-                                    <li><a>Submenu_3</a></li>
-                                </ul>
-                            </div>
-                            <div>
-                                <ul>
-                                    <li className="text-lg font-medium"><a>Accessories Brands</a></li>
-                                    <li><a>Submenu_1</a></li>
-                                    <li><a>Submenu_2</a></li>
-                                    <li><a>Submenu_3</a></li>
-                                </ul>
-                            </div>
-                            
-                        </div>
-                    </li>
-
-                    <li tabIndex={0} className="dropdown dropdown-hover">
-                        <span>FOOD</span>
-
-                        <div className="dropdown-content card card-compact w-72 rounded-box bg-base-200 p-2 z-10 grid grid-cols-2">
-                            <div>
-                                <ul>
-                                    <li className="text-lg font-medium"><a>Snacks</a></li>
-                                    <li><a>Submenu_1</a></li>
-                                    <li><a>Submenu_2</a></li>
-                                    <li><a>Submenu_3</a></li>
-                                </ul>
-                            </div>
-                            <div>
-                                <ul>
-                                    <li className="text-lg font-medium"><a>Processed Food</a></li>
-                                    <li><a>Submenu_1</a></li>
-                                    <li><a>Submenu_2</a></li>
-                                    <li><a>Submenu_3</a></li>
-                                </ul>
-                            </div>
-                            
-                        </div>
-                    </li>
-
-                    
-
-                </ul>
+                    </div>
+                </div>
 
             </div>
             
