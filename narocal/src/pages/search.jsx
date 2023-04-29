@@ -7,7 +7,7 @@ import {
 } from '@ant-design/icons';
 import InitialNavbar from '@/components/InitialNavbar'
 import VerticalFilter from '@/components/VerticalFilter'
-import VendorCard from '@/components/VendorCard'
+import VendorCard from '@/components/vendors/VendorCard'
 import { useState } from 'react';
 
 export default function Search(){
@@ -38,10 +38,34 @@ export default function Search(){
                     </div>
                     
                     <div className='flex flex-row justify-center'>
-                        {/* <div className='flex flex-col'>
-                            <p>Brand</p>
-                        </div> */}
-                        <VerticalFilter
+
+                        {(!isProduct) && 
+                            <VerticalFilter
+                            title1="Country"
+                            option11="USA"
+                            option12="Japan"
+                            option13="South Korea"
+                            option14="UK"
+
+                            title2="City"
+                            option21="New York"
+                            option22="Los Angeles"
+                            option23="Tokyo"
+                            option24="South Korea"
+                            option25="London"
+
+                            
+                            title3="Price Rate"
+                            option31="Low to High"
+                            option32="High to Low"
+                            
+                            >
+
+                            </VerticalFilter>
+                        }
+
+                        {(isProduct) && 
+                            <VerticalFilter
                             title1="Brand"
                             option11="Ambush"
                             option12="Christian Dior"
@@ -64,27 +88,17 @@ export default function Search(){
                             
                             >
 
-                        </VerticalFilter>
+                            </VerticalFilter>
+                        }
+                        
 
                         <div className='flex flex-col justify-center gap-8 w-5/6'>
-
-                            {/* <div className='grid grid-cols-1 gap-5 bg-secondary overflow-y-auto h-[80vh] p-8 overscroll-contain'>
-                                <VendorCard name='Chris Evans' language='English' exchange_rate='1 pound = 40 Baht' shopping_rate='300 Baht' link="1"></VendorCard>
-                                <VendorCard name='Yoko Ano' language='Thai, Japanese' exchange_rate='1 Yen = 0.28 Baht' shopping_rate='350 Baht' link="2"></VendorCard>
-                                <VendorCard name='Yoshida' language='Japanese' exchange_rate='1 Yen = 0.3 Baht' shopping_rate='400 Baht' link="3"></VendorCard>
-                                <VendorCard name='Miyawaki Sakura' language='Japanese' exchange_rate='1 Yen = 0.3 Baht' shopping_rate='400 Baht' link="4"></VendorCard>
-                            </div> */}
-
-                            
                             {(!isProduct) &&
                                 <div className='flex flex-col'>
                                     <VendorCard name='Yoko Ano' language='Thai, Japanese' exchange_rate='1 Yen = 0.28 Baht' shopping_rate='350 Baht' link="2"></VendorCard>
                                     {/* <VendorCard name='Yoko Pham' language='Thai, Japanese' exchange_rate='1 Yen = 0.28 Baht' shopping_rate='350 Baht' link="2"></VendorCard> */}
                                 </div>
                             }
-
-                            
-                            
 
                             {(isProduct) && 
                             
