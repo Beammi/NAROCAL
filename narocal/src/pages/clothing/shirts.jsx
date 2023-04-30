@@ -53,11 +53,11 @@ export default function Shirts(){
                             <ProductCard title='TOM FORD' body='straight-leg jeans'></ProductCard>
                             <ProductCard title='Dolce & Gabbana' body='ripped-detail straight-leg jeans'></ProductCard>
                             <ProductCard title='Diesel' body='straight-leg 1995 jeans'></ProductCard>
-                            <ProductCard title='Nike' body='Dunk Low Retro Panda'></ProductCard>
                             <ProductCard title='Prada' body='Double Match cotton shirt'></ProductCard>
                             <ProductCard title='Balenciaga' body='logo-print zip-up jacket'></ProductCard>
                             <ProductCard title='Maison Margiela' body='double-breasted tailored coat'></ProductCard>
                             <ProductCard title='Kenzo' body='logo-print belt bag'></ProductCard>
+                            <ProductCard title='Nike' body='Dunk Low Retro Panda'></ProductCard>
                         </div>
                     </div>
 

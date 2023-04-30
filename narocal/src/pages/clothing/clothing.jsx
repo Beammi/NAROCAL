@@ -49,7 +49,7 @@ export default function Clothing(){
 
                         </VerticalFilter>
                         <div className="grid grid-cols-4 gap-4 bg-background">
-                            <ProductCard title='Louis Vuitton' body='Monogram Bandana '></ProductCard>
+                            <ProductCard title='Louis Vuitton' body='Monogram Bandana shirt'></ProductCard>
                             <ProductCard title='Balenciaga' body='logo-print zip-up jacket'></ProductCard>
                             <ProductCard title='Dolce & Gabbana' body='Printed cotton V-neck T-shirt'></ProductCard>
                             <ProductCard title='Saint Laurent' body='pointed collar Western denim shirt'></ProductCard>
