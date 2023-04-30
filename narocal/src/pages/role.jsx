@@ -8,6 +8,7 @@ import { supabase } from "lib/supabaseClient"
 const inter = Inter({ subsets: ["latin"] })
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import { useRouter } from "next/router"
 
 export default function Role() {
   const [role, setRole] = useState("Customer")
@@ -16,7 +17,7 @@ export default function Role() {
   const [user, setUser] = useState()
   const [fetchError, setfetchError] = useState(null)
   const [formError, setFormError] = useState(null)
-
+  const router = useRouter()
   useEffect(() => {
     async function getProfile() {
       setLoading(true)
@@ -81,7 +82,7 @@ export default function Role() {
   }
   const handleSubmit = async (e) => {
     e.preventDefault()
-    upsertUser();
+    upsertUser()
     if (!user) {
       setFormError("Something wrong when updating data")
     }
@@ -99,9 +100,14 @@ export default function Role() {
       console.log("Cant Update")
       setFormError("Cant update")
     }
-    if (data) {
-      console.log(data)
+
+    if (role.toUpperCase() == "VENDOR") {
+      router.push("/vendor")
     }
+    if (role.toUpperCase() == "CUSTOMER") {
+      router.push("customer")
+    }
+    console.log(data)
   }
   return (
     <>
@@ -145,24 +151,11 @@ export default function Role() {
               </div>
             </div>
             <div className="flex flex-row pt-4 items-stretch md:items-center sm:items-center">
-              <form onSubmit={handleSubmit}>
-              <Link
-                href={{
-                  pathname: "/[slug]",
-                  query: { slug: role.toLowerCase() },
-                }}
-              >
-                <button className="btn btn-secondary" type="submit" onClick={handleSubmit}>
-                  Finish
-                </button>
-              </Link>
-              </form>
-
+              <button className="btn btn-secondary" onClick={handleSubmit}>
+                Finish
+              </button>
             </div>
-            {/* <Link href={{
-                  pathname: "/[slug]",
-                  query: { slug: role.toLowerCase() },
-                }} className='btn btn-secondary' onClick={handleSubmit}>Finish</Link> */}
+
             <div className="mt-2 border-b border-mock"></div>
           </div>
         </div>
