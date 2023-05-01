@@ -13,8 +13,47 @@ export default function Auth() {
   const [loading, setLoading] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [session, setSession] = useState(null)
 
+  // useEffect(() => {
+  //   async function getProfile() {
+  //     setLoading(true)
+  //     supabase.auth.getSession().then(({ data: { session } }) => {
+  //       setSession(session)
+  //     })
 
+  //     supabase.auth.onAuthStateChange((_event, session) => {
+  //       setSession(session)
+  //     })
+  //     var user = session
+  //     setLoading(false)
+  //   }
+  //   async function insertUser() {
+  //     const {
+  //       user
+  //     } = await supabase.auth.getSession()
+  //     setSession(user)
+  //     const { data, error } = await supabase
+  //         .from("User")
+  //         .select()
+  //         .eq("email", email)
+  
+  //     if (data == null) {
+
+  //       const { dataUpSert, errorUpsert } = await supabase
+  //       .from("User")
+  //       .insert(
+  //         { email: email, role: "" },
+  //         { upsert: true },
+  //         { onConflict: "email" }
+  //       )
+  //       .select()
+        
+  //     }    
+  //   }
+
+  //   insertUser()
+  // },[])
   const handleLoginOtp = async (event) => {
     event.preventDefault()
 
@@ -33,6 +72,7 @@ export default function Auth() {
       alert('Check your email for the login link!')
     }
     setLoading(false)
+    // insertUser()
   }
 
   const handleLoginPassword = async (event) => {
