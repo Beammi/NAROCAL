@@ -1,46 +1,134 @@
 import { useRouter } from "next/router"
 import { useState, useEffect } from "react"
+import { supabase } from "lib/supabaseClient"
+import e from "cors"
+// var email = ""
+
 
 export default function VendorEditProfile() {
   const router = useRouter()
   const [loading, setLoading] = useState(true)
-  const [username, setUsername] = useState(null)
-  const [website, setWebsite] = useState(null)
-  const [avatar_url, setAvatarUrl] = useState(null)
+  const [email, setEmail] = useState("")
+  const [address, setAddress] = useState(null)
+  const [firstname, setFirstName] = useState(null)
+  const [lastname, setLastName] = useState(null)
+
+  function convertStringFormatt(word) {
+    if(word == ""){
+      return ""
+    }else{
+      let temp = word.slice(1, word.length - 1)
+      return temp
+    }
+    
+  }
+
+  useEffect(() => {
+    async function getUserEmail() {
+
+      const { data } = await supabase.auth.getUser()
+  
+      let userJson = data.user
+
+      // alert(JSON.stringify(data.user.email))
+      // alert(JSON.stringify(userJson.email))
+
+
+      if (userJson != null) {
+        // let temp = convertStringFormatt(JSON.stringify(userJson.email))
+        setEmail(JSON.stringify(data.user.email))
+        // alert("email" + email)
+      }
+    }
+
+    getUserEmail()
+  }, [])
+
+  async function updateProfile(event) {
+    event.preventDefault()
+    getUserEmail()
+    let temp = convertStringFormatt(email)
+
+    const { dataUpSert, errorUpsert } = await supabase
+      .from("User")
+      .update({ firstname: firstname, lastname: lastname, address: address })
+      .eq("email", temp)
+  }
+
+  async function getPublicUser() {
+    let temp = convertStringFormatt(email)
+    // setEmail(temp)
+
+    const { data, error } = await supabase
+      .from("User")
+      .select()
+      .eq("email", temp)
+
+    // if (error) {
+    //   // alert("Error" + error)
+    // }
+    if (data.length != 0) {
+      setAddress(convertStringFormatt(JSON.stringify(data[0].address)))
+      setFirstName(convertStringFormatt(JSON.stringify(data[0].firstname)))
+      setLastName(convertStringFormatt(JSON.stringify(data[0].lastname)))
+
+      if(data[0].firstname == null){
+        setFirstName("")
+      }
+      if(data[0].lastname == null){
+        setLastName("")
+      }
+      if(data[0].address == null){
+        setAddress("")
+      }
+
+
+    }
+  }
+  async function signOut() {
+    const { error } = await supabase.auth.signOut()
+    router.push('/login')
+  }
+  getPublicUser();
   return (
     <div>
-      <form className="form-widget">
+      <form onSubmit={updateProfile} className="form-widget">
         <div>
           <label htmlFor="email">Email</label>
-          <input id="email" type="text" disabled />
+          <input id="email" type="text" value={email} disabled />
         </div>
         <div>
-          <label htmlFor="username">Name</label>
+          <label htmlFor="firstname">Firstname</label>
           <input
-            id="username"
+            id="firstname"
             type="text"
             required
-            value={username || ""}
-            onChange={(e) => setUsername(e.target.value)}
+            value={firstname || ""}
+            onChange={(e) => setFirstName(e.target.value)}
           />
         </div>
         <div>
-          <label htmlFor="website">Website</label>
+          <label htmlFor="lastname">Lastname</label>
           <input
-            id="website"
-            type="url"
-            value={website || ""}
-            onChange={(e) => setWebsite(e.target.value)}
+            id="lastname"
+            type="text"
+            value={lastname || ""}
+            onChange={(e) => setLastName(e.target.value)}
+          />
+        </div>
+        <div>
+          <label htmlFor="address">Address</label>
+          <input
+            id="adress"
+            type="text"
+            value={address || ""}
+            onChange={(e) => setAddress(e.target.value)}
           />
         </div>
 
         <div>
-          <button
-            className="button block primary"
-            type="submit"
-            disabled={loading}
-          >
-            {loading ? "Loading ..." : "Update"}
+          <button className="button block primary" type="submit">
+            Update
           </button>
         </div>
 
@@ -48,6 +136,7 @@ export default function VendorEditProfile() {
           <button
             className="button block"
             type="button"
+            onClick={signOut}
           >
             Sign Out
           </button>

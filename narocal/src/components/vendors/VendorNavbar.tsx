@@ -16,7 +16,7 @@ function VendorNavbar(){
                 <ul className="menu menu-horizontal px-3">
                     <li><a className="text-alternative hover:bg-secondary" href="/">Order</a></li>
                     <li><a className="text-alternative hover:bg-secondary" href="/">Chat</a></li>
-                    <li><a className="text-alternative hover:bg-secondary" href="/">Profile</a></li>
+                    <li><a className="text-alternative hover:bg-secondary" href="/vendor/profile">Profile</a></li>
                 </ul>
 
             </div>
