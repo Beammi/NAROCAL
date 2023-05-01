@@ -15,6 +15,7 @@ export default function Role() {
   const [session, setSession] = useState(null)
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState()
+  const [userData, setUserData] = useState()
   const [fetchError, setfetchError] = useState(null)
   const [formError, setFormError] = useState(null)
   const router = useRouter()
@@ -35,7 +36,7 @@ export default function Role() {
       const {
         data: { session },
       } = await supabase.auth.getSession()
-      // alert(session.user.email)
+      alert(session.user.email)
       const { data, error } = await supabase
         .from("User")
         .select()
@@ -50,45 +51,43 @@ export default function Role() {
         setUser(data)
         setfetchError(null)
       }
-      alert(JSON.stringify(data))
-    }
-    async function updateRole() {
-      const { data, error } = await supabase
-        .from("User")
-        .update({ role: role.toUpperCase() })
-        .eq("email", user.email)
-    }
+      setUserData(JSON.stringify(data).length)
 
+    }
     getProfile()
     getPublicUser()
   }, [])
 
-  const upsertUser = async (e) => {
+  const updateUser = async (e) => {
     // e.preventDefault()
-    if (!user) {
-      setFormError("Something wrong when updating data")
-    }
     const {
       data: { session },
     } = await supabase.auth.getSession()
 
-    const { dataUpSert, errorUpsert } = await supabase
-      .from("User")
-      .upsert(
-        { email: session.user.email, role: role.toUpperCase() },
-        { onConflict: "email" }
-      )
-      .select()
-  }
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    upsertUser()
+    if (userData == 2) {
+      const { dataUpSert, errorUpsert } = await supabase
+        .from("User")
+        .upsert([{ email: session.user.email, role: role.toUpperCase() }], { upsert: true })
+      // alert(errorUpsert)
+    }
+    
     if (!user) {
       setFormError("Something wrong when updating data")
     }
-    const {
-      data: { session },
-    } = await supabase.auth.getSession()
+
+    const { dataUpSert, errorUpsert } = await supabase
+      .from("User")
+      .update(
+        { role: role.toUpperCase() }
+      )
+      .eq('email', session.user.email)
+  }
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    updateUser()
+    if (!user) {
+      setFormError("Something wrong when updating data")
+    }
 
     //Set role in database
     const { data, error } = await supabase
