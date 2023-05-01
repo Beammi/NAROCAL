@@ -36,7 +36,7 @@ export default function Role() {
       const {
         data: { session },
       } = await supabase.auth.getSession()
-      alert(session.user.email)
+      // alert(session.user.email)
       const { data, error } = await supabase
         .from("User")
         .select()
