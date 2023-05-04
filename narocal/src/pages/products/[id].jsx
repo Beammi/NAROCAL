@@ -17,8 +17,8 @@ export default function ProductPage(){
                     <div className="flex flex-row justify-center pt-40">
                         <Image className="mx-14" src={BlackShirt} alt="product pic temp" width={450} height={640}/>
                         <div className="flex flex-col w-2/5">
-                            <p className="text-xl font-bold">Saint Laurent</p>
-                            <p className="text-lg">pointed collar Western denim shirt</p>
+                            <p className="text-xl font-bold">{router.query.title}</p>
+                            <p className="text-lg">{router.query.body}</p>
                             <p className="text-2xl py-10">14,000฿</p>
                             <select className="select w-full max-w-xs">
                                 <option disabled selected>Select size</option>

@@ -39,7 +39,7 @@ export default function VendorProfile() {
             <Image src={ProfileVendorMock} alt="Vendor's Profile" width={200} />
           </figure>
           <div>
-            <h3 className="md:text-2xl xs:text-xs p-2">Marie Shop</h3>
+            <h3 className="md:text-2xl xs:text-xs p-2">{router.query.name}</h3>
           </div>
           <div className="rating rating-md p-2">
             <input
