@@ -37,7 +37,9 @@ export default function VendorEditTemp() {
 
       {/* <button onClick={handleSubmit}>Edit Profile</button> */}
       
-      <Link href="/vendor/edit" > Edit Profile</Link>
+      <Link href="/vendor/edit" >Edit Profile</Link>
+      <br />
+      <Link href="/vendor/products">Product</Link>
     </div>
   )
 }
