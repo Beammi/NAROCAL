@@ -10,7 +10,7 @@ function VendorNavbar(){
     return(
         <div className="navbar bg-primary">
             <div className="flex-1">
-                <a className="btn btn-ghost normal-case text-l text-alternative" href="/">NAROCAL</a>
+                <a className="btn btn-ghost normal-case text-l text-alternative" href="/vendor">NAROCAL</a>
             </div>
             <div className="flex-none">
                 <ul className="menu menu-horizontal px-3">
