@@ -122,3 +122,22 @@ model Payment{
   venPayId    Int @unique
   @@schema("public")
 }
+
+model Chat{
+  id      Int @id @default(autoincrement())
+  vendor  String
+  customer  String
+  messages  Message[]
+  @@schema("public")
+}
+
+model Message{
+  id        Int      @id @default(autoincrement())
+  sender    String
+  receiver  String
+  text      String
+  timestamp DateTime @default(now())
+  chat      Chat @relation(fields: [chatId],references: [id])
+  chatId    Int  @unique
+  @@schema("public")
+}
