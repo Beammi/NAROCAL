@@ -61,7 +61,7 @@ function CustomerNavbar(){
             </div>
 
             <div className="navbar-center">
-                <a className="btn btn-ghost normal-case text-lg text-alternative" href="/">NAROCAL</a>
+                <a className="btn btn-ghost normal-case text-lg text-alternative" href="/customer">NAROCAL</a>
             </div>
 
 
