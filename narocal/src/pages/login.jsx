@@ -3,7 +3,7 @@ import { supabase } from 'lib/supabaseClient'
 import Auth from '../components/Authtentication/auth'
 import Account from '../components/account'
 import { useSession, useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
-
+import Role from '../pages/role'
 
 export default function Login(){
   const [session, setSession] = useState(null)
@@ -33,7 +33,8 @@ export default function Login(){
         <Auth supabaseClient={supabase}/>
       ) : (
         // <p>Account page will go here.</p>
-        <button onClick={signOut} className="btn btn-secondary">Sign out</button>
+        <Role></Role>
+        // <button onClick={signOut} className="btn btn-secondary">Sign out</button>
       )}
     </div>
   )
