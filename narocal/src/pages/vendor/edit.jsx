@@ -12,6 +12,8 @@ export default function VendorEditProfile() {
   const [address, setAddress] = useState(null)
   const [firstname, setFirstName] = useState(null)
   const [lastname, setLastName] = useState(null)
+  const [userId, setUserId] = useState(null)
+  const [shopping_rate, setShoppingRate] = useState(null)
 
   function convertStringFormatt(word) {
     if(word == ""){
@@ -37,9 +39,11 @@ export default function VendorEditProfile() {
       if (userJson != null) {
         // let temp = convertStringFormatt(JSON.stringify(userJson.email))
         setEmail(JSON.stringify(data.user.email))
-        // alert("email" + email)
+
       }
     }
+
+    
 
     getUserEmail()
   }, [])
@@ -71,7 +75,7 @@ export default function VendorEditProfile() {
       setAddress(convertStringFormatt(JSON.stringify(data[0].address)))
       setFirstName(convertStringFormatt(JSON.stringify(data[0].firstname)))
       setLastName(convertStringFormatt(JSON.stringify(data[0].lastname)))
-
+      setUserId(convertStringFormatt(JSON.stringify(data[0].id)))
       if(data[0].firstname == null){
         setFirstName("")
       }
@@ -85,12 +89,26 @@ export default function VendorEditProfile() {
 
     }
   }
+  async function insertVendorProfile(){
+    const { data, error } = await supabase
+        .from("VendorProfile")
+        .select()
+        .eq("id", userId)
+    
+    if(JSON.stringify(data).length == 2){
+      const { dataUpSert, errorUpsert } = await supabase
+        .from("VendorProfile")
+        .upsert([{ userId: userId, shpRate:  shopping_rate}], { upsert: true })
+    }
+  }
   async function signOut() {
     const { error } = await supabase.auth.signOut()
     router.push('/login')
   }
-  getPublicUser();
+  // getPublicUser()
+  // insertVendorProfile()
   return (
+
     <div>
       <form onSubmit={updateProfile} className="form-widget">
         <div>
