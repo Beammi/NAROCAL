@@ -4,7 +4,7 @@ import React from "react"
 import { useState } from "react"
 import BlueHoodie from "../pages/assets/blue-hoodie.jpg"
 import PurpleShirt from "../pages/assets/purple-shirt.jpg"
-import RedChair from "../pages/assets/red-chair.jpg"
+import RedChair from "../pages/assets/banner.png"
 
 
 interface Hero {
