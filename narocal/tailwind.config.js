@@ -23,6 +23,13 @@ module.exports = {
         test: '#F9F3F3',
       },
     },
+    screens:{
+      phone: '150px',
+      sm: '480px',
+      md: '768px',
+      lg: '976px',
+      xl: '1440px',
+    }
   },
   plugins: [require("daisyui"),
               require('@tailwindcss/typography'),
