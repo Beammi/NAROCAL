@@ -2,7 +2,7 @@ import { useRouter } from "next/router"
 import { useState, useEffect } from "react"
 import { supabase } from "lib/supabaseClient"
 import VendorNavBar from "@/components/vendors/VendorNavBar"
-
+export const revalidate = 60
 import e from "cors"
 // var email = ""
 
@@ -15,9 +15,11 @@ export default function VendorEditProfile() {
   const [lastname, setLastName] = useState(null)
   const [userId, setUserId] = useState(null)
   const [shopping_rate, setShoppingRate] = useState(null)
+  const [bio,setBio] = useState(null)
+  const [language,setLanguage] = useState(null)
 
   function convertStringFormatt(word) {
-    if (word == "") {
+    if (word == "" || word == null) {
       return ""
     } else {
       let temp = word.slice(1, word.length - 1)
@@ -36,53 +38,85 @@ export default function VendorEditProfile() {
 
       if (userJson != null) {
         // let temp = convertStringFormatt(JSON.stringify(userJson.email))
-        setEmail(JSON.stringify(data.user.email))
+        setEmail(convertStringFormatt(JSON.stringify(userJson.email,null,2)))
+        console.log("from get user email"+email)
+      }
+    }
+
+    async function getPublicUser() {
+      // let temp = convertStringFormatt(email)
+      // // setEmail(temp)
+      console.log("email: "+email)
+      const { data, error } = await supabase
+        .from("User")
+        .select()
+        .eq("email", email)
+  
+      if (error) {
+        console.log("Error" + error)
+      }
+
+      if (data.length != 0) {
+        setAddress(convertStringFormatt(JSON.stringify(data[0].address)))
+        setFirstName(convertStringFormatt(JSON.stringify(data[0].firstname)))
+        setLastName(convertStringFormatt(JSON.stringify(data[0].lastname)))
+        setUserId(JSON.stringify(data[0].id,null,2))
+        console.log("user id "+ lastname)
+        if (data[0].firstname == null) {
+          setFirstName("")
+        }
+        if (data[0].lastname == null) {
+          setLastName("")
+        }
+        if (data[0].address == null) {
+          setAddress("")
+        }
+        if (data[0].id == null) {
+          setUserId("")
+        }
+      }
+    }
+
+    async function getVendorProfile(){
+      const { data, error } = await supabase
+        .from("VendorProfile")
+        .select()
+        .eq("userId", userId)
+      if (error) {
+        console.log("Error Vendor Profile:" + error)
+      }
+      
+      else{
+        setShoppingRate(JSON.stringify(data[0].shpRate))
+        setBio(convertStringFormatt(JSON.stringify(data[0].bio)))
+        setLanguage(convertStringFormatt(JSON.stringify(data[0].language)))
+        // setUserId(JSON.stringify(data[0].id,null,2))
       }
     }
 
     getUserEmail()
-  }, [])
+    getPublicUser()
+    getVendorProfile()
+  }, [email,userId])
 
   async function updateProfile(event) {
     event.preventDefault()
-    getUserEmail()
-    let temp = convertStringFormatt(email)
+    // getUserEmail()
+    // let temp = convertStringFormatt(email)
 
-    const { dataUpSert, errorUpsert } = await supabase
+    const { error } = await supabase
       .from("User")
       .update({ firstname: firstname, lastname: lastname, address: address })
-      .eq("email", temp)
-  }
-
-  async function getPublicUser() {
-    let temp = convertStringFormatt(email)
-    // setEmail(temp)
-
-    const { data, error } = await supabase
-      .from("User")
-      .select()
-      .eq("email", temp)
-
-    // if (error) {
-    //   // alert("Error" + error)
-    // }
-    if (data.length != 0) {
-      setAddress(convertStringFormatt(JSON.stringify(data[0].address)))
-      setFirstName(convertStringFormatt(JSON.stringify(data[0].firstname)))
-      setLastName(convertStringFormatt(JSON.stringify(data[0].lastname)))
-      setUserId(convertStringFormatt(JSON.stringify(data[0].id)))
-      if (data[0].firstname == null) {
-        setFirstName("")
-      }
-      if (data[0].lastname == null) {
-        setLastName("")
-      }
-      if (data[0].address == null) {
-        setAddress("")
-      }
+      .eq("email", email)
+    if(error == null){
+      alert("Updated Complete")
+      insertVendorProfile()
     }
   }
+
+  
   async function insertVendorProfile() {
+    
     const { data, error } = await supabase
       .from("VendorProfile")
       .select()
@@ -92,6 +126,12 @@ export default function VendorEditProfile() {
       const { dataUpSert, errorUpsert } = await supabase
         .from("VendorProfile")
         .upsert([{ userId: userId, shpRate: shopping_rate }], { upsert: true })
+    }
+    else{
+      const { errorUpdate } = await supabase
+      .from("VendorProfile")
+      .update({ shpRate: shopping_rate, bio: bio })
+      .eq("userId", userId)
     }
   }
   async function signOut() {
@@ -159,6 +199,36 @@ export default function VendorEditProfile() {
               type="text"
               value={address || ""}
               onChange={(e) => setAddress(e.target.value)}
+              className="input input-secondary w-full max-w-xs"
+            />
+          </div>
+
+          <div className="md:place-self-center">
+            <label htmlFor="shopping_rate" className="md:text-lg phone:text-sm">
+              Shopping Rate in THB
+            </label>
+          </div>
+          <div>
+            <input
+              id="shopping_rate"
+              type="number"
+              value={shopping_rate || ""}
+              onChange={(e) => setShoppingRate(e.target.value)}
+              className="input input-secondary w-full max-w-xs"
+            />
+          </div>
+
+          <div className="md:place-self-center">
+            <label htmlFor="bio" className="md:text-lg phone:text-sm">
+              BIO
+            </label>
+          </div>
+          <div>
+            <input
+              id="bio"
+              type="text"
+              value={bio || ""}
+              onChange={(e) => setBio(e.target.value)}
               className="input input-secondary w-full max-w-xs"
             />
           </div>
