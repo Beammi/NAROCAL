@@ -24,10 +24,10 @@ export default function VendorEditTemp() {
     }
     getProfile()
   }, [])
-  // const handleSubmit = async(e) => {
-  //   <VendorEditProfile key={email}  />
-  //   router.push('vendor/edit')
-  // }
+  async function signOut() {
+    const { error } = await supabase.auth.signOut()
+    router.push("/login")
+  }
   return (
     <div>
       <VendorNavBar></VendorNavBar>
@@ -50,6 +50,15 @@ export default function VendorEditTemp() {
           >
             Product
           </Link>
+        </div>
+        <div className="p-6">
+          <button
+            type="button"
+            onClick={signOut}
+            className=" hover:text-secondary md:text-lg sm:text-sm"
+          >
+            Sign Out
+          </button>
         </div>
       </div>
     </div>
