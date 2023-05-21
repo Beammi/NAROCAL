@@ -36,8 +36,8 @@ const ProductCard: React.FunctionComponent<ProductCard> = ({
                         <div className="badge badge-secondary sm:text-ellipsis sm:text-xs">NEW</div>
                         <p className="sm:text-ellipsis sm:text-xs md:text-sm ">{body}</p>
                         <div className="card-actions justify-end">
-                        <div className="badge badge-outline sm:text-ellipsis sm:text-xs md:text-sm">Fashion</div>
-                        <div className="badge badge-outline sm:text-ellipsis sm:text-xs md:text-sm">Products</div>
+                            <div className="badge badge-outline sm:text-ellipsis sm:text-xs md:text-sm">Fashion</div>
+                            <div className="badge badge-outline sm:text-ellipsis sm:text-xs md:text-sm">Products</div>
                         </div>
                     </div>
                 </div>
