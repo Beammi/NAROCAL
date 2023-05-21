@@ -14,7 +14,7 @@ export default function VendorEditProfile() {
   const [firstname, setFirstName] = useState(null)
   const [lastname, setLastName] = useState(null)
   const [userId, setUserId] = useState(null)
-  const [shopping_rate, setShoppingRate] = useState(null)
+  const [shopping_rate, setShoppingRate] = useState(0)
   const [bio,setBio] = useState(null)
   const [language,setLanguage] = useState(null)
 
@@ -85,7 +85,9 @@ export default function VendorEditProfile() {
       if (error) {
         console.log("Error Vendor Profile:" + error)
       }
-      
+      else if(data[0]==null){
+        console.log("pass")
+      }
       else{
         setShoppingRate(JSON.stringify(data[0].shpRate))
         setBio(convertStringFormatt(JSON.stringify(data[0].bio)))
