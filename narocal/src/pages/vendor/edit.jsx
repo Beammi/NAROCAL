@@ -3,8 +3,6 @@ import { useState, useEffect } from "react"
 import { supabase } from "lib/supabaseClient"
 import VendorNavBar from "@/components/vendors/VendorNavBar"
 export const revalidate = 60
-import e from "cors"
-// var email = ""
 
 export default function VendorEditProfile() {
   const router = useRouter()
@@ -15,8 +13,8 @@ export default function VendorEditProfile() {
   const [lastname, setLastName] = useState(null)
   const [userId, setUserId] = useState(null)
   const [shopping_rate, setShoppingRate] = useState(0)
-  const [bio,setBio] = useState(null)
-  const [language,setLanguage] = useState(null)
+  const [bio, setBio] = useState(null)
+  const [language, setLanguage] = useState(null)
 
   function convertStringFormatt(word) {
     if (word == "" || word == null) {
@@ -38,20 +36,18 @@ export default function VendorEditProfile() {
 
       if (userJson != null) {
         // let temp = convertStringFormatt(JSON.stringify(userJson.email))
-        setEmail(convertStringFormatt(JSON.stringify(userJson.email,null,2)))
-        console.log("from get user email"+email)
+        setEmail(convertStringFormatt(JSON.stringify(userJson.email, null, 2)))
+        console.log("from get user email" + email)
       }
     }
 
     async function getPublicUser() {
-      // let temp = convertStringFormatt(email)
-      // // setEmail(temp)
-      console.log("email: "+email)
+      console.log("email: " + email)
       const { data, error } = await supabase
         .from("User")
         .select()
         .eq("email", email)
-  
+
       if (error) {
         console.log("Error" + error)
       }
@@ -60,8 +56,8 @@ export default function VendorEditProfile() {
         setAddress(convertStringFormatt(JSON.stringify(data[0].address)))
         setFirstName(convertStringFormatt(JSON.stringify(data[0].firstname)))
         setLastName(convertStringFormatt(JSON.stringify(data[0].lastname)))
-        setUserId(JSON.stringify(data[0].id,null,2))
-        console.log("user id "+ lastname)
+        setUserId(JSON.stringify(data[0].id, null, 2))
+        console.log("user id " + lastname)
         if (data[0].firstname == null) {
           setFirstName("")
         }
@@ -77,48 +73,44 @@ export default function VendorEditProfile() {
       }
     }
 
-    async function getVendorProfile(){
+    async function getVendorProfile() {
       const { data, error } = await supabase
         .from("VendorProfile")
         .select()
         .eq("userId", userId)
       if (error) {
         console.log("Error Vendor Profile:" + error)
-      }
-      else if(data[0]==null){
+      } else if (data[0] == null) {
         console.log("pass")
-      }
-      else{
+      } else {
         setShoppingRate(JSON.stringify(data[0].shpRate))
         setBio(convertStringFormatt(JSON.stringify(data[0].bio)))
         setLanguage(convertStringFormatt(JSON.stringify(data[0].language)))
         // setUserId(JSON.stringify(data[0].id,null,2))
+        if (data[0].bio == null) {
+          setBio("")
+        }
       }
     }
 
     getUserEmail()
     getPublicUser()
     getVendorProfile()
-  }, [email,userId])
+  }, [email, userId])
 
   async function updateProfile(event) {
     event.preventDefault()
-    // getUserEmail()
-    // let temp = convertStringFormatt(email)
-
     const { error } = await supabase
       .from("User")
       .update({ firstname: firstname, lastname: lastname, address: address })
       .eq("email", email)
-    if(error == null){
+    if (error == null) {
       alert("Updated Complete")
       insertVendorProfile()
     }
   }
 
-  
   async function insertVendorProfile() {
-    
     const { data, error } = await supabase
       .from("VendorProfile")
       .select()
@@ -128,12 +120,11 @@ export default function VendorEditProfile() {
       const { dataUpSert, errorUpsert } = await supabase
         .from("VendorProfile")
         .upsert([{ userId: userId, shpRate: shopping_rate }], { upsert: true })
-    }
-    else{
+    } else {
       const { errorUpdate } = await supabase
-      .from("VendorProfile")
-      .update({ shpRate: shopping_rate, bio: bio })
-      .eq("userId", userId)
+        .from("VendorProfile")
+        .update({ shpRate: shopping_rate, bio: bio })
+        .eq("userId", userId)
     }
   }
   async function signOut() {
