@@ -2,6 +2,9 @@ import { useRouter } from "next/router"
 import { useState, useEffect } from "react"
 import { supabase } from "lib/supabaseClient"
 import VendorNavBar from "@/components/vendors/VendorNavBar"
+import Label from "@/components/Label"
+import TextInput from "@/components/TextInput"
+
 export const revalidate = 60
 
 export default function VendorEditProfile() {
@@ -139,9 +142,8 @@ export default function VendorEditProfile() {
       <form onSubmit={updateProfile} className="form-widget">
         <div className="p-2 m-8 lg:m-20 lg:p-8 grid phone:gap-2 md:gap-6 md:grid-cols-2 phone:grid-cols-1 justify-items-stretch bg-background shadow-2xl rounded-2xl">
           <div className="md:place-self-center">
-            <label htmlFor="email" className="md:text-lg phone:text-sm">
-              Email
-            </label>
+            
+            <Label label="Email" labelId="email"></Label>
           </div>
           <div>
             <input
@@ -151,11 +153,10 @@ export default function VendorEditProfile() {
               disabled
               className="input input-secondary w-full max-w-xs disabled:bg-slate-50 disabled:text-secondary disabled:border-slate-200"
             />
+            
           </div>
           <div className="md:place-self-center">
-            <label htmlFor="firstname" className="md:text-lg phone:text-sm">
-              Firstname
-            </label>
+            <Label label="Firstname" labelId="firstname"></Label>
           </div>
           <div>
             <input
@@ -168,9 +169,7 @@ export default function VendorEditProfile() {
             />
           </div>
           <div className="md:place-self-center">
-            <label htmlFor="lastname" className="md:text-lg phone:text-sm">
-              Lastname
-            </label>
+            <Label label="Lastname" labelId="lastname"></Label>
           </div>
           <div>
             <input
@@ -182,9 +181,7 @@ export default function VendorEditProfile() {
             />
           </div>
           <div className="md:place-self-center">
-            <label htmlFor="address" className="md:text-lg phone:text-sm">
-              Address
-            </label>
+            <Label label="Address" labelId="address"></Label>
           </div>
           <div>
             <input
@@ -197,9 +194,7 @@ export default function VendorEditProfile() {
           </div>
 
           <div className="md:place-self-center">
-            <label htmlFor="shopping_rate" className="md:text-lg phone:text-sm">
-              Shopping Rate in THB
-            </label>
+           <Label label="Shopping Rate (THB)" labelId="shopping_rate"></Label>
           </div>
           <div>
             <input
@@ -212,9 +207,7 @@ export default function VendorEditProfile() {
           </div>
 
           <div className="md:place-self-center">
-            <label htmlFor="bio" className="md:text-lg phone:text-sm">
-              BIO
-            </label>
+            <Label label="BIO" labelId="bio"></Label>
           </div>
           <div>
             <input
