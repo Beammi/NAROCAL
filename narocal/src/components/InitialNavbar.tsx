@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import Link from "next/link"
 interface INavBar {
   style?: string
@@ -7,6 +7,15 @@ interface INavBar {
 }
 
 function InitialNavbar(){
+
+    const [query, setQuery] = useState("")
+
+    function submitHandler(event){
+        event.preventDefault()
+        console.log("Our search query: ", query);
+        
+    }
+
     return(
         <div className="flex flex-col z-20 w-full fixed">
             <div className="navbar bg-primary text-alternative">
@@ -99,13 +108,13 @@ function InitialNavbar(){
 
                         <li tabIndex={0} className="dropdown dropdown-hover">
                             {/* <span>CLOTHING</span> */}
-                            <a href="/clothing/clothing">CLOTHING</a>
+                            <a href="/products/clothing/clothing">CLOTHING</a>
 
                             <div className="dropdown-content card card-compact w-96 rounded-box bg-base-200 p-2 z-10 flex flex-row items-start">
                                 <div>
                                     <ul>
-                                        <li className="text-lg font-medium"><a href="/clothing/clothing">Clothing</a></li>
-                                        <li><a href="/clothing/shirts">Shirts</a></li>
+                                        <li className="text-lg font-medium"><a href="/products/clothing/clothing">Clothing</a></li>
+                                        <li><a href="/products/clothing/shirts">Shirts</a></li>
                                         <li><a>Polo shirt</a></li>
                                         <li><a>Coat</a></li>
                                         <li><a>Jeans</a></li>
@@ -215,27 +224,33 @@ function InitialNavbar(){
                 <div className="navbar-end">
                     <div className="my-3 w-4/5">
                         <div className="relative flex w-full flex-wrap items-stretch">
-                            <input
-                            type="text"
-                            className="relative m-0 block w-5/6 flex-auto rounded border border-solid border-neutral-600 bg-transparent bg-clip-padding px-4 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-600 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-300 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
-                            placeholder="Search"
-                            aria-label="Search"
-                            aria-describedby="button-addon2" />
+
+                            <form onSubmit={submitHandler} className="relative flex w-full flex-wrap items-stretch">
                             
-                            <span
-                            className="input-group-text flex items-center whitespace-nowrap rounded px-3 py-1.5 text-center text-base font-normal text-neutral-700 dark:text-neutral-200"
-                            id="basic-addon2">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                                className="h-5 w-5">
-                                <path
-                                fill-rule="evenodd"
-                                d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
-                                clip-rule="evenodd" />
-                            </svg>
-                            </span>
+                                <input
+                                type="text"
+                                className="relative m-0 block w-5/6 flex-auto rounded border border-solid border-neutral-600 bg-transparent bg-clip-padding px-4 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-600 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-300 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
+                                placeholder="Search"
+                                aria-label="Search"
+                                aria-describedby="button-addon2" 
+                                onChange={(e) => setQuery(e.target.value)}
+                                />
+                                
+                                <span
+                                className="input-group-text flex items-center whitespace-nowrap rounded px-3 py-1.5 text-center text-base font-normal text-neutral-700 dark:text-neutral-200"
+                                id="basic-addon2">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 20 20"
+                                        fill="currentColor"
+                                        className="h-5 w-5">
+                                        <path
+                                        fill-rule="evenodd"
+                                        d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
+                                        clip-rule="evenodd" />
+                                    </svg>
+                                </span>
+                            </form>
                         </div>
                     </div>
                 </div>
