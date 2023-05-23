@@ -102,12 +102,13 @@ model Product {
   category    String
   subCategory String?
   country     String
+  price       Float
   code        String?
   model       String?
   color       String?
   gender      String?
   createdAt   DateTime  @default(now())
-  published   Boolean   @default(false)
+  // published   Boolean   @default(false)
   author      VendorProfile?   @relation(fields: [authorId], references: [id])
   authorId    Int
   @@schema("public")
