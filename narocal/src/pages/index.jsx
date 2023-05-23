@@ -8,6 +8,8 @@ import Footer from "@/components/Footer"
 import ProductCard from "@/components/ProductCard"
 import VendorCard from "@/components/vendors/VendorCard"
 import Hero from "@/components/Hero"
+import {PRODUCTS} from "../../dummy-data"
+import EventList from '@/components/events/event-list'
 const inter = Inter({ subsets: ["latin"] })
 // import Login from "./login"
 // import Account from "../components/account"
@@ -52,39 +54,8 @@ export default function Home() {
       <div className="flex flex-col justify-center bg-test pt-24 w-screen">
         <div className="flex flex-col gap-y-10 bg-background p-20 w-full">
           <Hero></Hero>
-
-          <div className="grid grid-cols-5 gap-4 bg-background overflow-y-auto h-[70vh] overscroll-contain">
-            <ProductCard
-              title="Gucci"
-              body="Jackie 1961 small shoulder bag"
-            ></ProductCard>
-            <ProductCard
-              title="TOM FORD"
-              body="straight-leg jeans"
-            ></ProductCard>
-            <ProductCard
-              title="Dolce & Gabbana"
-              body="ripped-detail straight-leg jeans"
-            ></ProductCard>
-            <ProductCard
-              title="Diesel"
-              body="straight-leg 1995 jeans"
-            ></ProductCard>
-            <ProductCard title="Nike" body="Dunk Low Retro Panda"></ProductCard>
-            <ProductCard
-              title="Prada"
-              body="Double Match cotton shirt"
-            ></ProductCard>
-            <ProductCard
-              title="Balenciaga"
-              body="logo-print zip-up jacket"
-            ></ProductCard>
-            <ProductCard
-              title="Maison Margiela"
-              body="double-breasted tailored coat"
-            ></ProductCard>
-            <ProductCard title="Kenzo" body="logo-print belt bag"></ProductCard>
-          </div>
+          <EventList items={PRODUCTS}/>
+          
 
           {/* <div className='flex justify-center flex-col bg-secondary gap-5 overflow-y-auto p-10'> */}
           <div className='grid grid-cols-1 gap-5 bg-secondary overflow-y-auto h-[80vh] p-8 overscroll-contain'>
