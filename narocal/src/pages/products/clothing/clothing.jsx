@@ -13,7 +13,7 @@ export default function Clothing(){
 
     const router = useRouter()
 
-    function findEventsHandler(brand, category, sortPrice){
+    function findFilterHandler(brand, category, sortPrice){
         const fullPath = `/products/clothing/clothing/${brand}/${category}/${sortPrice}`;
 
         router.push(fullPath)
@@ -22,8 +22,20 @@ export default function Clothing(){
     const filterProducts = getFilteredProducts({
         brand: "None",
         category: ["shirts", "dress", "blouse"],
-        price: "None"
+        subCategory: "None",
+        price: "None",
+        searchKeywords: "None"
     });
+
+    let brandChoice = []
+    let categoryChoice = ["shirts", "dress", "blouse"] // Clothing is static page
+    filterProducts.map((p) => {
+
+        // push brand choice
+        if(!brandChoice.includes(p.brand)){
+            brandChoice.push(p.brand)
+        }
+    })
 
     return (
         <>
@@ -39,7 +51,7 @@ export default function Clothing(){
                     </div>
                     <h2 className='text-3xl font-bold text-center'>Clothing</h2>
                     <div className='flex flex-col justify-center'>
-                        <EventsSearch onSearch={findEventsHandler} category={["shirts", "dress", "blouse"]}/>
+                        <EventsSearch onFilter={findFilterHandler} brand={brandChoice} category={categoryChoice}/>
                         <EventList items={filterProducts}/>
                     </div>
 

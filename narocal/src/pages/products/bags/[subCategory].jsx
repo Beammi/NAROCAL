@@ -7,37 +7,50 @@ import VerticalFilter from '@/components/VerticalFilter'
 import EventsSearch from '@/components/events/events-search'
 import EventList from '@/components/events/event-list'
 import { useRouter } from 'next/router'
-import {PRODUCTS, getFilteredProducts, getProductByCategory} from "../../../../dummy-data"
+import { usePathname } from 'next/navigation';
+import {PRODUCTS, getFilteredProducts} from "../../../../dummy-data"
 
-export default function Shirts(){
+export default function BagsSubCategory(){
 
     const router = useRouter();
 
-    // function findSearchHandler(searchKey){
-    //     const fullPath = `/products/${searchKey}`
-    //     router.push(fullPath)
-    // }
+    // const filterData = router.query.subCategory
+    // console.log("F: ", filterData);
+    // // const thisSubCategory = filterData[0]
+
+    // // const pathname = usePathname()
+    // const segments = router.pathname.split('/')
+    // const thisSubCategory = segments[3]
+
+    let thisSubCategory = router.query.subCategory
+    console.log("Q: ", router.query);
+    console.log("My: ", thisSubCategory);
 
     function findFilterHandler(brand, category, sortPrice){
-        const fullPath = `/products/clothing/shirts/${brand}/${category}/${sortPrice}`;
+        const fullPath = `/products/bags/${thisSubCategory}/${brand}/${category}/${sortPrice}`;
         // const fullPath = `/products/clothing/${brand}/${category}`;
 
         router.push(fullPath)
     }
 
-    console.log("Path name: ", router.pathname);
+    // make uppercase first letter
+    let strSubCategory = ""
+
+    if (typeof thisSubCategory === 'string') {
+        strSubCategory = thisSubCategory;
+        
+    }
 
     const filterProducts = getFilteredProducts({
         brand: "None",
-        category: "shirts",
-        subCategory: "None",
+        category: "bags",
+        subCategory: strSubCategory,
         price: "None",
         searchKeywords: "None"
     });
 
     let brandChoice = []
-    let categoryChoice = ["short sleeve", "long sleeve"]
-
+    let categoryChoice = ["handbag", "shoulder bag", "crossbody bag", "backpack"]
     filterProducts.map((p) => {
 
         // push brand choice
@@ -46,10 +59,10 @@ export default function Shirts(){
         }
     })
 
-    // const brand = getProductByCategory({category: "shirts"})
-    // brand.map((p) => {
-    //     brandChoice.push(p.brand)
-    // })
+
+
+    strSubCategory = strSubCategory.charAt(0).toUpperCase() + strSubCategory.slice(1);
+    
 
     return (
         <>
@@ -60,13 +73,13 @@ export default function Shirts(){
                     <div className="text-md breadcrumbs">
                         <ul>
                             <li><a href='/'>Home</a></li> 
-                            <li><a href='/clothing/clothing'>Clothing</a></li> 
-                            <li>Shirts</li>
+                            <li><a href='/clothing/bags'>Bags</a></li> 
+                            <li>{strSubCategory}</li>
                         </ul>
                     </div>
-                    <h2 className='text-3xl font-bold text-center'>Shirts</h2>
+                    <h2 className='text-3xl font-bold text-center'>{strSubCategory}</h2>
                     <div className='flex flex-col justify-center'>
-                        <EventsSearch onFilter={findFilterHandler} brand={brandChoice} category={categoryChoice}/>
+                        <EventsSearch onFilter={findFilterHandler} brand={brandChoice} category="None" />
                         <EventList items={filterProducts}/>
                     </div>
 
