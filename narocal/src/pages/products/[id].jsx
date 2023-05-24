@@ -4,10 +4,13 @@ import InitialNavbar from '@/components/InitialNavbar'
 import BlackShirt from "../assets/black-shirt.jpg"
 import DropDown from '@/components/DropDown'
 import ProductCard from '@/components/ProductCard'
+import {getProductByID} from "../../../dummy-data"
 
 export default function ProductPage(){
     const router = useRouter();
     let picSize = 700;
+
+    const prod = getProductByID({id: router.query.id});
 
     return(
         <>
@@ -17,9 +20,9 @@ export default function ProductPage(){
                     <div className="flex flex-row justify-center pt-40">
                         <Image className="mx-14" src={BlackShirt} alt="product pic temp" width={450} height={640}/>
                         <div className="flex flex-col w-2/5">
-                            <p className="text-xl font-bold">{router.query.title}</p>
-                            <p className="text-lg">{router.query.body}</p>
-                            <p className="text-2xl py-10">14,000฿</p>
+                            <p className="text-xl font-bold">{prod?.brand}</p>
+                            <p className="text-lg">{prod?.model}</p>
+                            <p className="text-2xl py-10">{prod?.price}</p>
                             <select className="select w-full max-w-xs">
                                 <option disabled selected>Select size</option>
                                 <option>XS</option>

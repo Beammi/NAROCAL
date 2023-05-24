@@ -6,7 +6,7 @@ export default function EventList(props){
     return(
         <div className='grid grid-cols-4 gap-4 bg-background'>
             {items.map((product) => (
-                <ProductCard title={product.brand} body={product.model}></ProductCard>
+                <ProductCard link={product.id}></ProductCard>
             ))}
         </div>
     );

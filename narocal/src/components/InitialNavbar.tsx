@@ -1,18 +1,25 @@
 import React, { useState } from "react"
 import Link from "next/link"
+import {useRouter} from "next/router"
 interface INavBar {
   style?: string
   link: string
   text: string
 }
 
-function InitialNavbar(){
+function InitialNavbar(props){
 
     const [query, setQuery] = useState("")
+    const router = useRouter()
 
     function submitHandler(event){
         event.preventDefault()
-        console.log("Our search query: ", query);
+        console.log("Our search keyword query: ", query);
+
+        // props.onSearch(query)
+
+        const fullPath = `/products/search/${query}`
+        router.push(fullPath)
         
     }
 
@@ -158,6 +165,31 @@ function InitialNavbar(){
                                 <div>
                                     <ul>
                                         <li className="text-lg font-medium"><a>Shoes Brands</a></li>
+                                        <li><a>Submenu_1</a></li>
+                                        <li><a>Submenu_2</a></li>
+                                        <li><a>Submenu_3</a></li>
+                                    </ul>
+                                </div>
+                                
+                            </div>
+                        </li>
+
+                        <li tabIndex={0} className="dropdown dropdown-hover">
+                            <span>BAGS</span>
+
+                            <div className="dropdown-content card card-compact w-72 rounded-box bg-base-200 p-2 z-10 grid grid-cols-2">
+                                <div>
+                                    <ul>
+                                        <li className="text-lg font-medium"><a href="/products/bags/bags">Bags</a></li>
+                                        <li><a href="/products/bags/handbag">handbag</a></li>
+                                        <li><a href="/products/bags/shoulder bag">shoulder bag</a></li>
+                                        <li><a href="/products/bags/crossbody bag">crossbody bag</a></li>
+                                        <li><a href="/products/bags/backpack">backpack</a></li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <ul>
+                                        <li className="text-lg font-medium"><a>Bags Brands</a></li>
                                         <li><a>Submenu_1</a></li>
                                         <li><a>Submenu_2</a></li>
                                         <li><a>Submenu_3</a></li>

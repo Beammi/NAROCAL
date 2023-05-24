@@ -63,7 +63,7 @@ export const PRODUCTS = [
     id: "4",
     brand: "Yves Saint Laurent",
     model: "Monogram Envelope Chain Wallet",
-    category: "bag",
+    category: "bags",
     subCategory: "wallet",
     country: ["Paris"],
     color: "black",
@@ -84,7 +84,7 @@ export const PRODUCTS = [
     id: "6",
     brand: "Fendi",
     model: "Peekaboo X-Lite Regular Bag",
-    category: "bag",
+    category: "bags",
     subCategory: "handbag",
     country: ["Rome", "Seoul"],
     color: "brown",
@@ -95,7 +95,7 @@ export const PRODUCTS = [
     id: "7",
     brand: "Gucci",
     model: "GG Marmont Small Matelassé Shoulder Bag",
-    category: "bag",
+    category: "bags",
     subCategory: "shoulder bag",
     country: ["Florence", "Milan"],
     color: "black",
@@ -106,7 +106,7 @@ export const PRODUCTS = [
     id: "8",
     brand: "Chanel",
     model: "Classic Flap Bag",
-    category: "bag",
+    category: "bags",
     subCategory: "shoulder bag",
     country: ["Paris"],
     color: "beige",
@@ -128,7 +128,7 @@ export const PRODUCTS = [
     id: "10",
     brand: "Gucci",
     model: "Dionysus Super Mini Bag",
-    category: "bag",
+    category: "bags",
     subCategory: "crossbody bag",
     country: ["Florence", "Milan"],
     color: "red",
@@ -160,7 +160,7 @@ export const PRODUCTS = [
     id: "13",
     brand: "Prada",
     model: "Nylon Backpack",
-    category: "bag",
+    category: "bags",
     subCategory: "backpack",
     country: ["Milan"],
     color: "black",
@@ -171,7 +171,7 @@ export const PRODUCTS = [
     id: "14",
     brand: "Hermes",
     model: "Birkin Bag",
-    category: "bag",
+    category: "bags",
     subCategory: "handbag",
     country: ["Paris", "Seoul"],
     color: "orange",
@@ -203,7 +203,7 @@ export const PRODUCTS = [
     id: "17",
     brand: "Louis Vuitton",
     model: "Neverfull MM Monogram Tote Bag",
-    category: "bag",
+    category: "bags",
     subCategory: "tote bag",
     country: ["Paris"],
     color: "brown",
@@ -235,7 +235,7 @@ export const PRODUCTS = [
     id: "20",
     brand: "Louis Vuitton",
     model: "Keepall Bandoulière Monogram Duffle Bag",
-    category: "bag",
+    category: "bags",
     subCategory: "duffle bag",
     country: ["Paris"],
     color: "brown",
@@ -246,7 +246,7 @@ export const PRODUCTS = [
     id: "21",
     brand: "Givenchy",
     model: "Antigona Small Leather Tote",
-    category: "bag",
+    category: "bags",
     subCategory: "tote bag",
     country: ["Paris"],
     color: "black",
@@ -267,7 +267,7 @@ export const PRODUCTS = [
     id: "23",
     brand: "Prada",
     model: "Saffiano Leather Wallet",
-    category: "bag",
+    category: "bags",
     subCategory: "wallet",
     country: ["Milan"],
     color: "black",
@@ -299,7 +299,7 @@ export const PRODUCTS = [
     id: "26",
     brand: "Balenciaga",
     model: "City Small Shoulder Bag",
-    category: "bag",
+    category: "bags",
     subCategory: "shoulder bag",
     country: ["Paris"],
     color: "gray",
@@ -328,7 +328,7 @@ export const PRODUCTS = [
     id: "29",
     brand: "Gucci",
     model: "GG Supreme Canvas Belt Bag",
-    category: "bag",
+    category: "bags",
     subCategory: "belt bag",
     country: ["Florence", "Milan"],
     color: "beige",
@@ -358,7 +358,7 @@ export const PRODUCTS = [
   },
   {
     id: "32",
-    brand: "TOM FORD",
+    brand: "Tom Ford",
     model: "long-sleeved cotton shirt",
     category: "shirts",
     subCategory: "long sleeve",
@@ -377,6 +377,39 @@ export const PRODUCTS = [
     color: "white",
     gender: "men",
     price: 22000
+  },
+
+  {
+    id: "34",
+    brand: "Burberry",
+    model: "check-print silk shirt",
+    category: "shirts",
+    subCategory: "short sleeve",
+    country: ["Florence", "Milan"],
+    color: "blue",
+    gender: "unisex"
+  },
+
+  {
+    id: "35",
+    brand: "Off-White",
+    model: "embroidered-design short-sleeve shirt",
+    category: "shirts",
+    subCategory: "short sleeve",
+    country: ["Florence", "Milan"],
+    color: "beige",
+    gender: "unisex"
+  },
+
+  {
+    id: "36",
+    brand: "Maison Margiela",
+    model: "stripe-print long-sleeve shirt",
+    category: "shirts",
+    subCategory: "long sleeve",
+    country: ["Florence", "Milan"],
+    color: "beige",
+    gender: "unisex"
   },
 
 
@@ -402,16 +435,28 @@ export function getEventById(id) {
 }
 
 export function getFilteredProducts(productFilter) {
-  const { brand, model, category, subCategory, country, color, gender, price } = productFilter; // prototype for brand only ***
+  const { brand, model, category, subCategory, country, color, gender, price, searchKeywords } = productFilter; // prototype for brand only ***
 
+  const searchKeywordsArray = searchKeywords?.toLowerCase().split(" ");
 
   let filteredProducts = PRODUCTS.filter((product) => {
     return (brand == "None" || brand === product.brand) 
-      && ( category == "None" || category === product.category || category.includes(product.category))
-      // && ( subCategory == "None" || subCategory === product.subCategory)
+      && ( category == "None" || category === product.category || (Array.isArray(category) && category.includes(product.category)))
+      && ( subCategory == "None" || subCategory === product.subCategory)
       // && ( color == "None" || color === product.color)
       // && ( gender == "None" || gender === product.gender)
-      && (price === "LowToHigh" || price === "None" || (price === "HighToLow" && product.price >= 0));
+      && (price === "LowToHigh" || price === "None" || (price === "HighToLow" && product.price >= 0))
+      
+      && (searchKeywords == "None" || (searchKeywordsArray.every((keyword) =>
+        product.brand.toLowerCase().includes(keyword) ||
+        product.model.toLowerCase().includes(keyword) ||
+        product.category.toLowerCase().includes(keyword) ||
+        product.subCategory.toLowerCase().includes(keyword) 
+      ) || searchKeywordsArray.every((keyword) =>
+        // product.category.toLowerCase().includes(keyword) ||
+        // product.subCategory.toLowerCase().includes(keyword) ||
+        (product.color && product.color.toLowerCase().includes(keyword))
+      )));
   });
 
   if (price === "LowToHigh") {
@@ -424,7 +469,72 @@ export function getFilteredProducts(productFilter) {
   return filteredProducts;
 }
 
-export function getProductByBrand(brand) {
-  return PRODUCTS.find((product) => product.brand === brand);
+export function getProductByID(chosenId) {
+  const { id } = chosenId
+  return PRODUCTS.find((product) => id === product.id);
+}
+
+export function getProductByCategory(chosenCategory) {
+  const { category } = chosenCategory
+  return PRODUCTS.find((product) => product.category === category);
+}
+
+export function getProductBySubCategory(chosenSubCategory) {
+  const { subCategory } = chosenSubCategory
+  return PRODUCTS.find((product) => product.subCategory === subCategory);
+}
+
+export function searchProducts(productFilter) {
+  const { searchKeywords } = productFilter;
+
+  const searchKeywordsArray = searchKeywords.toLowerCase().split(" ");
+  console.log("S: ", searchKeywordsArray);
+
+  // let filteredSearchProducts = PRODUCTS.filter((product) => {
+  //     return searchKeywordsArray.some((key) => {
+  //       (key === "" || product.brand.toLowerCase().includes(key.toLowerCase()))
+  //       || (product.model.toLowerCase().includes(key.toLowerCase()))
+  //       || (product.category.toLowerCase().includes(key.toLowerCase()))
+  //       || (product.subCategory.toLowerCase().includes(key.toLowerCase()))
+  //       || (product.color?.toLowerCase().includes(key.toLowerCase()));
+  //   })
+  // })
+
+
+  // let filteredSearchProducts = PRODUCTS.filter((product) => {
+  //   return (searchKeywords === "" || product.brand.toLowerCase().includes(searchKeywords.toLowerCase()))
+  //     || (product.model.toLowerCase().includes(searchKeywords.toLowerCase()))
+  //     || (product.category.toLowerCase().includes(searchKeywords.toLowerCase()))
+  //     || (product.subCategory.toLowerCase().includes(searchKeywords.toLowerCase()))
+  //     || (product.color?.toLowerCase().includes(searchKeywords.toLowerCase()));
+  // });
+
+  // let filteredSearchProducts = PRODUCTS.filter((product) => {
+  //     return searchKeywordsArray.every((key) => {
+  //       (product.brand.toLowerCase().includes(key.toLowerCase()))
+  //       || (product.model.toLowerCase().includes(key.toLowerCase()))
+  //       || (product.category.toLowerCase().includes(key.toLowerCase()))
+  //       || (product.subCategory.toLowerCase().includes(key.toLowerCase()))
+  //       || (product.color?.toLowerCase().includes(key.toLowerCase()));
+  //   })
+  // })
+
+  
+
+  // correct but I input wrong it give answer
+  let filteredSearchProducts = PRODUCTS.filter((product) => {
+    return searchKeywordsArray.every((keyword) =>
+      product.brand.toLowerCase().includes(keyword) ||
+      product.model.toLowerCase().includes(keyword) ||
+      product.category.toLowerCase().includes(keyword) ||
+      product.subCategory.toLowerCase().includes(keyword) 
+    ) || searchKeywordsArray.every((keyword) =>
+      // product.category.toLowerCase().includes(keyword) ||
+      // product.subCategory.toLowerCase().includes(keyword) ||
+      (product.color && product.color.toLowerCase().includes(keyword))
+    );
+  });
+
+  return filteredSearchProducts;
 }
 
