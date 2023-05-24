@@ -10,7 +10,8 @@ export default function VendorProduct() {
   const [userId, setUserId] = useState(null)
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
-  const [products, setProducts] = useState(null)
+  const [products, setProducts] = useState([])
+  const [len, setLen] = useState(0)
   function convertStringFormatt(word) {
     if (word == "" || word == null) {
       return ""
@@ -79,41 +80,63 @@ export default function VendorProduct() {
         .from("Product")
         .select()
         .eq("authorId", authorId)
-      setProducts(JSON.stringify(data.name))
       // setProducts(data)
-      console.log("Products " + products)
-      
+      if (data == null) {
+        console.log("pass")
+      } else {
+        setProducts(data)
+        setLen(Object.keys(data).length)
+        // setProducts(JSON.parse(data))
+        console.log("Products " + Object.keys(data).length)
+      }
+
       if (error) {
-        console.log(error)
+        console.log(JSON.stringify(error))
       }
     }
     getUserEmail()
     getUserId()
     getAuthorId()
     getProducts()
-  }, [email, userId, authorId])
+  }, [email, userId, authorId, len])
+  const renderProduct = () => {
+    let li = []
+    for (let i = 0; i < len; i++) {
+      console.log("render pass")
+      li.push(
+        <ProductCard
+          title={products[i].name}
+          body={products[i].description}
+        ></ProductCard>
+      )
+    }
+    return li
+  }
   return (
     <div>
       <VendorNavBar></VendorNavBar>
-      <div className="divide-y-2">
+      <div className="divide-y-2 bg-background">
         <div className="p-6">
           <Link
             href="products/create"
             className="hover:text-secondary md:text-lg sm:text-sm"
           >
-            Create Product{" "}
+            Create Product
+          </Link>
+        </div>
+        <div className="p-6">
+        <Link
+            href="products/create"
+            className="hover:text-secondary md:text-lg sm:text-sm"
+          >
+            Edit Product
           </Link>
         </div>
       </div>
 
-      <p className="p-6">Vendor Product</p>
+      <p className="p-6 md:text-lg sm:text-sm bg-background">Vendor Product</p>
       <ul className="grid justify-items-center md:grid-cols-2 sm:grid-flow-row sm:auto-rows-auto gap-4 overflow-x-auto overflow-contain p-10 bg-background rounded-b-lg">
-        {/* {products.map((product) => (
-          <ProductCard
-            title={product.name}
-            body={product.description}
-          ></ProductCard>
-        ))} */}
+        {renderProduct()}
       </ul>
     </div>
   )
