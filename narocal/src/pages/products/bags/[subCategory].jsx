@@ -14,14 +14,6 @@ export default function BagsSubCategory(){
 
     const router = useRouter();
 
-    // const filterData = router.query.subCategory
-    // console.log("F: ", filterData);
-    // // const thisSubCategory = filterData[0]
-
-    // // const pathname = usePathname()
-    // const segments = router.pathname.split('/')
-    // const thisSubCategory = segments[3]
-
     let thisSubCategory = router.query.subCategory
     console.log("Q: ", router.query);
     console.log("My: ", thisSubCategory);
@@ -79,7 +71,7 @@ export default function BagsSubCategory(){
                     </div>
                     <h2 className='text-3xl font-bold text-center'>{strSubCategory}</h2>
                     <div className='flex flex-col justify-center'>
-                        <EventsSearch onFilter={findFilterHandler} brand={brandChoice} category="None" />
+                        <EventsSearch onFilter={findFilterHandler} brand={brandChoice}/>
                         <EventList items={filterProducts}/>
                     </div>
 
