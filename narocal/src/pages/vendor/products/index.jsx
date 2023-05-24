@@ -2,7 +2,7 @@ import Link from "next/link"
 import VendorNavBar from "@/components/vendors/VendorNavBar"
 import { useState, useEffect } from "react"
 import { supabase } from "lib/supabaseClient"
-import ProductCard from "@/components/ProductCard"
+import ProductCard from "@/components/ProductCardSupa"
 
 export default function VendorProduct() {
   const [email, setEmail] = useState("")
