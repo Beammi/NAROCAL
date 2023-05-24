@@ -84,7 +84,7 @@ export default function VendorProduct() {
       if (data == null) {
         console.log("pass")
       } else {
-        setProducts(data)
+        setProducts(data) // products ***
         setLen(Object.keys(data).length)
         // setProducts(JSON.parse(data))
         console.log("Products " + Object.keys(data).length)
