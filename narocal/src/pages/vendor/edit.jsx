@@ -117,17 +117,20 @@ export default function VendorEditProfile() {
     const { data, error } = await supabase
       .from("VendorProfile")
       .select()
-      .eq("id", userId)
+      .eq("userId", userId)
+    console.log(JSON.stringify(data))
+    console.log(error)
 
     if (JSON.stringify(data).length == 2) {
       const { dataUpSert, errorUpsert } = await supabase
         .from("VendorProfile")
-        .upsert([{ userId: userId, shpRate: shopping_rate }], { upsert: true })
+        .insert([{ userId: userId, shpRate: shopping_rate }], { upsert: true })
     } else {
       const { errorUpdate } = await supabase
         .from("VendorProfile")
         .update({ shpRate: shopping_rate, bio: bio })
         .eq("userId", userId)
+      
     }
   }
   async function signOut() {
