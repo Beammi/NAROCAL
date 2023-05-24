@@ -15,7 +15,7 @@ export default function CreateProduct() {
   const [email, setEmail] = useState("")
   const [authorId, setAuthorId] = useState(null)
   const [userId, setUserId] = useState(null)
-  const [price,setPrice] = useState(null)
+  const [price, setPrice] = useState(null)
 
   function convertStringFormatt(word) {
     if (word == "" || word == null) {
@@ -46,13 +46,13 @@ export default function CreateProduct() {
 
       console.log(email)
 
-      if (error){
-        console.log("Error"+ error)
+      if (error) {
+        console.log("Error" + error)
       }
 
       if (data.length != 0) {
         setUserId(JSON.stringify(data[0].id, null, 2))
-        console.log("user id "+userId)
+        console.log("user id " + userId)
         if (data[0].id == null) {
           setUserId("")
         }
@@ -68,19 +68,15 @@ export default function CreateProduct() {
 
       if (error) {
         console.log("Error in vendor profile" + JSON.stringify(error))
-      }
-      else if (data[0] == null){
+      } else if (data[0] == null) {
         console.log("pass")
-
-      }
-      else {
+      } else {
         setAuthorId(JSON.stringify(data[0].id))
-        console.log("vendor id "+authorId)
+        console.log("vendor id " + authorId)
         if (data[0].id == null) {
           setUserId("")
         }
       }
-      
     }
     getUserEmail()
     getUserId()
@@ -98,14 +94,12 @@ export default function CreateProduct() {
         country: country,
         authorId: authorId,
         price: price,
-
       },
     ])
 
-    if (error){
+    if (error) {
       console.log("Error in insert product")
-    }
-    else{
+    } else {
       alert("Product creates successfully!")
     }
   }
