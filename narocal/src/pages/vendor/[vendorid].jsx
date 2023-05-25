@@ -8,7 +8,6 @@ import { useState, useEffect } from "react"
 import { supabase } from "lib/supabaseClient"
 export const revalidate = 60
 
-
 export default function VendorProfile() {
   const router = useRouter()
   console.log(router.query.vendorid)
@@ -94,15 +93,17 @@ export default function VendorProfile() {
         setShoppingRate(JSON.stringify(data[0].shpRate))
         setBio(convertStringFormatt(JSON.stringify(data[0].bio)))
         setLanguage(convertStringFormatt(JSON.stringify(data[0].language)))
-        setVendorId(JSON.stringify(data[0].id,null,2))
+        setVendorId(JSON.stringify(data[0].id, null, 2))
         // setUserId(JSON.stringify(data[0].id,null,2))
         if (data[0].bio == null) {
           setBio("")
         }
       }
     }
-    async function insertChat(){
-      
+    async function insertChat() {
+      const { data, error } = await supabase
+        .from("Chat")
+        .insert([{ vendor: vendorId, customer: userId }])
     }
 
     getUserEmail()
@@ -110,9 +111,8 @@ export default function VendorProfile() {
     getVendorProfile()
   }, [email, userId])
 
-  const clickChat = () =>{
-
-    router.push("/chat/"+vendorId)
+  const clickChat = () => {
+    router.push("/chat/" + vendorId)
   }
 
   return (
@@ -193,7 +193,12 @@ export default function VendorProfile() {
             ></P>
           </div>
           <div className="flex md:flex-row space-x-2 p-4">
-            <input type="button" value="Chat" className="btn btn-outline btn-secondary" onClick={clickChat}/>
+            <input
+              type="button"
+              value="Chat"
+              className="btn btn-outline btn-secondary"
+              onClick={clickChat}
+            />
           </div>
         </div>
       </div>
