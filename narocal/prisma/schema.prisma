@@ -127,8 +127,8 @@ model Payment{
 
 model Chat{
   id      Int @id @default(autoincrement())
-  vendor  String
-  customer  String
+  vendor  Int
+  customer  Int
   messages  Message[]
   @@schema("public")
 }
