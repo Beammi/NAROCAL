@@ -22,13 +22,13 @@ export default function Chat() {
   const [len, setLen] = useState(0)
 
   useEffect(() => {
-    async function getChatsAccordingToVendor() {
+    async function getChatsAccordingToCustomer() {
       let slug = router.query
-      console.log("Vendor id" + slug.chatid)
+      console.log("Customer id" + slug.chatid)
       let { data: Chat, error } = await supabase
         .from("Chat")
         .select("*")
-        .eq("vendor", slug.chatid)
+        .eq("customer", slug.chatid)
       if (error) {
         console.log("Error in Chat" + JSON.stringify(error))
       }
@@ -36,7 +36,9 @@ export default function Chat() {
         console.log("no chat yet")
       } else {
         setChats(Chat)
+        console.log(JSON.stringify(Chat))
         setLen(Object.keys(Chat).length)
+        console.log("len"+len)
 
       }
     }
@@ -44,8 +46,8 @@ export default function Chat() {
     // getUserEmail()
     // getPublicUser()
     // getVendorProfile()
-    getChatsAccordingToVendor()
-  }, [router])
+    getChatsAccordingToCustomer()
+  }, [router,len])
   const renderChat = () => {
     let li = []
 
@@ -55,13 +57,14 @@ export default function Chat() {
 
     else{
         let slug = router.query.chatid
-        // slug = slug + "/" + 
+        
         for (let i = 0; i < len; i++) {
-            console.log("render pass")
+            console.log("render pass" + JSON.stringify(chats[i].vendor))
+            slug = slug + "/" + JSON.stringify(chats[i].vendor)
             li.push(
                 <ChatChannel
-                receiver={chats[i].receiver}
-                link={router.query.chatid}></ChatChannel>
+                receiver={JSON.stringify(chats[i].vendor)}
+                channel={slug}></ChatChannel>
               
             )
           }
@@ -73,8 +76,9 @@ export default function Chat() {
     <div>
       <VendorNavBar></VendorNavBar>
       <div className="divide-y-2">
-        <p>Chat {router.query.chatid}</p>
+        {/* <p>Chat {router.query.chatid}</p> */}
         {renderChat()}
+        
         
       </div>
     </div>

@@ -1,7 +1,7 @@
 import VendorNavBar from "@/components/vendors/VendorNavBar"
 import Image from "next/image"
 import P from "@/components/text/P"
-import ProductCard from "@/components/ProductCard"
+import ProductCard from "@/components/ProductCardSupa"
 import ProfileVendorMock from "../../pages/assets/vendor_profile_mock.png"
 import { useRouter } from "next/router"
 import { useState, useEffect } from "react"
@@ -15,14 +15,16 @@ export default function VendorProfile() {
   const [loading, setLoading] = useState(true)
   const [email, setEmail] = useState("")
   const [address, setAddress] = useState(null)
-  const [firstname, setFirstName] = useState(null)
+  const [firstname, setFirstName] = useState("")
   const [lastname, setLastName] = useState(null)
   const [userId, setUserId] = useState(null)
   const [shopping_rate, setShoppingRate] = useState(0)
   const [bio, setBio] = useState(null)
   const [language, setLanguage] = useState(null)
   const [vendorId, setVendorId] = useState(null)
-
+  const [products, setProducts] = useState([])
+  const [len, setLen] = useState(0)
+  const [cusId, setCusId] = useState(null)
   function convertStringFormatt(word) {
     if (word == "" || word == null) {
       return ""
@@ -47,7 +49,6 @@ export default function VendorProfile() {
         console.log("from get user email" + email)
       }
     }
-
     async function getPublicUser() {
       console.log("email: " + email)
       const { data, error } = await supabase
@@ -60,31 +61,67 @@ export default function VendorProfile() {
       }
 
       if (data.length != 0) {
-        setAddress(convertStringFormatt(JSON.stringify(data[0].address)))
-        setFirstName(convertStringFormatt(JSON.stringify(data[0].firstname)))
-        setLastName(convertStringFormatt(JSON.stringify(data[0].lastname)))
         setUserId(JSON.stringify(data[0].id, null, 2))
-        console.log("user id " + lastname)
-        if (data[0].firstname == null) {
-          setFirstName("")
-        }
-        if (data[0].lastname == null) {
-          setLastName("")
-        }
-        if (data[0].address == null) {
-          setAddress("")
-        }
         if (data[0].id == null) {
           setUserId("")
         }
       }
     }
 
-    async function getVendorProfile() {
+    async function getCustomerId() {
+      const { data, error } = await supabase
+        .from("CustomerProfile")
+        .select()
+        .eq("userId", userId)
+      if (error) {
+        console.log("Error in customer id")
+      } else if (data == null) {
+        console.log("Customer id pass")
+      } else {
+        setCusId(JSON.stringify(data[0].id, null, 2))
+      }
+    }
+    async function getVendorName() {
+      let slug = router.query
+
+      console.log("email: " + email)
       const { data, error } = await supabase
         .from("VendorProfile")
         .select()
-        .eq("userId", userId)
+        .eq("id", slug.vendorid)
+
+      if (error) {
+        console.log("Error" + error)
+      }
+
+      if (data != null) {
+        setVendorId(JSON.stringify(data[0].userId, null, 2))
+        const { data: User, error } = await supabase
+          .from("User")
+          .select()
+          .eq("id", vendorId)
+
+        if (User == null) {
+          console.log("pass")
+        } else {
+          // console.log(JSON.stringify(User[0].firstname))
+
+          setFirstName(JSON.stringify(User[0].firstname))
+          console.log("firstname " +firstname)
+          if (data[0].firstname == null) {
+            setFirstName("")
+          }
+        }
+      }
+    }
+
+    async function getVendorProfile() {
+      let slug = router.query
+
+      const { data, error } = await supabase
+        .from("VendorProfile")
+        .select()
+        .eq("userId", slug.vendorid)
       if (error) {
         console.log("Error Vendor Profile:" + error)
       } else if (data[0] == null) {
@@ -94,27 +131,115 @@ export default function VendorProfile() {
         setBio(convertStringFormatt(JSON.stringify(data[0].bio)))
         setLanguage(convertStringFormatt(JSON.stringify(data[0].language)))
         setVendorId(JSON.stringify(data[0].id, null, 2))
-        // setUserId(JSON.stringify(data[0].id,null,2))
         if (data[0].bio == null) {
           setBio("")
         }
       }
     }
-    async function insertChat() {
+
+    // async function isExisted() {
+    //   let slug = router.query
+    //   console.log("check " + userId + vendorId)
+    //   const { data, error } = await supabase
+    //     .from("Chat")
+    //     .select()
+    //     .eq("customer", cusId)
+    //     .eq("vendor", slug.vendor)
+    //   if (data == null) {
+    //     insertChat()
+    //     console.log("null" + data)
+    //   } else if (error) {
+    //     console.log(error)
+    //   } else {
+    //     console.log(JSON.stringify(data))
+
+    //     router.push("/chat")
+    //   }
+    // }
+    // async function insertChat() {
+    //   let slug = router.query
+    //   console.log("check " + cusId + vendorId)
+
+    //   const { data, error } = await supabase
+    //     .from("Chat")
+    //     .upsert([{ vendor: slug.vendorid, customer: cusId }])
+    //   if (error) {
+    //     console.log("error in insert chat")
+    //   }
+    // }
+    async function getProducts() {
+      let slug = router.query
       const { data, error } = await supabase
-        .from("Chat")
-        .insert([{ vendor: vendorId, customer: userId }])
+        .from("Product")
+        .select()
+        .eq("authorId", slug.vendorid)
+      // setProducts(data)
+      if (data == null) {
+        console.log("pass")
+      } else {
+        setProducts(data) // products ***
+        setLen(Object.keys(data).length)
+        // setProducts(JSON.parse(data))
+        console.log("Products " + Object.keys(data).length)
+      }
+
+      if (error) {
+        console.log(JSON.stringify(error))
+      }
     }
 
     getUserEmail()
     getPublicUser()
+    getVendorName()
     getVendorProfile()
-  }, [email, userId])
+    // isExisted()
+    getProducts()
+    getCustomerId()
+  }, [email, userId, vendorId, cusId])
 
-  const clickChat = () => {
-    router.push("/chat/" + vendorId)
+  const insertChat = async () =>{
+    let slug = router.query
+      console.log("check " + cusId + vendorId)
+
+      const { data, error } = await supabase
+        .from("Chat")
+        .upsert([{ vendor: slug.vendorid, customer: cusId }])
+      if (error) {
+        console.log("error in insert chat")
+      }
   }
+  const clickChat = async () => {
+    let slug = router.query
+    console.log("check " + userId + vendorId)
+    const { data, error } = await supabase
+      .from("Chat")
+      .select()
+      .eq("vendor", vendorId)
+    if (data == null) {
+      insertChat()
+      console.log("null" + data)
+      router.push("/chat/"+cusId)
 
+    } else if (error) {
+      console.log(error)
+    } else {
+      console.log(JSON.stringify(data))
+      router.push("/chat/"+cusId)
+    }
+  }
+  const renderProduct = () => {
+    let li = []
+    for (let i = 0; i < len; i++) {
+      console.log("render pass")
+      li.push(
+        <ProductCard
+          title={products[i].name}
+          body={products[i].description}
+        ></ProductCard>
+      )
+    }
+    return li
+  }
   return (
     <div>
       <VendorNavBar></VendorNavBar>
@@ -126,34 +251,6 @@ export default function VendorProfile() {
           <div>
             <h3 className="md:text-2xl xs:text-xs p-2">{router.query.name}</h3>
           </div>
-          <div className="rating rating-md p-2">
-            <input
-              type="radio"
-              name="rating"
-              className="mask mask-star-2 bg-secondary"
-            />
-            <input
-              type="radio"
-              name="rating"
-              className="mask mask-star-2 bg-secondary"
-            />
-            <input
-              type="radio"
-              name="rating"
-              className="mask mask-star-2 bg-secondary"
-            />
-            <input
-              type="radio"
-              name="rating"
-              className="mask mask-star-2 bg-secondary"
-            />
-            <input
-              type="radio"
-              name="rating"
-              className="mask mask-star-2 bg-secondary"
-            />
-          </div>
-
           <div className="flex md:flex-row space-x-2 p-4">
             <P
               text="Language:"
@@ -174,7 +271,7 @@ export default function VendorProfile() {
               style="font-light md:text-sm sm:text-xs p-2"
             ></P>
             <P
-              text="300 Baht"
+              text={shopping_rate}
               style="font-light bg-secondary text-white rounded-xl md:text-sm sm:text-xs p-2"
             ></P>
           </div>
@@ -210,42 +307,7 @@ export default function VendorProfile() {
               Product
             </h3>
             <div className="grid md:grid-cols-4 sm:grid-flow-row sm:auto-rows-auto gap-4 overflow-x-auto overflow-contain h-[50vh] p-10 bg-background rounded-b-lg space-x-4 pt-4">
-              <ProductCard
-                title="Gucci"
-                body="Jackie 1961 small shoulder bag"
-              ></ProductCard>
-              <ProductCard
-                title="TOM FORD"
-                body="straight-leg jeans"
-              ></ProductCard>
-              <ProductCard
-                title="Dolce & Gabbana"
-                body="ripped-detail straight-leg jeans"
-              ></ProductCard>
-              <ProductCard
-                title="Diesel"
-                body="straight-leg 1995 jeans"
-              ></ProductCard>
-              <ProductCard
-                title="Nike"
-                body="Dunk Low Retro Panda"
-              ></ProductCard>
-              <ProductCard
-                title="Prada"
-                body="Double Match cotton shirt"
-              ></ProductCard>
-              <ProductCard
-                title="Balenciaga"
-                body="logo-print zip-up jacket"
-              ></ProductCard>
-              <ProductCard
-                title="Maison Margiela"
-                body="double-breasted tailored coat"
-              ></ProductCard>
-              <ProductCard
-                title="Kenzo"
-                body="logo-print belt bag"
-              ></ProductCard>
+              {renderProduct()}
             </div>
           </div>
         </div>
