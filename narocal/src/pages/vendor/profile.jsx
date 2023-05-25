@@ -6,7 +6,7 @@ import { supabase } from "lib/supabaseClient"
 import Auth from "@/components/Authtentication/auth"
 import VendorEditProfile from "./edit"
 
-export default function VendorEditTemp() {
+export default function VendorProfileMainPage() {
   const router = useRouter()
   const [loading, setLoading] = useState(true)
   const [username, setUsername] = useState(null)
