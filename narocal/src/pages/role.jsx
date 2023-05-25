@@ -101,7 +101,7 @@ export default function Role() {
     }
 
     if (role.toUpperCase() == "VENDOR") {
-      router.push("/vendor")
+      router.push("/vendor/profile")
     }
     if (role.toUpperCase() == "CUSTOMER") {
       router.push("customer")
