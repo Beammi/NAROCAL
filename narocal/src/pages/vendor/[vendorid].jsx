@@ -6,29 +6,114 @@ import ProfileVendorMock from "../../pages/assets/vendor_profile_mock.png"
 import { useRouter } from "next/router"
 import { useState, useEffect } from "react"
 import { supabase } from "lib/supabaseClient"
+export const revalidate = 60
 
 export default function VendorProfile() {
   const router = useRouter()
-  const [role, setRole] = useState(null)
-  const [session, setSession] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [user, setUser] = useState()
   console.log(router.query.vendorid)
-  useEffect(() => {
-    async function getProfile() {
-      setLoading(true)
-      supabase.auth.getSession().then(({ data: { session } }) => {
-        setSession(session)
-      })
 
-      supabase.auth.onAuthStateChange((_event, session) => {
-        setSession(session)
-      })
-      var user = session
-      setLoading(false)
+  const [loading, setLoading] = useState(true)
+  const [email, setEmail] = useState("")
+  const [address, setAddress] = useState(null)
+  const [firstname, setFirstName] = useState(null)
+  const [lastname, setLastName] = useState(null)
+  const [userId, setUserId] = useState(null)
+  const [shopping_rate, setShoppingRate] = useState(0)
+  const [bio, setBio] = useState(null)
+  const [language, setLanguage] = useState(null)
+  const [vendorId, setVendorId] = useState(null)
+
+  function convertStringFormatt(word) {
+    if (word == "" || word == null) {
+      return ""
+    } else {
+      let temp = word.slice(1, word.length - 1)
+      return temp
     }
-    getProfile()
-  })
+  }
+
+  useEffect(() => {
+    async function getUserEmail() {
+      const { data } = await supabase.auth.getUser()
+
+      let userJson = data.user
+
+      // alert(JSON.stringify(data.user.email))
+      // alert(JSON.stringify(userJson.email))
+
+      if (userJson != null) {
+        // let temp = convertStringFormatt(JSON.stringify(userJson.email))
+        setEmail(convertStringFormatt(JSON.stringify(userJson.email, null, 2)))
+        console.log("from get user email" + email)
+      }
+    }
+
+    async function getPublicUser() {
+      console.log("email: " + email)
+      const { data, error } = await supabase
+        .from("User")
+        .select()
+        .eq("email", email)
+
+      if (error) {
+        console.log("Error" + error)
+      }
+
+      if (data.length != 0) {
+        setAddress(convertStringFormatt(JSON.stringify(data[0].address)))
+        setFirstName(convertStringFormatt(JSON.stringify(data[0].firstname)))
+        setLastName(convertStringFormatt(JSON.stringify(data[0].lastname)))
+        setUserId(JSON.stringify(data[0].id, null, 2))
+        console.log("user id " + lastname)
+        if (data[0].firstname == null) {
+          setFirstName("")
+        }
+        if (data[0].lastname == null) {
+          setLastName("")
+        }
+        if (data[0].address == null) {
+          setAddress("")
+        }
+        if (data[0].id == null) {
+          setUserId("")
+        }
+      }
+    }
+
+    async function getVendorProfile() {
+      const { data, error } = await supabase
+        .from("VendorProfile")
+        .select()
+        .eq("userId", userId)
+      if (error) {
+        console.log("Error Vendor Profile:" + error)
+      } else if (data[0] == null) {
+        console.log("pass")
+      } else {
+        setShoppingRate(JSON.stringify(data[0].shpRate))
+        setBio(convertStringFormatt(JSON.stringify(data[0].bio)))
+        setLanguage(convertStringFormatt(JSON.stringify(data[0].language)))
+        setVendorId(JSON.stringify(data[0].id, null, 2))
+        // setUserId(JSON.stringify(data[0].id,null,2))
+        if (data[0].bio == null) {
+          setBio("")
+        }
+      }
+    }
+    async function insertChat() {
+      const { data, error } = await supabase
+        .from("Chat")
+        .insert([{ vendor: vendorId, customer: userId }])
+    }
+
+    getUserEmail()
+    getPublicUser()
+    getVendorProfile()
+  }, [email, userId])
+
+  const clickChat = () => {
+    router.push("/chat/" + vendorId)
+  }
 
   return (
     <div>
@@ -106,6 +191,14 @@ export default function VendorProfile() {
               text="1 Yen = 0.3 Baht"
               style="font-light bg-secondary text-white rounded-xl md:text-sm sm:text-xs p-2"
             ></P>
+          </div>
+          <div className="flex md:flex-row space-x-2 p-4">
+            <input
+              type="button"
+              value="Chat"
+              className="btn btn-outline btn-secondary"
+              onClick={clickChat}
+            />
           </div>
         </div>
       </div>

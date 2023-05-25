@@ -1,46 +1,117 @@
-import Head from "next/head"
 import Image from "next/image"
-import { Inter } from "@next/font/google"
-import styles from "@/styles/Home.module.css"
-import CustomerNavbar from "@/components/CustomerNavbar"
-import ProductCard from "@/components/ProductCard"
+import P from "@/components/text/P"
+import ProductCard from "@/components/ProductCardSupa"
+import ProfileVendorMock from "../../pages/assets/vendor_profile_mock.png"
+import Link from "next/link"
 import VendorCard from "@/components/vendors/VendorCard"
+import VendorList from "@/components/vendors/VendorList"
+import { useState, useEffect } from "react"
+import { supabase } from "lib/supabaseClient"
+import CustomerNavbar from "@/components/CustomerNavbar"
 import Hero from "@/components/Hero"
-const inter = Inter({ subsets: ["latin"] })
-import Link from 'next/link'
 
+export const revalidate = 60
 
 export default function CustomerHome() {
-  const vendors = [
-    {
-      id: "1",
-      name: "Chris Evan",
-      language: "English",
-      exchange_rate: "1 pound = 40 Baht",
-      shopping_rate: "300 Baht",
-    },
-    {
-      id: "2",
-      name: "Yoko Ano",
-      language: "English",
-      exchange_rate: "1 pound = 40 Baht",
-      shopping_rate: "300 Baht",
-    },
-    {
-      id: "3",
-      name: "Yoshida",
-      language: "English",
-      exchange_rate: "1 pound = 40 Baht",
-      shopping_rate: "300 Baht",
-    },
-    {
-      id: "4",
-      name: "Miyawaki Sakura",
-      language: "English",
-      exchange_rate: "1 pound = 40 Baht",
-      shopping_rate: "300 Baht",
-    },
-  ]
+  const [vendors, setVendors] = useState([])
+  const [len, setLen] = useState(0)
+  const [vendorName, setVendorName] = useState(null)
+  const [products, setProducts] = useState([])
+  const [productLen,setProductLen] = useState(0)
+
+  useEffect(() => {
+    async function getAllVendors() {
+      let { data: VendorProfile, error } = await supabase
+        .from("VendorProfile")
+        .select("*")
+
+      if (error) {
+        console.log("Error Vendor Profile:" + error)
+      } else if (VendorProfile == null) {
+        console.log("can't find vendors")
+      } else {
+        setVendors(VendorProfile)
+        setLen(Object.keys(VendorProfile).length)
+        // console.log(JSON.stringify(vendors[0].userId))
+        console.log(JSON.stringify(vendors[0]))
+      }
+    }
+    async function matchVendors() {
+      let { data: VendorsName, error } = await supabase.from("VendorProfile")
+        .select(`
+              userId,
+                  User (
+                      firstname,lastname
+              )
+          `)
+      if (error) {
+        console.log("Error in match vendors" + JSON.stringify(error))
+      } else {
+        // console.log(JSON.stringify(VendorsName[0].User.firstname))
+        console.log(JSON.stringify(VendorsName))
+        setVendorName(VendorsName)
+      }
+    }
+
+    async function getProducts() {
+      let { data, error } = await supabase.from("Product").select("*")
+      console.log(JSON.stringify(data))
+
+      if (error) {
+        console.log(JSON.stringify(error))
+      } else if (data == null) {
+        console.log("Product null")
+      } else {
+        setProducts(data) // products ***
+        console.log(JSON.stringify(products[0]))
+        setProductLen(Object.keys(data).length)
+      }
+    }
+
+    getAllVendors()
+    matchVendors()
+    getProducts()
+  }, [len,productLen])
+
+  const renderVendors = () => {
+    let li = []
+    if(vendorName==null){
+        console.log("pass")
+        return
+    }else{
+        for (let i = 0; i < len; i++) {
+            console.log("render pass")
+            // let j = vendors[i].userId
+            li.push(
+              <VendorCard
+                name={vendorName[i].User.firstname}
+                language={"English"}
+                exchange_rate={"1 Dollar = 35 Baht"}
+                shopping_rate={vendors[i].shpRate}
+                link={vendors[i].id}
+              ></VendorCard>
+            )
+          }
+          return li
+    }
+  }
+  const renderProduct = () => {
+    if (products == null) {
+      console.log("Products null")
+    } else {
+      let li = []
+      for (let i = 0; i < productLen; i++) {
+        console.log("render pass")
+        li.push(
+          <ProductCard
+            title={products[i].name}
+            body={products[i].description}
+          ></ProductCard>
+        )
+      }
+      return li
+    }
+  }
   return (
     <>
       <CustomerNavbar></CustomerNavbar>
@@ -57,8 +128,8 @@ export default function CustomerHome() {
           </div>
           <Hero></Hero>
 
-          <div className="grid grid-cols-5 gap-4 bg-background overflow-y-auto h-[50vh] overscroll-contain">
-            <ProductCard
+          <div className="grid md:grid-cols-5 sm:grid-cols-1 gap-4 bg-background overflow-y-auto h-[50vh] overscroll-contain">
+            {/* <ProductCard
               title="Gucci"
               body="Jackie 1961 small shoulder bag"
             ></ProductCard>
@@ -87,17 +158,13 @@ export default function CustomerHome() {
               title="Maison Margiela"
               body="double-breasted tailored coat"
             ></ProductCard>
-            <ProductCard title="Kenzo" body="logo-print belt bag"></ProductCard>
+            <ProductCard title="Kenzo" body="logo-print belt bag"></ProductCard> */}
+            {renderProduct()}
           </div>
 
-          {/* <div className='flex justify-center flex-col bg-secondary gap-5 overflow-y-auto p-10'> */}
-          <div className='grid grid-cols-1 gap-5 bg-secondary overflow-y-auto h-[80vh] p-8 overscroll-contain'>
-            <VendorCard name='Chris Evans' language='English' exchange_rate='1 pound = 40 Baht' shopping_rate='300 Baht' link="1"></VendorCard>
-            <VendorCard name='Yoko Ano' language='Thai, Japanese' exchange_rate='1 Yen = 0.28 Baht' shopping_rate='350 Baht' link="2"></VendorCard>
-            <VendorCard name='Yoshida' language='Japanese' exchange_rate='1 Yen = 0.3 Baht' shopping_rate='400 Baht' link="3"></VendorCard>
-            <VendorCard name='Miyawaki Sakura' language='Japanese' exchange_rate='1 Yen = 0.3 Baht' shopping_rate='400 Baht' link="4"></VendorCard>
+          <div className="grid grid-cols-1 gap-5 bg-secondary overflow-y-auto h-[80vh] p-8 overscroll-contain">
+            {renderVendors()}
           </div>
-
         </div>
       </div>
     </>
