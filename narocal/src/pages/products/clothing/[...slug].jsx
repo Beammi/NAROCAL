@@ -30,7 +30,7 @@ export default function ProductFilter(){
     }
     else  if(thisPage == "clothing"){ // big category at Navbar
         categoryChoice.push("shirts", "dress", "blouse")
-        filteredCategory = filteredSelectCategory
+        filteredCategory = ["shirts", "dress", "blouse"]
         filteredSelectCategory = "None"
     }
 
