@@ -97,14 +97,16 @@ model Shipment{
 model Product {
   id          Int       @id @default(autoincrement())
   name        String
-  description String
+  description String?
   brand       String
   category    String
   subCategory String?
+  city        String?
   country     String
+  image       String?
   price       Float
   code        String?
-  model       String?
+  model       String
   color       String?
   gender      String?
   createdAt   DateTime  @default(now())
