@@ -137,11 +137,11 @@ model Chat{
 
 model Message{
   id        Int      @id @default(autoincrement())
-  sender    String
-  receiver  String
+  sender    Int
+  receiver  Int
   text      String
   timestamp DateTime @default(now())
   chat      Chat @relation(fields: [chatId],references: [id])
-  chatId    Int  @unique
+  chatId    Int  
   @@schema("public")
 }
