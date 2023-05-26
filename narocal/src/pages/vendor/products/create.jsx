@@ -12,6 +12,14 @@ export default function CreateProduct() {
   const [brand, setBrand] = useState("")
   const [category, setCategory] = useState("")
   const [country, setCountry] = useState("")
+  const [city, setCity] = useState("")
+  const [model, setModel] = useState("")
+  const [subCategory,setSubCategory] = useState("")
+  const [code,setCode] = useState("")
+  const [color,setColor] = useState("")
+  const [gender,setGender] = useState("")
+  const [image,setImage] = useState("")
+
   const [email, setEmail] = useState("")
   const [authorId, setAuthorId] = useState(null)
   const [userId, setUserId] = useState(null)
@@ -94,6 +102,14 @@ export default function CreateProduct() {
         country: country,
         authorId: authorId,
         price: price,
+        subCategory:subCategory,
+        city: city,
+        model: model,
+        gender: gender,
+        code: code,
+        color: color,
+        image: image,
+
       },
     ])
 
@@ -122,6 +138,20 @@ export default function CreateProduct() {
             />
           </div>
           <div className="md:place-self-center">
+            <Label label="Model" labelId="model"></Label>
+          </div>
+          <div>
+            <input
+              id="model"
+              className="input input-secondary w-full max-w-xs"
+              type="text"
+              required
+              value={model || ""}
+              onChange={(e) => setModel(e.target.value)}
+            />
+          </div>
+          
+          <div className="md:place-self-center">
             <Label label="Description" labelId="description"></Label>
           </div>
           <div>
@@ -129,7 +159,7 @@ export default function CreateProduct() {
               id="description"
               className="input input-secondary w-full max-w-xs"
               type="text"
-              required
+              
               value={description || ""}
               onChange={(e) => setDescription(e.target.value)}
             />
@@ -161,6 +191,18 @@ export default function CreateProduct() {
             />
           </div>
           <div className="md:place-self-center">
+            <Label label="Sub-Category" labelId="subCategory"></Label>
+          </div>
+          <div>
+            <input
+              id="subCategory"
+              className="input input-secondary w-full max-w-xs"
+              type="text"
+              value={subCategory || ""}
+              onChange={(e) => setSubCategory(e.target.value)}
+            />
+          </div>
+          <div className="md:place-self-center">
             <Label label="Country" labelId="country"></Label>
           </div>
           <div>
@@ -171,6 +213,54 @@ export default function CreateProduct() {
               required
               value={country || ""}
               onChange={(e) => setCountry(e.target.value)}
+            />
+          </div>
+          <div className="md:place-self-center">
+            <Label label="City" labelId="city"></Label>
+          </div>
+          <div>
+            <input
+              id="city"
+              className="input input-secondary w-full max-w-xs"
+              type="text"
+              value={city || ""}
+              onChange={(e) => setCity(e.target.value)}
+            />
+          </div>
+          <div className="md:place-self-center">
+            <Label label="Color" labelId="color"></Label>
+          </div>
+          <div>
+            <input
+              id="color"
+              className="input input-secondary w-full max-w-xs"
+              type="text"
+              value={color || ""}
+              onChange={(e) => setColor(e.target.value)}
+            />
+          </div>
+          <div className="md:place-self-center">
+            <Label label="Gender" labelId="gender"></Label>
+          </div>
+          <div>
+            <input
+              id="gender"
+              className="input input-secondary w-full max-w-xs"
+              type="text"
+              value={gender || ""}
+              onChange={(e) => setGender(e.target.value)}
+            />
+          </div>
+          <div className="md:place-self-center">
+            <Label label="Code" labelId="code"></Label>
+          </div>
+          <div>
+            <input
+              id="code"
+              className="input input-secondary w-full max-w-xs"
+              type="text"
+              value={code || ""}
+              onChange={(e) => setCode(e.target.value)}
             />
           </div>
           <div className="md:place-self-center">
