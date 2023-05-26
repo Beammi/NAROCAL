@@ -79,11 +79,12 @@ export default function VendorProduct() {
       const { data, error } = await supabase
         .from("Product")
         .select()
-        .eq("authorId", authorId)
+        .eq("authorId", authorId) // based on current vendor
       // setProducts(data)
       if (data == null) {
         console.log("pass")
       } else {
+        console.log("Product data raw: ", data);
         setProducts(data) // products ***
         setLen(Object.keys(data).length)
         // setProducts(JSON.parse(data))
@@ -101,15 +102,27 @@ export default function VendorProduct() {
   }, [email, userId, authorId, len])
   const renderProduct = () => {
     let li = []
-    for (let i = 0; i < len; i++) {
-      console.log("render pass")
+    // for (let i = 0; i < len; i++) {
+    //   console.log("render pass")
+    //   li.push(
+    //     <ProductCard
+    //       link={products[i].id}
+    //       title={products[i].name}
+    //       body={products[i].description}
+    //     ></ProductCard>
+    //   )
+    // }
+
+    products.map((p) => {
       li.push(
-        <ProductCard
-          title={products[i].name}
-          body={products[i].description}
-        ></ProductCard>
+        <ProductCard 
+          link={p.id}
+          title={p.name}
+          body={p.description}>
+        </ProductCard>
       )
-    }
+    })
+
     return li
   }
   return (
