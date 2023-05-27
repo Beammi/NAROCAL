@@ -11,8 +11,6 @@ export default function Login(){
   const user = useUser()
   const [data, setData] = useState()
   useEffect(() => {
-
-    
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session)
     })

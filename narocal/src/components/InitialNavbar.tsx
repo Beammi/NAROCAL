@@ -1,4 +1,5 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
+import { supabase } from 'lib/supabaseClient'
 import Link from "next/link"
 import {useRouter} from "next/router"
 interface INavBar {
@@ -10,8 +11,38 @@ interface INavBar {
 function InitialNavbar(props){
 
     const [query, setQuery] = useState("")
-    const router = useRouter()
+    const [session, setSession] = useState(null)
+    const [nav1,setNav1] = useState("")
+    const [nav2,setNav2] = useState("")
+    const [nav1Link,setNav1Link] = useState("")
+    const [nav2Link,setNav2Link] = useState("")
 
+
+    const router = useRouter()
+    useEffect(()=>{
+        supabase.auth.getSession().then(({ data: { session } }) => {
+            setSession(session)
+          })
+      
+          supabase.auth.onAuthStateChange((_event, session) => {
+            setSession(session)
+          })
+        function checkAuthentication(){
+            if(session){
+                setNav1("Chat")
+                setNav2("Profile")
+                setNav1Link("/chat/")
+                setNav2Link("/customer/profile")
+            }else if(!session){
+                setNav2("Log In")
+                setNav2Link("/login")
+                setNav1("")
+                setNav1Link("")
+            }
+        }
+        checkAuthentication()
+    },[])
+    
     function submitHandler(event){
         event.preventDefault()
         console.log("Our search keyword query: ", query);
@@ -22,6 +53,8 @@ function InitialNavbar(props){
         router.push(fullPath)
         
     }
+    
+    
 
     return(
         <div className="flex flex-col z-20 w-full fixed">
@@ -83,8 +116,8 @@ function InitialNavbar(props){
                 {/* <div className="flex-none"> */}
                 <div className="navbar-end">
                     <ul className="menu menu-horizontal px-3">
-                        <li><a className="text-alternative hover:bg-secondary" href="/login">Log in</a></li>
-                        <li><a className="text-alternative hover:bg-secondary" href="/role">Register</a></li>
+                        <li><a className="text-alternative hover:bg-secondary" href={nav1Link}>{nav1}</a></li>
+                        <li><a className="text-alternative hover:bg-secondary" href={nav2Link}>{nav2}</a></li>
                     </ul>
 
                 </div>

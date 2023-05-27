@@ -151,7 +151,7 @@ export default function Role() {
             </div>
             <div className="flex flex-row pt-4 items-stretch md:items-center sm:items-center">
               <button className="btn btn-secondary" onClick={handleSubmit}>
-                Finish
+                Confirm
               </button>
             </div>
 
