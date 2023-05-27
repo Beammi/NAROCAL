@@ -8,8 +8,13 @@ import Footer from "@/components/Footer"
 import ProductCard from "@/components/ProductCard"
 import VendorCard from "@/components/vendors/VendorCard"
 import Hero from "@/components/Hero"
-import {PRODUCTS} from "../../dummy-data"
-import EventList from '@/components/events/event-list'
+// import {PRODUCTS} from "../../dummy-data"
+// import EventList from '@/components/events/event-list'
+
+import EventList from '@/components/events/event-list-supa'
+import { useState, useEffect } from "react"
+import { supabase } from "lib/supabaseClient"
+
 const inter = Inter({ subsets: ["latin"] })
 // import Login from "./login"
 // import Account from "../components/account"
@@ -18,6 +23,8 @@ const inter = Inter({ subsets: ["latin"] })
 // import { GetServerSideProps } from 'next'
 
 export default function Home() {
+  const [products, setProducts] = useState([""])
+
   const vendors = [
     {
       id: "1",
@@ -48,13 +55,37 @@ export default function Home() {
       shopping_rate: "300 Baht",
     },
   ]
+
+  useEffect(() => {
+      async function loadData(){
+          const {data, error} = await supabase
+              .from('Product')
+              .select()
+
+              if(data == null){
+                  console.log("pass");
+              }else {
+                  setProducts(data)
+              }
+
+
+              if (error) {
+                  console.log(JSON.stringify(error))
+              }
+          
+
+      }
+      loadData()
+
+  })
+
   return (
     <>
       <InitialNavbar></InitialNavbar>
       <div className="flex flex-col justify-center bg-test pt-24 w-screen">
         <div className="flex flex-col gap-y-10 bg-background p-20 w-full">
           <Hero></Hero>
-          <EventList items={PRODUCTS}/>
+          <EventList items={products}/>
           
 
           {/* <div className='flex justify-center flex-col bg-secondary gap-5 overflow-y-auto p-10'> */}
