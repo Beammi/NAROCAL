@@ -77,7 +77,7 @@ export default function ProductPage() {
 
   return (
     <>
-      <div>
+      <div className="bg-secondary">
         <VendorNavBar></VendorNavBar>
         <form onSubmit={editProduct} className="form-widget">
           <div className="p-2 m-8 lg:m-20 lg:p-8 grid phone:gap-2 md:gap-6 md:grid-cols-2 phone:grid-cols-1 justify-items-stretch bg-background shadow-2xl rounded-2xl">
@@ -224,7 +224,7 @@ export default function ProductPage() {
                 value={productData.price || ""}
                 onChange={(e) => setProductData({...productData, price: e.target.value})}              />
             </div>
-            <div className="md:place-self-end">
+            <div className="md:place-self-end space-x-2">
               <button
                 className="btn btn-outline btn-secondary md:text-base phone:text-xs"
                 type="submit"
@@ -233,14 +233,16 @@ export default function ProductPage() {
               </button>
               
             </div>
-            {/* <button
+            <button id="delete"
                 className="btn btn-outline btn-secondary md:text-base phone:text-xs"
-                onClick={deleteProduct()}
+                onClick={deleteProduct}
               >
                 Delete
-              </button> */}
+              </button>
+            
           </div>
         </form>
+        
       </div>
     </>
   )
