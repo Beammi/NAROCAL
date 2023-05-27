@@ -10,13 +10,8 @@ import { supabase } from "lib/supabaseClient"
 
 export default function ProductPage(){
     const router = useRouter();
-    let picSize = 700;
-
-    // const prod = getProductByID({id: router.query.id});
 
     const [product, setProduct] = useState([""]);
-
-    // console.log("r: ", router.query);
 
     useEffect(() => {
         async function renderInformation(){
@@ -49,7 +44,7 @@ export default function ProductPage(){
                         <InitialNavbar></InitialNavbar>
                         <div className="flex flex-col justify-center gap-10">
                             <div className="flex flex-row justify-center pt-40">
-                                <Image className="mx-14" src={BlackShirt} alt="product pic temp" width={450} height={640}/>
+                                <Image className="mx-14" src={p.image} alt="PRODUCT PICTURE" width={450} height={640}/>
                                 <div className="flex flex-col w-2/5">
                                     <p className="text-xl font-bold">{p.brand}</p>
                                     <p className="text-lg">{p.model}</p>
