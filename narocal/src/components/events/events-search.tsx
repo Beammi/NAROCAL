@@ -1,7 +1,10 @@
 import Button from "../Button";
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { supabase } from "lib/supabaseClient"
 
-function EventsSearch(props) {
+export default function EventsSearch(props) {
+
+    // const {brand} = props;
 
     const brandInputRef = useRef();
     const categoryInputRef = useRef();
@@ -28,7 +31,9 @@ function EventsSearch(props) {
 
         props.onFilter(selectedBrand, selectedCategory, selectedPriceSort);
 
+        
     }
+    
     
 
     return  (
@@ -55,6 +60,31 @@ function EventsSearch(props) {
                         { props.brand.map((brand, index) => (
                             <option key={index} value={brand}>{brand}</option>
                         ))}
+
+                        {/* {(props.brand instanceof Array) && props.brand.map((brand, index) => (
+                            <option key={index} value={brand}>{brand}</option>
+                        ))} */}
+
+                        {/* {
+                            props.brand.then(product => {
+                                return product.map((brand, index) => (
+                                    <option key={index} value={brand}>{brand}</option>
+                                ))
+                            })
+                        } */}
+
+                        {/* { props.brand instanceof Promise ? (
+                            props.brand.then((product) => {
+                                return product.map((brand, index) => (
+                                    <option key={index} value={brand}>{brand}</option>
+                                ));
+                            })
+                        ) : (
+                            props.brand.map((brand, index) => (
+                                <option key={index} value={brand}>{brand}</option>
+                            ))
+                        )} */}
+                    
 
                     </select>
                 </div>}
@@ -85,5 +115,3 @@ function EventsSearch(props) {
         </ form>
     );
 }
-
-export default EventsSearch

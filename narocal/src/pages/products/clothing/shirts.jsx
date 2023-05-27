@@ -5,18 +5,19 @@ import InitialNavbar from '@/components/InitialNavbar'
 import Footer from '@/components/Footer'
 import VerticalFilter from '@/components/VerticalFilter'
 import EventsSearch from '@/components/events/events-search'
-import EventList from '@/components/events/event-list'
+// import EventList from '@/components/events/event-list'
+import EventList from '@/components/events/event-list-supa'
 import { useRouter } from 'next/router'
 import {PRODUCTS, getFilteredProducts, getProductByCategory} from "../../../../dummy-data"
+import { supabase } from "lib/supabaseClient"
+import { useEffect, useState } from 'react'
 
 export default function Shirts(){
 
     const router = useRouter();
-
-    // function findSearchHandler(searchKey){
-    //     const fullPath = `/products/${searchKey}`
-    //     router.push(fullPath)
-    // }
+    const [products, setProducts] = useState([""])
+    let brandChoice = []
+    let categoryChoice = ["short sleeve", "long sleeve"]
 
     function findFilterHandler(brand, category, sortPrice){
         const fullPath = `/products/clothing/shirts/${brand}/${category}/${sortPrice}`;
@@ -25,31 +26,35 @@ export default function Shirts(){
         router.push(fullPath)
     }
 
-    console.log("Path name: ", router.pathname);
+    useEffect(() => {
+        async function loadData(){
+            const {data, error} = await supabase
+                .from('Product')
+                .select()
+                .eq('category', 'shirts')
+                // .in('category', ['Albania', 'Algeria'])
 
-    const filterProducts = getFilteredProducts({
-        brand: "None",
-        category: "shirts",
-        subCategory: "None",
-        price: "None",
-        searchKeywords: "None"
-    });
+            if(data == null){
+                console.log("pass");
+            }else {
+                setProducts(data)
+            }
 
-    let brandChoice = []
-    let categoryChoice = ["short sleeve", "long sleeve"]
+            if (error) {
+                console.log(JSON.stringify(error))
+            }
 
-    filterProducts.map((p) => {
+        }
 
-        // push brand choice
+        loadData()
+    })
+
+    products.map((p) => {
         if(!brandChoice.includes(p.brand)){
             brandChoice.push(p.brand)
         }
     })
 
-    // const brand = getProductByCategory({category: "shirts"})
-    // brand.map((p) => {
-    //     brandChoice.push(p.brand)
-    // })
 
     return (
         <>
@@ -67,7 +72,8 @@ export default function Shirts(){
                     <h2 className='text-3xl font-bold text-center'>Shirts</h2>
                     <div className='flex flex-col justify-center'>
                         <EventsSearch onFilter={findFilterHandler} brand={brandChoice} category={categoryChoice}/>
-                        <EventList items={filterProducts}/>
+                        {/* <EventList items={filterProducts}/> */}
+                        <EventList items={products}/>
                     </div>
 
                 </div>

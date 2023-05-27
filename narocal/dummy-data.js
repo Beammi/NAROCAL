@@ -33,7 +33,7 @@ export const PRODUCTS = [
     model: "logo-print hoodie",
     category: "hoodie",
     subCategory: "long sleeve",
-    country: ["Paris", "Seoul"],
+    country: "Spain",
     color: "gray",
     gender: "unisex",
     price: 39000
@@ -44,7 +44,7 @@ export const PRODUCTS = [
     model: "Coco Mademoiselle Eau de Parfum",
     category: "fragrance",
     subCategory: "eau de parfum",
-    country: ["Paris", "Tokyo"],
+    country: "France",
     gender: "women",
     price: 7500
   },
@@ -54,7 +54,7 @@ export const PRODUCTS = [
     model: "floral-print silk dress",
     category: "dress",
     subCategory: "sleeveless",
-    country: ["Florence", "Milan"],
+    country: "France",
     color: "pink",
     gender: "women",
     price: 18000
@@ -65,7 +65,7 @@ export const PRODUCTS = [
     model: "Monogram Envelope Chain Wallet",
     category: "bags",
     subCategory: "wallet",
-    country: ["Paris"],
+    country: "Paris",
     color: "black",
     gender: "women",
     price: 18000
@@ -76,7 +76,7 @@ export const PRODUCTS = [
     model: "Shalimar Eau de Parfum",
     category: "fragrance",
     subCategory: "eau de parfum",
-    country: ["Paris"],
+    country: "Paris",
     gender: "women",
     price: 7000
   },
@@ -86,7 +86,7 @@ export const PRODUCTS = [
     model: "Peekaboo X-Lite Regular Bag",
     category: "bags",
     subCategory: "handbag",
-    country: ["Rome", "Seoul"],
+    country: "Rome",
     color: "brown",
     gender: "women",
     price: 48000
@@ -97,7 +97,7 @@ export const PRODUCTS = [
     model: "GG Marmont Small Matelassé Shoulder Bag",
     category: "bags",
     subCategory: "shoulder bag",
-    country: ["Florence", "Milan"],
+    country: "Milan",
     color: "black",
     gender: "women",
     price: 74000
@@ -108,7 +108,7 @@ export const PRODUCTS = [
     model: "Classic Flap Bag",
     category: "bags",
     subCategory: "shoulder bag",
-    country: ["Paris"],
+    country: "Paris",
     color: "beige",
     gender: "women",
     price: 69500
@@ -152,7 +152,7 @@ export const PRODUCTS = [
     model: "Black Orchid Parfum",
     category: "fragrance",
     subCategory: "parfum",
-    country: ["New York"],
+    country: "New York",
     gender: "unisex",
     price: 11000
   },
@@ -205,7 +205,7 @@ export const PRODUCTS = [
     model: "Neverfull MM Monogram Tote Bag",
     category: "bags",
     subCategory: "tote bag",
-    country: ["Paris"],
+    country: "Paris",
     color: "brown",
     gender: "women",
     price: 44000
@@ -362,7 +362,7 @@ export const PRODUCTS = [
     model: "long-sleeved cotton shirt",
     category: "shirts",
     subCategory: "long sleeve",
-    country: ["Florence", "Milan"],
+    country: "Florence",
     color: "white",
     gender: "men",
     price: 18000
@@ -489,36 +489,6 @@ export function searchProducts(productFilter) {
 
   const searchKeywordsArray = searchKeywords.toLowerCase().split(" ");
   console.log("S: ", searchKeywordsArray);
-
-  // let filteredSearchProducts = PRODUCTS.filter((product) => {
-  //     return searchKeywordsArray.some((key) => {
-  //       (key === "" || product.brand.toLowerCase().includes(key.toLowerCase()))
-  //       || (product.model.toLowerCase().includes(key.toLowerCase()))
-  //       || (product.category.toLowerCase().includes(key.toLowerCase()))
-  //       || (product.subCategory.toLowerCase().includes(key.toLowerCase()))
-  //       || (product.color?.toLowerCase().includes(key.toLowerCase()));
-  //   })
-  // })
-
-
-  // let filteredSearchProducts = PRODUCTS.filter((product) => {
-  //   return (searchKeywords === "" || product.brand.toLowerCase().includes(searchKeywords.toLowerCase()))
-  //     || (product.model.toLowerCase().includes(searchKeywords.toLowerCase()))
-  //     || (product.category.toLowerCase().includes(searchKeywords.toLowerCase()))
-  //     || (product.subCategory.toLowerCase().includes(searchKeywords.toLowerCase()))
-  //     || (product.color?.toLowerCase().includes(searchKeywords.toLowerCase()));
-  // });
-
-  // let filteredSearchProducts = PRODUCTS.filter((product) => {
-  //     return searchKeywordsArray.every((key) => {
-  //       (product.brand.toLowerCase().includes(key.toLowerCase()))
-  //       || (product.model.toLowerCase().includes(key.toLowerCase()))
-  //       || (product.category.toLowerCase().includes(key.toLowerCase()))
-  //       || (product.subCategory.toLowerCase().includes(key.toLowerCase()))
-  //       || (product.color?.toLowerCase().includes(key.toLowerCase()));
-  //   })
-  // })
-
   
 
   // correct but I input wrong it give answer

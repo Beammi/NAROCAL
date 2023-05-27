@@ -1,12 +1,27 @@
 import { useRouter } from "next/router"
-import {getFilteredProducts} from "../../../../dummy-data"
-import EventList from '@/components/events/event-list'
+// import {getFilteredProducts} from "../../../../dummy-data"
+import {getFilteredProducts} from "../../../pages/api/product-api.ts"
+// import EventList from '@/components/events/event-list'
+import EventList from '@/components/events/event-list-supa'
 import InitialNavbar from '@/components/InitialNavbar'
 import EventsSearch from '@/components/events/events-search'
 import Footer from '@/components/Footer'
+import { useEffect, useState } from 'react'
+import { supabase } from "lib/supabaseClient"
 
 export default function ProductFilter(){
+
     const router = useRouter();
+    const [products, setProducts] = useState([""])
+    const [brandOption, setBrandOption] = useState([""])
+    // const [clothing, setClothing] = useState([""])
+    // const [shirts, setShirts] = useState([""])
+
+    // const [thisPage, setThisPage] = useState("")
+    // const [filteredBrand, setFilteredBrand] = useState("")
+    // const [filteredSelectCategory, setFilteredSelectCategory] = useState("")
+    // const [filteredSortPrice, setFilteredSortPrice] = useState("")
+    // const [filteredCategory, setFilteredCategory] = useState("")
 
     const filterData = router.query.slug
 
@@ -29,12 +44,16 @@ export default function ProductFilter(){
         filteredCategory = "shirts" // <- thisPage == filteredCategory
     }
     else  if(thisPage == "clothing"){ // big category at Navbar
-        categoryChoice.push("shirts", "dress", "blouse")
-        filteredCategory = ["shirts", "dress", "blouse"]
-        filteredSelectCategory = "None"
+        categoryChoice.push("shirts", "dress", "blouse", "hoodie")
+        filteredCategory = ["shirts", "dress", "blouse", "hoodie"]
+        // filteredSelectCategory = "None"
+        if(filteredSelectCategory != "None"){ // if selected
+            filteredCategory = filteredSelectCategory
+            filteredSelectCategory = "None"
+        }
     }
 
-    console.log("1: ", filteredBrand, ", 2: ", filteredCategory, ", 3: ", filteredSelectCategory, ", 4: ", filteredSortPrice);
+    // console.log("1: ", filteredBrand, ", 2: ", filteredCategory, ", 3: ", filteredSelectCategory, ", 4: ", filteredSortPrice);
 
     const filterProducts = getFilteredProducts({
         brand: filteredBrand,
@@ -44,11 +63,53 @@ export default function ProductFilter(){
         searchKeywords: "None"
     });
 
-    filterProducts.map((p) => {
-        // push brand choice
+    products.map((p) => {
         if(!brandChoice.includes(p.brand)){
             brandChoice.push(p.brand)
+            // console.log(brandChoice);
         }
+    })
+
+    useEffect(() => {
+        async function loadData(){
+            if(thisPage == "shirts"){
+                const {data, error} = await supabase
+                .from('Product')
+                .select()
+                .eq('category', thisPage)
+
+                if(data == null){
+                    console.log("pass");
+                }else {
+                    setProducts(data)
+                }
+
+
+                if (error) {
+                    console.log(JSON.stringify(error))
+                }
+            }
+            else if(thisPage = "clothing"){
+                const {data, error} = await supabase
+                    .from('Product')
+                    .select()
+                    .in('category', ["shirts", "dress", "blouse", "hoodie"])
+
+                if(data == null){
+                    console.log("pass");
+                }else {
+                    setProducts(data)
+                }
+
+
+                if (error) {
+                    console.log(JSON.stringify(error))
+                }
+            }
+
+        }
+        loadData()
+
     })
 
 
@@ -79,7 +140,7 @@ export default function ProductFilter(){
                         <h3 className='text-xl text-center mt-2'>
                             filtered by { filteredBrand == "None" ? "" : (filteredBrand + " ")} 
                             {/* {Array.isArray(filteredCategory) ? "" : (filteredCategory + " ")} */}
-                            { (Array.isArray(filteredCategory) || filteredSelectCategory == "None") ? "" : ((filteredCategory === thisPage) ? filteredSelectCategory : filteredCategory)}
+                            { (Array.isArray(filteredCategory) || filteredSelectCategory == "None") ? filteredCategory : ((filteredCategory === thisPage) ? filteredSelectCategory: filteredCategory)}
                             { filteredSortPrice == "None" ? "" : (filteredSortPrice + " ")}
                         </h3>
                     </div>
@@ -89,6 +150,26 @@ export default function ProductFilter(){
                         {((!filterProducts || filterProducts.length === 0) ? 
                             <p className="text-center text-2xl font-semibold">No products for these chosen filters</p>
                             : <EventList items={filterProducts}/>)}
+
+                        {/* {filterProducts.then(
+                            (data) => {
+                                // if (data.length === 0) {
+                                //     return (
+                                //         <p className="text-center text-2xl font-semibold">
+                                //         No products for these chosen filters
+                                //         </p>
+                                //     );
+                                // } else {
+                                // // return <EventList items={data} />;
+                                // }
+                                console.log("D: ", data);
+                            }
+                        ).catch((error) => {
+                            console.error('Error occurred while fetching filtered products:', error);
+                            // Handle the error gracefully
+                            return null; // Or display an error message
+                        })} */}
+
                     </div>
 
                 </div>

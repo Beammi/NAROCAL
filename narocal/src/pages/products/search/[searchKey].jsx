@@ -1,12 +1,17 @@
 import { useRouter } from "next/router"
-import {searchProducts} from "../../../../dummy-data"
-import EventList from '@/components/events/event-list'
+// import {searchProducts} from "../../../../dummy-data"
+import {searchProducts} from "../../api/product-api.ts"
+// import EventList from '@/components/events/event-list'
+import EventList from '@/components/events/event-list-supa'
 import InitialNavbar from '@/components/InitialNavbar'
 import EventsSearch from '@/components/events/events-search'
 import Footer from '@/components/Footer'
+import { supabase } from "lib/supabaseClient"
+import { useState, useEffect } from "react"
 
 export default function Search(){
     const router = useRouter();
+    const [products, setProducts] = useState([""])
 
     const searchKey = router.query.searchKey
 
@@ -23,20 +28,56 @@ export default function Search(){
     // make select option based on the search result items
     let brandChoice = []
     let categoryChoice = []
-    filterProducts.map((p) => {
+    // filterProducts.map((p) => {
 
-        // push brand choice
+    //     // push brand choice
+    //     if(!brandChoice.includes(p.brand)){
+    //         brandChoice.push(p.brand)
+    //     }
+
+    //     // push category choice (push only subCategory)
+    //     if (p.category === "shirts" && !categoryChoice.includes("short sleeve")){ // to check not push duplicate
+    //         categoryChoice.push("short sleeve", "long sleeve")
+    //     }
+    //     else if(p.category === "fragrance" && !categoryChoice.includes("parfum")){
+    //         categoryChoice.push("eau de toilette", "eau de parfum", "parfum")
+    //     }
+    // })
+
+    products.map((p) => {
         if(!brandChoice.includes(p.brand)){
             brandChoice.push(p.brand)
         }
+        if(!categoryChoice.includes(p.subCategory)){
+            categoryChoice.push(p.subCategory)
+        }
+    })
 
-        // push category choice (push only subCategory)
-        if (p.category === "shirts" && !categoryChoice.includes("short sleeve")){ // to check not push duplicate
-            categoryChoice.push("short sleeve", "long sleeve")
+    useEffect(() => {
+        async function loadData(){
+            const {data, error} = await supabase
+                .from('Product')
+                .select()
+                .textSearch('name', strSearchKey, {
+                    type: 'websearch',
+                    config: 'english',
+                })
+
+                if(data == null){
+                    console.log("pass");
+                }else {
+                    setProducts(data)
+                }
+
+
+                if (error) {
+                    console.log(JSON.stringify(error))
+                }
+            
+
         }
-        else if(p.category === "fragrance" && !categoryChoice.includes("parfum")){
-            categoryChoice.push("eau de toilette", "eau de parfum", "parfum")
-        }
+        loadData()
+
     })
 
     function findFilterHandler(brand, category, sortPrice){
@@ -45,19 +86,6 @@ export default function Search(){
 
         router.push(fullPath)
     }
-
-
-    // if(!filterProducts || filterProducts.length === 0){
-    //     return <p className="text-center text-lg">No products for these chosen filters</p>;
-    // }
-
-    // console.log("O: ", filterProducts);
-
-    // function findFilterHandler(brand, category, sortPrice){
-    //     const fullPath = `/products/clothing/${thisCategoryPage}/${brand}/${category}/${sortPrice}`;
-
-    //     router.push(fullPath)
-    // }
 
     return (
         <>
