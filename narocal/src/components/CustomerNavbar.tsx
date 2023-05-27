@@ -81,7 +81,8 @@ function CustomerNavbar() {
         if (data && data.length > 0) {
           // Check if 'data[0]' has a property 'id'
           if ("id" in data[0]) {
-            setCusId(data[0].id)
+            setCusId(userId)
+            console.log("Customer id"+cusId)
           } else {
             console.log("Error: 'id' does not exist in 'data[0]'")
             // You can set some default value here, if needed
@@ -125,12 +126,7 @@ function CustomerNavbar() {
             </a>
           </li>
           <li>
-            <a
-              className="text-alternative hover:bg-secondary"
-              href="/customer/profile"
-            >
-              Profile
-            </a>
+           <Link className="text-alternative hover:bg-secondary" href="/customer/profile">Profile</Link>
           </li>
         </ul>
       </div>
