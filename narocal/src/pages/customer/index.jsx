@@ -1,10 +1,8 @@
 import Image from "next/image"
-import P from "@/components/text/P"
 import ProductCard from "@/components/ProductCardSupa"
 import ProfileVendorMock from "../../pages/assets/vendor_profile_mock.png"
 import Link from "next/link"
 import VendorCard from "@/components/vendors/VendorCard"
-import VendorList from "@/components/vendors/VendorList"
 import { useState, useEffect } from "react"
 import { supabase } from "lib/supabaseClient"
 import CustomerNavbar from "@/components/CustomerNavbar"
@@ -129,36 +127,6 @@ export default function CustomerHome() {
           <Hero></Hero>
 
           <div className="grid md:grid-cols-5 sm:grid-cols-1 gap-4 bg-background overflow-y-auto h-[50vh] overscroll-contain">
-            {/* <ProductCard
-              title="Gucci"
-              body="Jackie 1961 small shoulder bag"
-            ></ProductCard>
-            <ProductCard
-              title="TOM FORD"
-              body="straight-leg jeans"
-            ></ProductCard>
-            <ProductCard
-              title="Dolce & Gabbana"
-              body="ripped-detail straight-leg jeans"
-            ></ProductCard>
-            <ProductCard
-              title="Diesel"
-              body="straight-leg 1995 jeans"
-            ></ProductCard>
-            <ProductCard title="Nike" body="Dunk Low Retro Panda"></ProductCard>
-            <ProductCard
-              title="Prada"
-              body="Double Match cotton shirt"
-            ></ProductCard>
-            <ProductCard
-              title="Balenciaga"
-              body="logo-print zip-up jacket"
-            ></ProductCard>
-            <ProductCard
-              title="Maison Margiela"
-              body="double-breasted tailored coat"
-            ></ProductCard>
-            <ProductCard title="Kenzo" body="logo-print belt bag"></ProductCard> */}
             {renderProduct()}
           </div>
 
