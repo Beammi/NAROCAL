@@ -7,6 +7,7 @@ import { useState, useEffect } from "react"
 import { supabase } from "lib/supabaseClient"
 import CustomerNavbar from "@/components/CustomerNavbar"
 import Hero from "@/components/Hero"
+import InitialNavbar from "@/components/InitialNavbar"
 
 export const revalidate = 60
 
@@ -15,7 +16,8 @@ export default function CustomerHome() {
   const [len, setLen] = useState(0)
   const [vendorName, setVendorName] = useState(null)
   const [products, setProducts] = useState([])
-  const [productLen,setProductLen] = useState(0)
+  const [productLen, setProductLen] = useState(0)
+  const [session, setSession] = useState(null)
 
   useEffect(() => {
     async function getAllVendors() {
@@ -69,28 +71,28 @@ export default function CustomerHome() {
     getAllVendors()
     matchVendors()
     getProducts()
-  }, [len,productLen])
+  }, [len, productLen])
 
   const renderVendors = () => {
     let li = []
-    if(vendorName==null){
-        console.log("pass")
-        return
-    }else{
-        for (let i = 0; i < len; i++) {
-            console.log("render pass")
-            // let j = vendors[i].userId
-            li.push(
-              <VendorCard
-                name={vendorName[i].User.firstname}
-                language={"English"}
-                exchange_rate={"1 Dollar = 35 Baht"}
-                shopping_rate={vendors[i].shpRate}
-                link={vendors[i].id}
-              ></VendorCard>
-            )
-          }
-          return li
+    if (vendorName == null) {
+      console.log("pass")
+      return
+    } else {
+      for (let i = 0; i < len; i++) {
+        console.log("render pass")
+        // let j = vendors[i].userId
+        li.push(
+          <VendorCard
+            name={vendorName[i].User.firstname}
+            language={"English"}
+            exchange_rate={"1 Dollar = 35 Baht"}
+            shopping_rate={vendors[i].shpRate}
+            link={vendors[i].id}
+          ></VendorCard>
+        )
+      }
+      return li
     }
   }
   const renderProduct = () => {

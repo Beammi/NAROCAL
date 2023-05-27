@@ -3,6 +3,8 @@ import { useState, useEffect } from "react"
 import { supabase } from "lib/supabaseClient"
 import Label from "@/components/Label"
 import CustomerNavbar from "@/components/CustomerNavbar"
+import InitialNavbar from "@/components/InitialNavbar"
+
 
 export const revalidate = 60
 
@@ -28,6 +30,7 @@ export default function CustomerEdit(){
     }
   
     useEffect(() => {
+
       async function getUserEmail() {
         const { data } = await supabase.auth.getUser()
   
@@ -140,7 +143,7 @@ export default function CustomerEdit(){
       <div className="bg-secondary min-h-screen">
         <CustomerNavbar></CustomerNavbar>
         <form onSubmit={updateProfile} className="form-widget">
-          <div className="p-2 m-8 lg:m-20 lg:p-8 grid phone:gap-2 md:gap-6 md:grid-cols-2 phone:grid-cols-1 justify-items-stretch bg-background shadow-2xl rounded-2xl">
+          <div className="p-t m-8 lg:m-20 lg:p-8 grid phone:gap-2 md:gap-6 md:grid-cols-2 phone:grid-cols-1 justify-items-stretch bg-background shadow-2xl rounded-2xl">
             <div className="md:place-self-center">
               
               <Label label="Email" labelId="email"></Label>

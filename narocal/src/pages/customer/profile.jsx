@@ -3,6 +3,8 @@ import { useState, useEffect } from "react"
 import { supabase } from "lib/supabaseClient"
 import Link from "next/link"
 import CustomerNavbar from "@/components/CustomerNavbar"
+import InitialNavbar from "@/components/InitialNavbar"
+
 export default function CustomerProfile() {
   const router = useRouter()
   const [loading, setLoading] = useState(true)
@@ -29,7 +31,7 @@ export default function CustomerProfile() {
     <div>
       <CustomerNavbar></CustomerNavbar>
       <br />
-      <div className="p-6">
+      <div className="p-6 pt-24">
         <Link
           href="/customer/edit"
           className="hover:text-secondary md:text-lg sm:text-sm"
