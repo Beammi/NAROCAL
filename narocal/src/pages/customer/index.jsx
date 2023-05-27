@@ -104,8 +104,8 @@ export default function CustomerHome() {
         console.log("render pass")
         li.push(
           <ProductCard
-            title={products[i].name}
-            body={products[i].description}
+            title={products[i].brand}
+            body={products[i].model}
             link={products[i].id}
             authorId={products[i].authorId}
           ></ProductCard>
