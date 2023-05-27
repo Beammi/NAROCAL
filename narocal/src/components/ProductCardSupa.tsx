@@ -29,6 +29,18 @@ const ProductCardSupa: React.FunctionComponent<ProductCardSupa> = ({
     // const prod = getProductByID({id: link});
 
     const [product, setProduct] = useState([""]);
+    const [username, setUsername] = useState("")
+    const [vendor, setVendor] = useState(0)
+    // const [user, setUser] = useState("")
+
+    function convertStringFormatt(word) {
+      if (word == "" || word == null) {
+        return "";
+      } else {
+        let temp = word.slice(1, word.length - 1);
+        return temp;
+      }
+    }
 
     useEffect(() => {
         async function renderInformation(){
@@ -40,8 +52,63 @@ const ProductCardSupa: React.FunctionComponent<ProductCardSupa> = ({
             if(data == null){
                 console.log("pass");
             }else{
+
                 setProduct(data)
+                console.log("o: ", product[0].authorId);
                 
+
+                const {data: vendorData, error: errorVendor} = await supabase
+                    .from('VendorProfile')
+                    .select()
+                    .eq('id', product[0].authorId)
+
+                if (error) {
+                  console.log("Error" + error);
+                }
+
+                // if (vendorData == null) {
+                //   setVendor(vendorData[0].userId)
+                //   if (vendorData[0].userId == null) {
+                //     setVendor(0);
+                //   }
+                // }
+                console.log("v: ", JSON.stringify(vendorData));
+                
+
+                if (vendorData && vendorData.length > 0) {
+                    // Check if 'data[0]' has a property 'id'
+                    if ("userId" in vendorData[0]) {
+                        setVendor(JSON.stringify(vendorData[0].userId, null, 2))
+                        
+                        // console.log("Customer id"+cusId)
+                    } else {
+                        console.log("Error: 'id' does not exist in 'data[0]'")
+                        // You can set some default value here, if needed
+                    } 
+                    
+                }
+
+                
+                
+                const { data: userData, error: errorUser } = await supabase
+                    .from('User')
+                    .select()
+                    .eq('id', vendor)
+
+                if (userData && userData.length > 0) {
+                    // Check if 'data[0]' has a property 'id'
+                    if ("firstname" in userData[0]) {
+                        setUsername(userData[0].firstname)
+                        // console.log("Customer id"+cusId)
+                    } else {
+                        console.log("Error: 'id' does not exist in 'data[0]'")
+                        // You can set some default value here, if needed
+                    } 
+                    
+                }
+
+                
+                                
             }
 
             if (error) {
@@ -49,12 +116,9 @@ const ProductCardSupa: React.FunctionComponent<ProductCardSupa> = ({
             }
             
         }
-        if(product.image != undefined){
-            console.log(product.image);
-        }
         
         renderInformation()
-    })
+    }, [])
 
 
     return (
@@ -72,19 +136,26 @@ const ProductCardSupa: React.FunctionComponent<ProductCardSupa> = ({
                         <p className="card-title sm:text-ellipsis sm:text-xs md:text-xl">
                         {title}
                         </p>
-                        <div className="badge badge-secondary sm:text-ellipsis sm:text-xs">NEW</div>
+                        {/* <div className="badge badge-secondary sm:text-ellipsis sm:text-xs">NEW</div> */}
                         <p className="sm:text-ellipsis sm:text-xs md:text-sm ">{body}</p>
-                        <div className="card-actions justify-start">
+                        <div className="card-actions flex justify-end">
+                            
                             { product.map((p) => {
                                 if(p.price != null){
-                                    return <div className="badge badge-outline sm:text-ellipsis sm:text-xs md:text-sm">{p.price}฿</div>
+                                    return (
+                                        <div>
+                                            <label>{username}</label>
+                                            <div className="badge badge-outline sm:text-ellipsis sm:text-xs md:text-sm">{p.price.toLocaleString()}฿</div>                                            
+                                        </div>
+                                        
+                                        )
                                 }                        
                             })}        
                         </div>
-                        <div className="card-actions justify-end">
+                        {/* <div className="card-actions justify-end">
                             <div className="badge badge-outline sm:text-ellipsis sm:text-xs md:text-sm">Fashion</div>
                             <div className="badge badge-outline sm:text-ellipsis sm:text-xs md:text-sm">Products</div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </Link>
