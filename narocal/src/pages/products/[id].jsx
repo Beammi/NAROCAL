@@ -7,6 +7,7 @@ import ProductCard from "@/components/ProductCard";
 import { getProductByID } from "../../../dummy-data";
 import { useEffect, useState } from "react";
 import { supabase } from "lib/supabaseClient";
+import EventList from "../../components/events/event-list-supa.tsx"
 
 export default function ProductPage() {
   const router = useRouter();
@@ -14,6 +15,7 @@ export default function ProductPage() {
   const [product, setProduct] = useState([""]);
   const [userId, setUserId] = useState(0)
   const [email, setEmail] = useState("")
+  const [recommend, setRecommend] = useState([])
 
   function convertStringFormatt(word) {
     if (word == "" || word == null) {
@@ -76,6 +78,27 @@ export default function ProductPage() {
       }
     }
 
+    async function loadRecommendProduct(){
+        const {data, error} = await supabase
+            .from('Product')
+            .select()
+            .eq('brand', product[0].brand)
+            .neq('id', product[0].id)
+            // .in('category', ['Albania', 'Algeria'])
+
+        if(data == null){
+            console.log("pass");
+        }else {
+            setRecommend(data)
+        }
+
+        if (error) {
+            console.log(JSON.stringify(error))
+        }
+
+    }
+    
+    loadRecommendProduct()
     renderInformation();
     getUserEmail();
     getPublicUser();
@@ -109,7 +132,7 @@ export default function ProductPage() {
     let vendorId = 0
 
     product.map((p) => {
-        vendorId = p.vendorId
+        vendorId = p.authorId
     })
 
     const { data, error } = await supabase
@@ -125,15 +148,26 @@ export default function ProductPage() {
       .eq("vendor", vendorId)
       .eq("customer", userId);
 
+    // if (chat == null || chat.length == 0) {
+    //   insertChat();
+    //   console.log("null" + chat);
+    //   router.push("/chat/" + userId);
+    // } else if (chatError) {
+    //   console.log(chatError);
+    // } else {
+    //   console.log(JSON.stringify(chat));
+    //   router.push("/chat/" + userId);
+    // }
+
     if (chat == null || chat.length == 0) {
-      insertChat();
-      console.log("null" + chat);
-      router.push("/chat/" + userId);
-    } else if (chatError) {
-      console.log(chatError);
+      insertChat()
+      console.log("null" + chat)
+      router.push("/chat/" + userId+"/"+vendorId)
+    } else if (error) {
+      console.log(error)
     } else {
-      console.log(JSON.stringify(chat));
-      router.push("/chat/" + userId);
+      console.log(JSON.stringify(chat))
+      router.push("/chat/" + userId+"/"+vendorId)
     }
   };
 
@@ -155,7 +189,7 @@ export default function ProductPage() {
                 <div className="flex flex-col w-2/5">
                   <p className="text-xl font-bold">{p.brand}</p>
                   <p className="text-lg">{p.model}</p>
-                  <p className="text-2xl py-10">{p.price}</p>
+                  <p className="text-2xl py-10">{p.price?.toLocaleString()}฿</p>
                   <select className="select w-full max-w-xs">
                     <option disabled selected>
                       Select size
@@ -170,8 +204,8 @@ export default function ProductPage() {
                   {/* <button className="btn btn-primary my-10 w-40" href="">CHAT</button> */}
                   <input
                     type="button"
-                    value="Chat"
-                    className="btn btn-outline btn-secondary"
+                    value="Contact Vendor"
+                    className="btn btn-primary my-10 w-40 hover:btn-secondary"
                     onClick={clickChat}
                   />
 
@@ -189,28 +223,13 @@ export default function ProductPage() {
                 </div>
               </div>
 
-              <div className="flex flex-col gap-2 justify-center">
+              <div className="flex flex-col gap-2 justify-center px-10 py-5">
                 <div className="divider text-center underline underline-offset-4 decoration-2">
                   Recommend Items
                 </div>
-                <div className="flex flex-row gap-5 w-full justify-center">
-                  <ProductCard
-                    title="Prada"
-                    body="Double Match cotton shirt"
-                  ></ProductCard>
-                  <ProductCard
-                    title="Louis Vuitton"
-                    body="Monogram Bandana shirt"
-                  ></ProductCard>
-                  <ProductCard
-                    title="Balenciaga"
-                    body="logo-print zip-up jacket"
-                  ></ProductCard>
-                  <ProductCard
-                    title="Maison Margiela"
-                    body="double-breasted tailored coat"
-                  ></ProductCard>
-                </div>
+                { (recommend.length == 0) ? (<h2>No recommend</h2>) : (<EventList items={recommend}/>)}
+                {/* <EventList items={recommend}/> */}
+                
               </div>
             </div>
           </div>
