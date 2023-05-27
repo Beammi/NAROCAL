@@ -115,14 +115,14 @@ function VendorNavbar() {
       </div>
       <div className="flex-none">
         <ul className="menu menu-horizontal px-3">
-          <li>
+          {/* <li>
             <a
               className="text-alternative hover:bg-secondary"
               href="/order/orderVendorSide"
             >
               Order
             </a>
-          </li>
+          </li> */}
           <li>
             <a className="text-alternative hover:bg-secondary" href={link}>
               Chat
