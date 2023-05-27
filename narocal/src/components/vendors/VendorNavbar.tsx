@@ -108,7 +108,7 @@ function VendorNavbar(){
             </div>
             <div className="flex-none">
                 <ul className="menu menu-horizontal px-3">
-                    <li><a className="text-alternative hover:bg-secondary" href="/">Order</a></li>
+                    <li><a className="text-alternative hover:bg-secondary" href="/order/orderVendorSide">Order</a></li>
                     <li><a className="text-alternative hover:bg-secondary" href={link}>Chat</a></li>
                     <li><a className="text-alternative hover:bg-secondary" href="/vendor/profile">Profile</a></li>
                 </ul>

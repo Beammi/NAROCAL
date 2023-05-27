@@ -116,7 +116,7 @@ function CustomerNavbar() {
       <div className="flex-none">
         <ul className="menu menu-horizontal px-3">
           <li>
-            <a className="text-alternative hover:bg-secondary" href="/">
+            <a className="text-alternative hover:bg-secondary" href="/order/orderCustomerSide">
               Order
             </a>
           </li>
