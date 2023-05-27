@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 import { supabase } from "lib/supabaseClient"
 import VendorNavBar from "@/components/vendors/VendorNavBar"
 import ChatChannel from "@/components/chat/ChatChannel"
+import CustomerNavbar from "@/components/CustomerNavbar"
 
 export const revalidate = 60
 
@@ -14,6 +15,7 @@ export default function Chat() {
   const [lenCus, setLenCus] = useState(0)
   const [lenVen, setLenVen] = useState(0)
   const [role, setRole] = useState("")
+  const [firstname,setFirstName] = useState("")
   function convertStringFormatt(word) {
     if (word == "" || word == null) {
       return ""
@@ -51,6 +53,7 @@ export default function Chat() {
         console.log("role:" + role)
       }
     }
+    
     async function getChatsAccordingToRole() {
       console.log("pass mai")
       if (role == "CUSTOMER") {
@@ -86,7 +89,7 @@ export default function Chat() {
           console.log("no chat yet")
         } else {
           setChats(Chat)
-          console.log(JSON.stringify(Chat))
+          console.log("Vendor chat "+JSON.stringify(Chat))
           setLenVen(Object.keys(Chat).length)
           // console.log("len" + len)
         }
@@ -97,7 +100,15 @@ export default function Chat() {
     getPublicUser()
   }, [email,role, router,lenCus, lenVen])
 
-  
+  async function getFirstname(id){
+    let { data: Name, error } = await supabase
+    .from("User")
+    .select()
+    .eq("id", id)
+    if(Name !=null){
+      setFirstName(JSON.stringify(Name[0].firstname))
+    }
+  }
 
   const renderChat = () => {
     let li = []
@@ -115,20 +126,43 @@ export default function Chat() {
       }
       for (let i = 0; i < temp; i++) {
         console.log("render pass" + JSON.stringify(chats[i].vendor))
-        slug = slug + "/" + JSON.stringify(chats[i].vendor)
-        li.push(
-          <ChatChannel
-            receiver={JSON.stringify(chats[i].vendor)}
-            channel={slug}
-          ></ChatChannel>
-        )
+        if(role=="VENDOR"){
+          slug = slug + "/" + JSON.stringify(chats[i].customer)
+          let name = getFirstname(JSON.stringify(chats[i].customer))
+          li.push(
+            <ChatChannel
+              receiver={JSON.stringify(chats[i].customer)}
+              channel={slug}
+            ></ChatChannel>
+          )
+        }
+        if(role=="CUSTOMER"){
+          slug = slug + "/" + JSON.stringify(chats[i].vendor)
+          let name = getFirstname(JSON.stringify(chats[i].vendor))
+
+          li.push(
+            <ChatChannel
+              receiver={JSON.stringify(chats[i].vendor)}
+              channel={slug}
+            ></ChatChannel>
+          )
+        }
+        
       }
       return li
     }
   }
+  const chooseNavBar = () => {
+    if (role == "CUSTOMER") {
+      return <CustomerNavbar />
+    }
+    if (role == "VENDOR") {
+      return <VendorNavBar />
+    }
+  }
   return (
     <div>
-      <VendorNavBar></VendorNavBar>
+      {chooseNavBar()}
       <div className="divide-y-2">
         {/* <p>Chat {router.query.chatid}</p> */}
         {renderChat()}
