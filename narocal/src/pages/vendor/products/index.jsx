@@ -3,6 +3,7 @@ import VendorNavBar from "@/components/vendors/VendorNavBar"
 import { useState, useEffect } from "react"
 import { supabase } from "lib/supabaseClient"
 import ProductCard from "@/components/ProductCardSupa"
+import EventList from "@/components/events/event-list-supa"
 
 export default function VendorProduct() {
   const [email, setEmail] = useState("")
@@ -101,29 +102,9 @@ export default function VendorProduct() {
     getProducts()
   }, [email, userId, authorId, len])
   const renderProduct = () => {
-    let li = []
-    // for (let i = 0; i < len; i++) {
-    //   console.log("render pass")
-    //   li.push(
-    //     <ProductCard
-    //       link={products[i].id}
-    //       title={products[i].name}
-    //       body={products[i].description}
-    //     ></ProductCard>
-    //   )
-    // }
 
-    products.map((p) => {
-      li.push(
-        <ProductCard 
-          link={p.id}
-          title={p.name}
-          body={p.description}>
-        </ProductCard>
-      )
-    })
-
-    return li
+    return <EventList items={products}/>
+    
   }
   return (
     <div>

@@ -3,6 +3,8 @@ import Link from "next/link"
 import P from "../components/text/P"
 import ProductPicTemp from "../pages/assets/product_pic_temp.png"
 import {getProductByID} from "../../dummy-data"
+import { useEffect, useState } from "react"
+import { supabase } from "lib/supabaseClient"
 
 
 interface ProductCardSupa {
@@ -12,6 +14,7 @@ interface ProductCardSupa {
   body?: string
   link: string
   price?: string
+  authorId?: string
 }
 
 const ProductCardSupa: React.FunctionComponent<ProductCardSupa> = ({
@@ -20,9 +23,10 @@ const ProductCardSupa: React.FunctionComponent<ProductCardSupa> = ({
   link,
   title,
   body,
+  authorId
 }) => {
 
-    const prod = getProductByID({id: link});
+    // const prod = getProductByID({id: link});
 
     return (
         <>

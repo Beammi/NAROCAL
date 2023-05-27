@@ -5,13 +5,19 @@ import InitialNavbar from '@/components/InitialNavbar'
 import Footer from '@/components/Footer'
 import VerticalFilter from '@/components/VerticalFilter'
 import EventsSearch from '@/components/events/events-search'
-import EventList from '@/components/events/event-list'
+// import EventList from '@/components/events/event-list'
+import EventList from '@/components/events/event-list-supa'
 import { useRouter } from 'next/router'
 import {PRODUCTS, getFilteredProducts} from "../../../../dummy-data"
+import { supabase } from "lib/supabaseClient"
+import { useEffect, useState } from 'react'
 
 export default function Clothing(){
 
     const router = useRouter()
+    const [products, setProducts] = useState([""])
+    let brandChoice = []
+    let categoryChoice = ["shirts", "dress", "blouse"]
 
     function findFilterHandler(brand, category, sortPrice){
         const fullPath = `/products/clothing/clothing/${brand}/${category}/${sortPrice}`;
@@ -27,14 +33,44 @@ export default function Clothing(){
         searchKeywords: "None"
     });
 
-    let brandChoice = []
-    let categoryChoice = ["shirts", "dress", "blouse"] // Clothing is static page
-    filterProducts.map((p) => {
+    // let brandChoice = []
+    // let categoryChoice = ["shirts", "dress", "blouse"] // Clothing is static page
+    // filterProducts.map((p) => {
 
-        // push brand choice
+    //     // push brand choice
+    //     if(!brandChoice.includes(p.brand)){
+    //         brandChoice.push(p.brand)
+    //     }
+    // })
+
+    products.map((p) => {
         if(!brandChoice.includes(p.brand)){
             brandChoice.push(p.brand)
+            // console.log(brandChoice);
         }
+    })
+
+    useEffect(() => {
+        async function loadData(){
+            const {data, error} = await supabase
+                .from('Product')
+                .select()
+                .in('category', ["shirts", "dress", "blouse", "hoodie"])
+
+            if(data == null){
+                console.log("pass");
+            }else {
+                setProducts(data)
+            }
+
+
+            if (error) {
+                console.log(JSON.stringify(error))
+            }
+
+        }
+        loadData()
+
     })
 
     return (
@@ -52,7 +88,7 @@ export default function Clothing(){
                     <h2 className='text-3xl font-bold text-center'>Clothing</h2>
                     <div className='flex flex-col justify-center'>
                         <EventsSearch onFilter={findFilterHandler} brand={brandChoice} category={categoryChoice}/>
-                        <EventList items={filterProducts}/>
+                        <EventList items={products}/>
                     </div>
 
                 </div>

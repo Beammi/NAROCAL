@@ -5,13 +5,19 @@ import InitialNavbar from '@/components/InitialNavbar'
 import Footer from '@/components/Footer'
 import VerticalFilter from '@/components/VerticalFilter'
 import EventsSearch from '@/components/events/events-search'
-import EventList from '@/components/events/event-list'
+// import EventList from '@/components/events/event-list'
+import EventList from '@/components/events/event-list-supa'
 import { useRouter } from 'next/router'
 import {PRODUCTS, getFilteredProducts, getProductByCategory} from "../../../../dummy-data"
+import { supabase } from "lib/supabaseClient"
+import { useEffect, useState } from 'react'
 
 export default function Shirts(){
 
     const router = useRouter();
+    const [products, setProducts] = useState([""])
+    let brandChoice = []
+    let categoryChoice = ["short sleeve", "long sleeve"]
 
     // function findSearchHandler(searchKey){
     //     const fullPath = `/products/${searchKey}`
@@ -25,26 +31,58 @@ export default function Shirts(){
         router.push(fullPath)
     }
 
-    console.log("Path name: ", router.pathname);
+    // console.log("Path name: ", router.pathname);
 
-    const filterProducts = getFilteredProducts({
-        brand: "None",
-        category: "shirts",
-        subCategory: "None",
-        price: "None",
-        searchKeywords: "None"
-    });
+    // const filterProducts = getFilteredProducts({
+    //     brand: "None",
+    //     category: "shirts",
+    //     subCategory: "None",
+    //     price: "None",
+    //     searchKeywords: "None"
+    // });
 
-    let brandChoice = []
-    let categoryChoice = ["short sleeve", "long sleeve"]
+    // let brandChoice = []
+    // let categoryChoice = ["short sleeve", "long sleeve"]
 
-    filterProducts.map((p) => {
+    // filterProducts.map((p) => {
 
-        // push brand choice
+    //     // push brand choice
+    //     if(!brandChoice.includes(p.brand)){
+    //         brandChoice.push(p.brand)
+    //     }
+    // })
+
+    useEffect(() => {
+        async function loadData(){
+            const {data, error} = await supabase
+                .from('Product')
+                .select()
+                .eq('category', 'shirts')
+                // .in('category', ['Albania', 'Algeria'])
+
+            if(data == null){
+                console.log("pass");
+            }else {
+                setProducts(data)
+            }
+
+            if (error) {
+                console.log(JSON.stringify(error))
+            }
+
+        }
+
+        loadData()
+    })
+
+    products.map((p) => {
         if(!brandChoice.includes(p.brand)){
             brandChoice.push(p.brand)
         }
     })
+
+    
+        // .textSearch("brand" , "")
 
     // const brand = getProductByCategory({category: "shirts"})
     // brand.map((p) => {
@@ -67,7 +105,8 @@ export default function Shirts(){
                     <h2 className='text-3xl font-bold text-center'>Shirts</h2>
                     <div className='flex flex-col justify-center'>
                         <EventsSearch onFilter={findFilterHandler} brand={brandChoice} category={categoryChoice}/>
-                        <EventList items={filterProducts}/>
+                        {/* <EventList items={filterProducts}/> */}
+                        <EventList items={products}/>
                     </div>
 
                 </div>
