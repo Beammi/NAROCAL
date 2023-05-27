@@ -4,6 +4,7 @@ import { supabase } from "lib/supabaseClient";
 import VendorNavBar from "@/components/vendors/VendorNavBar";
 import ChatChannel from "@/components/chat/ChatChannel";
 import CustomerNavbar from "@/components/CustomerNavbar";
+import Label from "@/components/Label"
 
 const useFetchUser = (setEmail, setRole) => {
   useEffect(() => {
@@ -79,6 +80,7 @@ export default function Chat() {
   return (
     <div>
       <Navbar />
+      <div className="p-6 md:text-lg phone:text-sm justify-self-center">Chat</div>
       <div className="divide-y-2">{renderChat}</div>
     </div>
   );
