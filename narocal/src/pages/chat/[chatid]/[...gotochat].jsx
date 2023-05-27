@@ -198,6 +198,7 @@ export default function ChatSpecific() {
             .eq("userId", slugs[0])
           if (error) {
             console.log(JSON.stringify(error))
+            alert("This is your PRODUCT!!!")
           } else {
             let { data: UserName, error } = await supabase
               .from("User")
@@ -210,8 +211,6 @@ export default function ChatSpecific() {
               setAnotherId(JSON.stringify(UserName[0].id))
 
               console.log("Another " + anotherUserName)
-            }if(error){
-              alert("This is your PRODUCT!!!")
             }
           }
         } else {
