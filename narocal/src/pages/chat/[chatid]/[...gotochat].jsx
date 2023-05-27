@@ -196,7 +196,7 @@ export default function ChatSpecific() {
             .from("VendorProfile")
             .select()
             .eq("userId", slugs[0])
-          if (error) {
+          if (error || Vendor[0]==null) {
             console.log(JSON.stringify(error))
             alert("This is your PRODUCT!!!")
           } else {
