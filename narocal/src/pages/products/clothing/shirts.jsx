@@ -19,38 +19,12 @@ export default function Shirts(){
     let brandChoice = []
     let categoryChoice = ["short sleeve", "long sleeve"]
 
-    // function findSearchHandler(searchKey){
-    //     const fullPath = `/products/${searchKey}`
-    //     router.push(fullPath)
-    // }
-
     function findFilterHandler(brand, category, sortPrice){
         const fullPath = `/products/clothing/shirts/${brand}/${category}/${sortPrice}`;
         // const fullPath = `/products/clothing/${brand}/${category}`;
 
         router.push(fullPath)
     }
-
-    // console.log("Path name: ", router.pathname);
-
-    // const filterProducts = getFilteredProducts({
-    //     brand: "None",
-    //     category: "shirts",
-    //     subCategory: "None",
-    //     price: "None",
-    //     searchKeywords: "None"
-    // });
-
-    // let brandChoice = []
-    // let categoryChoice = ["short sleeve", "long sleeve"]
-
-    // filterProducts.map((p) => {
-
-    //     // push brand choice
-    //     if(!brandChoice.includes(p.brand)){
-    //         brandChoice.push(p.brand)
-    //     }
-    // })
 
     useEffect(() => {
         async function loadData(){
@@ -81,13 +55,6 @@ export default function Shirts(){
         }
     })
 
-    
-        // .textSearch("brand" , "")
-
-    // const brand = getProductByCategory({category: "shirts"})
-    // brand.map((p) => {
-    //     brandChoice.push(p.brand)
-    // })
 
     return (
         <>

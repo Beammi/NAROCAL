@@ -489,36 +489,6 @@ export function searchProducts(productFilter) {
 
   const searchKeywordsArray = searchKeywords.toLowerCase().split(" ");
   console.log("S: ", searchKeywordsArray);
-
-  // let filteredSearchProducts = PRODUCTS.filter((product) => {
-  //     return searchKeywordsArray.some((key) => {
-  //       (key === "" || product.brand.toLowerCase().includes(key.toLowerCase()))
-  //       || (product.model.toLowerCase().includes(key.toLowerCase()))
-  //       || (product.category.toLowerCase().includes(key.toLowerCase()))
-  //       || (product.subCategory.toLowerCase().includes(key.toLowerCase()))
-  //       || (product.color?.toLowerCase().includes(key.toLowerCase()));
-  //   })
-  // })
-
-
-  // let filteredSearchProducts = PRODUCTS.filter((product) => {
-  //   return (searchKeywords === "" || product.brand.toLowerCase().includes(searchKeywords.toLowerCase()))
-  //     || (product.model.toLowerCase().includes(searchKeywords.toLowerCase()))
-  //     || (product.category.toLowerCase().includes(searchKeywords.toLowerCase()))
-  //     || (product.subCategory.toLowerCase().includes(searchKeywords.toLowerCase()))
-  //     || (product.color?.toLowerCase().includes(searchKeywords.toLowerCase()));
-  // });
-
-  // let filteredSearchProducts = PRODUCTS.filter((product) => {
-  //     return searchKeywordsArray.every((key) => {
-  //       (product.brand.toLowerCase().includes(key.toLowerCase()))
-  //       || (product.model.toLowerCase().includes(key.toLowerCase()))
-  //       || (product.category.toLowerCase().includes(key.toLowerCase()))
-  //       || (product.subCategory.toLowerCase().includes(key.toLowerCase()))
-  //       || (product.color?.toLowerCase().includes(key.toLowerCase()));
-  //   })
-  // })
-
   
 
   // correct but I input wrong it give answer

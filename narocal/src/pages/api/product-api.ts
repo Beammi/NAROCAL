@@ -42,3 +42,33 @@ export async function getFilteredProducts(productFilter) {
     return filteredProducts;
     
 }
+
+export async function searchProducts(productFilter) {
+    const { searchKeywords } = productFilter;
+
+    const searchKeywordsArray = searchKeywords.toLowerCase().split(" ");
+    console.log("S: ", searchKeywordsArray);
+
+    const {data, error} = await supabase
+        .from('Product')
+        .select()
+    
+    const PRODUCTS = data
+  
+
+    // correct but I input wrong it give answer
+    let filteredSearchProducts = PRODUCTS.filter((product) => {
+        return searchKeywordsArray.every((keyword) =>
+        product.brand.toLowerCase().includes(keyword) ||
+        product.model.toLowerCase().includes(keyword) ||
+        product.category.toLowerCase().includes(keyword) ||
+        product.subCategory.toLowerCase().includes(keyword) 
+        ) || searchKeywordsArray.every((keyword) =>
+        // product.category.toLowerCase().includes(keyword) ||
+        // product.subCategory.toLowerCase().includes(keyword) ||
+        (product.color && product.color.toLowerCase().includes(keyword))
+        );
+    });
+
+    return filteredSearchProducts;
+}
