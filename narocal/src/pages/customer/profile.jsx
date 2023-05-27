@@ -37,6 +37,14 @@ export default function CustomerProfile() {
           Edit Profile
         </Link>
       </div>
+      <div className="p-6">
+        <Link
+          href="/role"
+          className=" hover:text-secondary md:text-lg sm:text-sm"
+        >
+          Change Role
+        </Link>
+      </div>
 
       <div className="p-6">
         <button

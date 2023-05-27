@@ -52,6 +52,14 @@ export default function VendorProfileMainPage() {
           </Link>
         </div>
         <div className="p-6">
+          <Link
+            href="/role"
+            className=" hover:text-secondary md:text-lg sm:text-sm"
+          >
+            Change Role
+          </Link>
+        </div>
+        <div className="p-6">
           <button
             type="button"
             onClick={signOut}

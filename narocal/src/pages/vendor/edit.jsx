@@ -17,6 +17,13 @@ export default function VendorEditProfile() {
   const [userId, setUserId] = useState(null)
   const [shopping_rate, setShoppingRate] = useState(0)
   const [bio, setBio] = useState(null)
+  const [currency,setCurrency] = useState("")
+  const [yen,setYen] = useState(0)
+  const [yuan,setYuan] = useState(0)
+  const [dollar,setDollar] = useState(0)
+  const [euro,setEuro] = useState(0)
+  const [vendorId,setVendorId] = useState(0)
+  const [won,setWon] = useState(0)
   const [language, setLanguage] = useState(null)
 
   function convertStringFormatt(word) {
@@ -89,7 +96,7 @@ export default function VendorEditProfile() {
         setShoppingRate(JSON.stringify(data[0].shpRate))
         setBio(convertStringFormatt(JSON.stringify(data[0].bio)))
         setLanguage(convertStringFormatt(JSON.stringify(data[0].language)))
-        // setUserId(JSON.stringify(data[0].id,null,2))
+        setVendorId(JSON.stringify(data[0].id,null,2))
         if (data[0].bio == null) {
           setBio("")
         }
@@ -110,6 +117,26 @@ export default function VendorEditProfile() {
     if (error == null) {
       alert("Updated Complete")
       insertVendorProfile()
+      insertCurrency()
+    }
+  }
+  async function insertCurrency(){
+    const { data, error } = await supabase
+      .from("Currency")
+      .select()
+      .eq("vendorId", vendorId)
+    console.log(JSON.stringify(data))
+    console.log(error)
+    if (JSON.stringify(data).length == 2) {
+      const { dataUpSert, errorUpsert } = await supabase
+        .from("Currency")
+        .insert([{ vendorId: vendorId, rate: yen ,currency:"yen"}], { upsert: true })
+    } else {
+      const { errorUpdate } = await supabase
+        .from("Currency")
+        .update({ rate: yen, bio: bio ,currency:"yen"})
+        .eq("vendorId", vendorId)
+      
     }
   }
 
@@ -205,6 +232,30 @@ export default function VendorEditProfile() {
               type="number"
               value={shopping_rate || ""}
               onChange={(e) => setShoppingRate(e.target.value)}
+              className="input input-secondary w-full max-w-xs"
+            />
+          </div>
+          <div className="md:place-self-center">
+           <Label label="Yen" labelId="yen"></Label>
+          </div>
+          <div>
+            <input
+              id="yen"
+              type="number"
+              value={yen || ""}
+              onChange={(e) => setYen(e.target.value)}
+              className="input input-secondary w-full max-w-xs"
+            />
+          </div>
+          <div className="md:place-self-center">
+           <Label label="Dollar" labelId="dollar"></Label>
+          </div>
+          <div>
+            <input
+              id="dollar"
+              type="number"
+              value={dollar || ""}
+              onChange={(e) => setDollar(e.target.value)}
               className="input input-secondary w-full max-w-xs"
             />
           </div>

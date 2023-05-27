@@ -17,7 +17,7 @@ export default function VendorProfile() {
   const [address, setAddress] = useState(null)
   const [firstname, setFirstName] = useState("")
   const [lastname, setLastName] = useState(null)
-  const [userId, setUserId] = useState(null)
+  const [userId, setUserId] = useState(0)
   const [shopping_rate, setShoppingRate] = useState(0)
   const [bio, setBio] = useState(null)
   const [language, setLanguage] = useState(null)
@@ -25,6 +25,7 @@ export default function VendorProfile() {
   const [products, setProducts] = useState([])
   const [len, setLen] = useState(0)
   const [cusId, setCusId] = useState(null)
+  const [venRealId, setVenRealId] = useState(0)
   function convertStringFormatt(word) {
     if (word == "" || word == null) {
       return ""
@@ -55,6 +56,8 @@ export default function VendorProfile() {
         .from("User")
         .select()
         .eq("email", email)
+      // console.log("cus id" + JSON.stringify(data[0].id, null, 2))
+      console.log("cus id" + email)
 
       if (error) {
         console.log("Error" + error)
@@ -78,7 +81,12 @@ export default function VendorProfile() {
       } else if (data == null) {
         console.log("Customer id pass")
       } else {
-        setCusId(JSON.stringify(data[0].id, null, 2))
+        console.log("cus id" + JSON.stringify(data[0].id, null, 2))
+        const { data: Customer, error } = await supabase
+          .from("User")
+          .select()
+          .eq("id", data[0].id)
+        setCusId(JSON.stringify(Customer[0].id, null, 2))
       }
     }
     async function getVendorName() {
@@ -106,8 +114,8 @@ export default function VendorProfile() {
         } else {
           // console.log(JSON.stringify(User[0].firstname))
 
-          setFirstName(JSON.stringify(User[0].firstname))
-          console.log("firstname " +firstname)
+          // setFirstName(JSON.stringify(User[0].firstname))
+          console.log("firstname " + firstname)
           if (data[0].firstname == null) {
             setFirstName("")
           }
@@ -121,7 +129,7 @@ export default function VendorProfile() {
       const { data, error } = await supabase
         .from("VendorProfile")
         .select()
-        .eq("userId", slug.vendorid)
+        .eq("id", slug.vendorid)
       if (error) {
         console.log("Error Vendor Profile:" + error)
       } else if (data[0] == null) {
@@ -130,7 +138,18 @@ export default function VendorProfile() {
         setShoppingRate(JSON.stringify(data[0].shpRate))
         setBio(convertStringFormatt(JSON.stringify(data[0].bio)))
         setLanguage(convertStringFormatt(JSON.stringify(data[0].language)))
-        setVendorId(JSON.stringify(data[0].id, null, 2))
+        // setVendorId(JSON.stringify(data[0].id, null, 2))
+        const { data: VenUser, error } = await supabase
+          .from("User")
+          .select()
+          .eq("id", data[0].userId)
+        if(VenUser==null){
+          console.log("Ven user null")
+        }else{
+          console.log("see"+JSON.stringify(data[0].userId))
+          setVenRealId(VenUser[0].id)
+        }
+        
         if (data[0].bio == null) {
           setBio("")
         }
@@ -194,19 +213,19 @@ export default function VendorProfile() {
     getVendorProfile()
     // isExisted()
     getProducts()
-    getCustomerId()
-  }, [email, userId, vendorId, cusId])
+    // getCustomerId()
+  }, [email, userId, venRealId, cusId])
 
-  const insertChat = async () =>{
+  const insertChat = async () => {
     let slug = router.query
-      console.log("check " + cusId + vendorId)
+    console.log("check " + cusId + venRealId)
 
-      const { data, error } = await supabase
-        .from("Chat")
-        .upsert([{ vendor: slug.vendorid, customer: cusId }])
-      if (error) {
-        console.log("error in insert chat")
-      }
+    const { data, error } = await supabase
+      .from("Chat")
+      .upsert([{ vendor: venRealId, customer: userId }])
+    if (error) {
+      console.log("error in insert chat")
+    }
   }
   const clickChat = async () => {
     let slug = router.query
@@ -214,17 +233,17 @@ export default function VendorProfile() {
     const { data, error } = await supabase
       .from("Chat")
       .select()
-      .eq("vendor", vendorId)
-    if (data == null) {
+      .eq("vendor", venRealId)
+      .eq("customer", userId)
+    if (data == null || data.length == 0) {
       insertChat()
       console.log("null" + data)
-      router.push("/chat/"+cusId)
-
+      router.push("/chat/" + userId)
     } else if (error) {
       console.log(error)
     } else {
       console.log(JSON.stringify(data))
-      router.push("/chat/"+cusId)
+      router.push("/chat/" + userId)
     }
   }
   const renderProduct = () => {
