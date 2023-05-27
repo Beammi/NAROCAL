@@ -223,14 +223,16 @@ export default function ProductPage() {
                 </div>
               </div>
 
-              <div className="flex flex-col gap-2 justify-center px-10 py-5">
-                <div className="divider text-center underline underline-offset-4 decoration-2">
-                  Recommend Items
+              { (recommend.length != 0) && (
+                <div className="flex flex-col gap-2 justify-center px-10 py-5">
+                    <div className="divider text-center underline underline-offset-4 decoration-2">
+                        Recommend Items
+                    </div>                    
+                    <EventList items={recommend}/>
+                    
                 </div>
-                { (recommend.length == 0) ? (<h2>No recommend</h2>) : (<EventList items={recommend}/>)}
-                {/* <EventList items={recommend}/> */}
-                
-              </div>
+              )}
+              
             </div>
           </div>
         );
