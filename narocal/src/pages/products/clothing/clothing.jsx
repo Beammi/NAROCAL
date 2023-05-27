@@ -25,24 +25,6 @@ export default function Clothing(){
         router.push(fullPath)
     }
 
-    const filterProducts = getFilteredProducts({
-        brand: "None",
-        category: ["shirts", "dress", "blouse"],
-        subCategory: "None",
-        price: "None",
-        searchKeywords: "None"
-    });
-
-    // let brandChoice = []
-    // let categoryChoice = ["shirts", "dress", "blouse"] // Clothing is static page
-    // filterProducts.map((p) => {
-
-    //     // push brand choice
-    //     if(!brandChoice.includes(p.brand)){
-    //         brandChoice.push(p.brand)
-    //     }
-    // })
-
     products.map((p) => {
         if(!brandChoice.includes(p.brand)){
             brandChoice.push(p.brand)
