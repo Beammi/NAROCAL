@@ -74,6 +74,13 @@ const ProductCardSupa: React.FunctionComponent<ProductCardSupa> = ({
                         </p>
                         <div className="badge badge-secondary sm:text-ellipsis sm:text-xs">NEW</div>
                         <p className="sm:text-ellipsis sm:text-xs md:text-sm ">{body}</p>
+                        <div className="card-actions justify-start">
+                            { product.map((p) => {
+                                if(p.price != null){
+                                    return <div className="badge badge-outline sm:text-ellipsis sm:text-xs md:text-sm">{p.price}฿</div>
+                                }                        
+                            })}        
+                        </div>
                         <div className="card-actions justify-end">
                             <div className="badge badge-outline sm:text-ellipsis sm:text-xs md:text-sm">Fashion</div>
                             <div className="badge badge-outline sm:text-ellipsis sm:text-xs md:text-sm">Products</div>
