@@ -21,8 +21,12 @@ const ProductCardSupa: React.FunctionComponent<ProductCardSupa> = ({ link ,title
     async function fetchData() {
       const { data, error } = await supabase.from("Product").select().eq("id", link)
       if (error) console.log("Error" + error)
-
+      if(data==null){
+        console.log("null")
+        return
+      }
       const productData = data[0]
+      
       setProduct(productData)
 
       const { data: vendorData } = await supabase.from("VendorProfile").select().eq("id", productData.authorId)
