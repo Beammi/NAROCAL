@@ -311,7 +311,7 @@ export default function VendorProfile() {
           <div className="flex md:flex-row space-x-2 p-4">
             <input
               type="button"
-              value="Chat"
+              value="Contact Vendor"
               className="btn btn-outline btn-secondary"
               onClick={clickChat}
             />
