@@ -6,6 +6,8 @@ import VendorNavBar from "@/components/vendors/VendorNavBar"
 import CustomerNavbar from "@/components/CustomerNavbar"
 import ChatBubbleSender from "@/components/chat/ChatBubbleSender"
 import ChatBubbleReceiver from "@/components/chat/ChatBubbleReceiver"
+import Link from "next/link"
+
 export const revalidate = 60
 
 export default function ChatSpecific() {
@@ -83,7 +85,8 @@ export default function ChatSpecific() {
         console.log("Error" + error)
       }
 
-      if (data.length != 0) {
+      if (data.length != 0 ||data[0]!=null) {
+        console.log(JSON.stringify(data[0].role))
         setRole(convertStringFormatt(JSON.stringify(data[0].role)))
         setUserId(JSON.stringify(data[0].id, null, 2))
         setFirstName(convertStringFormatt(JSON.stringify(data[0].firstname)))
@@ -276,6 +279,7 @@ export default function ChatSpecific() {
       supabase.removeChannel(Message)
     }
   }, [supabase])
+  
 
   async function sendMessage() {
     await supabase.from("Message").insert([
@@ -360,15 +364,19 @@ export default function ChatSpecific() {
   const buttonFunction = () => {
     if (role == "CUSTOMER") {
       let li = [
-        <button className="btn btn-secondary">Order</button>,
-        <button className="btn btn-secondary">Pay</button>,
+        // <button className="btn btn-secondary">View Order</button>,
+        <Link className="btn btn-secondary" href="/payment/">Pay</Link>,
+        <Link className="btn btn-secondary" href="/order/orderReceive">Receive Order</Link>,
+
       ]
       return li
     }
     if (role == "VENDOR") {
+      
+      let temp = "/order/"+slugs
       let li = [
-        <button className="btn btn-secondary">Create Order</button>,
-        <button className="btn btn-secondary">Shipment</button>,
+        // <Link className="btn btn-secondary" href={temp}>Create Order</Link>,
+        // <button className="btn btn-secondary" href="/shipment/create">Shipment</button>,
       ]
       return li
     }

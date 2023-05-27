@@ -2,7 +2,7 @@ import Link from "next/link"
 import VendorNavBar from "@/components/vendors/VendorNavBar"
 import { useState, useEffect } from "react"
 import { supabase } from "lib/supabaseClient"
-import ProductCard from "@/components/ProductCardSupa"
+import ProductCard from "@/components/vendors/ProductEdit"
 import EventList from "@/components/events/event-list-supa"
 
 export default function VendorProduct() {
@@ -85,11 +85,11 @@ export default function VendorProduct() {
       if (data == null) {
         console.log("pass")
       } else {
-        console.log("Product data raw: ", data);
+        console.log("Product data raw: ", data)
         setProducts(data) // products ***
         setLen(Object.keys(data).length)
         // setProducts(JSON.parse(data))
-        console.log("Products " + Object.keys(data).length)
+        console.log("Products " + products.n)
       }
 
       if (error) {
@@ -102,31 +102,22 @@ export default function VendorProduct() {
     getProducts()
   }, [email, userId, authorId, len])
   const renderProduct = () => {
-
-    return <EventList items={products}/>
-    
+    let li = []
+    for (let i =0;i<len;i++){
+        li.push(
+            <ProductCard
+              link={products[i].id}
+              title={products[i].name}
+              body={products[i].model}
+              authorId={products[i].authorId}
+            />
+          )
+    }
+     return li
   }
   return (
     <div>
       <VendorNavBar></VendorNavBar>
-      <div className="divide-y-2 bg-background">
-        <div className="p-6">
-          <Link
-            href="products/create"
-            className="hover:text-secondary md:text-lg sm:text-sm"
-          >
-            Create Product
-          </Link>
-        </div>
-        <div className="p-6">
-        <Link
-            href="products/edit"
-            className="hover:text-secondary md:text-lg sm:text-sm"
-          >
-            Edit Product
-          </Link>
-        </div>
-      </div>
 
       <p className="p-6 md:text-lg sm:text-sm bg-background">Vendor Product</p>
       <ul className="grid justify-items-center md:grid-cols-2 sm:grid-flow-row sm:auto-rows-auto gap-4 overflow-x-auto overflow-contain p-10 bg-background rounded-b-lg">
