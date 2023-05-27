@@ -104,6 +104,8 @@ export default function CustomerHome() {
           <ProductCard
             title={products[i].name}
             body={products[i].description}
+            link={products[i].id}
+            authorId={products[i].authorId}
           ></ProductCard>
         )
       }
