@@ -1,6 +1,6 @@
 import { useRouter } from "next/router"
 import { useEffect } from "react"
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { supabase } from "lib/supabaseClient"
 import VendorNavBar from "@/components/vendors/VendorNavBar"
 import CustomerNavbar from "@/components/CustomerNavbar"
@@ -23,8 +23,10 @@ export default function ChatSpecific() {
   const [messagesLen, setMessagesLen] = useState(0)
   const [firstname, setFirstName] = useState("")
   const [anotherUserName, setAnotherUserName] = useState("")
-  const [anotherId,setAnotherId] = useState("")
+  const [anotherId, setAnotherId] = useState("")
   const [newBubble, setNewBubble] = useState("")
+  const messagesRef = useRef([])
+
   const router = useRouter()
 
   function convertStringFormatt(word) {
@@ -94,13 +96,9 @@ export default function ChatSpecific() {
         }
       }
     }
-    // async function checkUser(){
-    //   if(isCustomer){
-    //     setSender()
-    //   }
-    // }
+
     async function getChatId() {
-      if (slugs.length == 1) {
+      if (role == "CUSTOMER") {
         const { data, error } = await supabase
           .from("Chat")
           .select()
@@ -112,15 +110,25 @@ export default function ChatSpecific() {
           console.log("no chat")
           return
         } else {
-          console.log("nai"+JSON.stringify(data[0].id))
-          setChatId(JSON.stringify(data[0].id))
+          if (data && data.length > 0) {
+            // Check if 'data[0]' has a property 'id'
+            if ("id" in data[0]) {
+              setChatId(JSON.stringify(data[0].id))
+            } else {
+              console.log("Error: 'id' does not exist in 'data[0]'")
+              // You can set some default value here, if needed
+            }
+          } else {
+            console.log("Error: 'data' is undefined or empty")
+            // You can set some default value here, if needed
+          }
         }
-      } else {
+      } else if (role == "VENDOR") {
         const { data, error } = await supabase
           .from("Chat")
           .select()
           .eq("customer", slugs[0])
-          .eq("vendor", slugs[1])
+          .eq("vendor", userId)
         if (error) {
           console.log("Error in get chat id")
         } else if (data == null) {
@@ -131,19 +139,7 @@ export default function ChatSpecific() {
         }
       }
     }
-    async function fetchMessages() {
-      const { data, error } = await supabase
-        .from("Message")
-        .select()
-        .eq("chatId", chatId)
-      if (data != null) {
-        setMessages(data)
-        setMessagesLen(Object.keys(data).length)
-        console.log("message" + JSON.stringify(messages))
-      } else {
-        console.log("Error in fetch messages")
-      }
-    }
+
     async function getAnotherUser() {
       if (isVendor) {
         if (slugs.length == 1) {
@@ -158,11 +154,14 @@ export default function ChatSpecific() {
               .from("User")
               .select()
               .eq("id", Vendor.userId)
+            if (UserName != null) {
               setAnotherUserName(
                 convertStringFormatt(JSON.stringify(UserName[0].firstname))
               )
-            setAnotherId(JSON.stringify(UserName[0].id))
-            console.log(anotherUserName)
+              setAnotherId(JSON.stringify(UserName[0].id))
+
+              console.log("Another " + anotherUserName)
+            }
           }
         } else {
           let { data: Vendor, error } = await supabase
@@ -176,10 +175,14 @@ export default function ChatSpecific() {
               .from("User")
               .select()
               .eq("id", Vendor.userId)
+            if (UserName != null) {
               setAnotherUserName(
                 convertStringFormatt(JSON.stringify(UserName[0].firstname))
               )
-            setAnotherId(JSON.stringify(UserName[0].id))
+              setAnotherId(JSON.stringify(UserName[0].id))
+
+              console.log("Another " + anotherUserName)
+            }
 
             console.log(anotherUserName)
           }
@@ -232,63 +235,67 @@ export default function ChatSpecific() {
         }
       }
     }
+    async function fetchMessages() {
+      const { data, error } = await supabase
+        .from("Message")
+        .select()
+        .eq("chatId", chatId)
+      if (data != null) {
+        setMessages(data)
+        setMessagesLen(Object.keys(data).length)
+        console.log("message" + JSON.stringify(messages))
+      } else {
+        console.log("Error in fetch messages")
+      }
+    }
 
     getSlugs()
     getUserEmail()
+
     getPublicUser()
+    getAnotherUser()
+
     getChatId()
     fetchMessages()
-    getAnotherUser()
-  }, [role, email, supabase, chatId, anotherUserName])
+  }, [role, email, chatId, anotherUserName, messagesLen])
 
   useEffect(() => {
     const Message = supabase
       .channel("real-time-chat")
       .on(
         "postgres_changes",
-        { event: "*", schema: "public", table: "Message" },
+        { event: "INSERT", schema: "public", table: "Message" },
         (payload) => {
           console.log("Change received!", payload)
           setNewBubble(payload.new)
-          setMessages((messages) => [...messages, payload.new])
+          messagesRef.current.push(payload.new)
         }
       )
       .subscribe()
     return () => {
       supabase.removeChannel(Message)
     }
-  }, [chatId])
+  }, [supabase])
 
   async function sendMessage() {
-    if (slugs.length == 1) {
-      await supabase.from("Message").insert([
-        {
-          text: newMessage,
-          sender: userId,
-          receiver: anotherId,
-          chatId: chatId,
-        },
-      ])
-      setNewMessage("")
-    } else {
-      await supabase.from("Message").insert([
-        {
-          text: newMessage,
-          sender: userId,
-          receiver: anotherId,
-          chatId: chatId,
-        },
-      ])
-      setNewMessage("")
-    }
+    await supabase.from("Message").insert([
+      {
+        text: newMessage,
+        sender: userId,
+        receiver: slugs[0],
+        chatId: chatId,
+      },
+    ])
+    setNewMessage("")
+    console.log(slugs[0])
   }
-  const generateChatBubble = () => {
+  const fetchChatBubble = () => {
     let li = []
-    if (messages == null || messages.length == 0) {
+    if (messages == null || messagesLen == 0) {
       return <p>No Message yet</p>
     } else {
       for (let i = 0; i < messagesLen; i++) {
-        if (slugs[0] == messages[i].sender) {
+        if (userId == messages[i].sender) {
           console.log("render pass" + JSON.stringify(messages[i].message))
           li.push(
             <ChatBubbleSender
@@ -297,7 +304,9 @@ export default function ChatSpecific() {
               name={firstname}
             />
           )
-        } else {
+        } else if (userId == messages[i].receiver) {
+          console.log("render pass" + JSON.stringify(messages[i]))
+
           li.push(
             <ChatBubbleReceiver
               message={JSON.stringify(messages[i].text)}
@@ -305,10 +314,40 @@ export default function ChatSpecific() {
               name={anotherUserName}
             />
           )
+        } else {
+          return
         }
       }
       return li
     }
+  }
+  const generateChatBubble = () => {
+    let li = []
+
+    for (let i = 0; i < messagesRef.current.length; i++) {
+      console.log("render pass" + JSON.stringify(messagesRef.current[i].sender))
+      if (userId == messagesRef.current[i].sender) {
+        console.log(
+          "render pass" + JSON.stringify(messagesRef.current[i].message)
+        )
+        li.push(
+          <ChatBubbleSender
+            message={JSON.stringify(messagesRef.current[i].text)}
+            timestamp={JSON.stringify(messagesRef.current[i].timestamp)}
+            name={firstname}
+          />
+        )
+      } else {
+        li.push(
+          <ChatBubbleReceiver
+            message={JSON.stringify(messagesRef.current[i].text)}
+            timestamp={JSON.stringify(messagesRef.current[i].timestamp)}
+            name={anotherUserName}
+          />
+        )
+      }
+    }
+    return li
   }
   const chooseNavBar = () => {
     if (role == "CUSTOMER") {
@@ -318,18 +357,20 @@ export default function ChatSpecific() {
       return <VendorNavBar />
     }
   }
-  const buttonFunction = () =>{
+  const buttonFunction = () => {
     if (role == "CUSTOMER") {
       let li = [
-        <button>Order</button>,<button>Pay</button>
+        <button className="btn btn-secondary">Order</button>,
+        <button className="btn btn-secondary">Pay</button>,
       ]
       return li
     }
     if (role == "VENDOR") {
       let li = [
-        <button>Create Order</button>,<button>Shipment</button>
+        <button className="btn btn-secondary">Create Order</button>,
+        <button className="btn btn-secondary">Shipment</button>,
       ]
-      return li 
+      return li
     }
   }
 
@@ -338,18 +379,20 @@ export default function ChatSpecific() {
       {chooseNavBar()}
       <h1>Post: {slugs}</h1>
       <div className="flex-col p-6 w-4/5 mx-auto bg-white rounded-xl shadow-md flex items-center space-x-4">
+        <div>{fetchChatBubble()}</div>
+
         <div className="p-6">{generateChatBubble()}</div>
-        <div className="flex flex-row">
+        <div className="flex flex-row  space-x-2">
           <input
             type="text"
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
           />
-          <button onClick={sendMessage}>Send</button>
+          <button onClick={sendMessage} className="btn btn-secondary ">
+            Send
+          </button>
         </div>
-        <div className="flex flex-row">
-          {buttonFunction()}
-        </div>
+        <div className="flex flex-row space-x-2 p-2">{buttonFunction()}</div>
       </div>
 
       <div></div>
