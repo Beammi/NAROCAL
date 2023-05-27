@@ -238,12 +238,12 @@ export default function VendorProfile() {
     if (data == null || data.length == 0) {
       insertChat()
       console.log("null" + data)
-      router.push("/chat/" + userId)
+      router.push("/chat/" + userId+"/"+venRealId)
     } else if (error) {
       console.log(error)
     } else {
       console.log(JSON.stringify(data))
-      router.push("/chat/" + userId)
+      router.push("/chat/" + userId+"/"+venRealId)
     }
   }
   const renderProduct = () => {
