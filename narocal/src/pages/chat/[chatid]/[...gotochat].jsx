@@ -210,6 +210,8 @@ export default function ChatSpecific() {
               setAnotherId(JSON.stringify(UserName[0].id))
 
               console.log("Another " + anotherUserName)
+            }if(error){
+              alert("This is your PRODUCT!!!")
             }
           }
         } else {
