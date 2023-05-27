@@ -62,9 +62,9 @@ model VendorProfile{
 model Currency{
   id          Int             @id @default(autoincrement())
   currency    String
-  rate        Int
+  rate        Float
   vendor      VendorProfile   @relation(fields: [vendorId], references: [id])
-  vendorId    Int             @unique
+  vendorId    Int             
   @@schema("public")
 }
 
