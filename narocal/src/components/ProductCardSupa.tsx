@@ -46,7 +46,7 @@ const ProductCardSupa: React.FunctionComponent<ProductCardSupa> = ({ link ,title
           <div className="card sm:card-compact bg-base-100 shadow-xl">
             {product.image && (
               <figure>
-                <Image src={product.image} alt="product image" className="pt-2" width={100} height={100} />
+                <Image src={product.image} alt="product image" className="pt-2" width={230} height={100} />
               </figure>
             )}
 
