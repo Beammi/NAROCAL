@@ -364,8 +364,10 @@ export default function ChatSpecific() {
   const buttonFunction = () => {
     if (role == "CUSTOMER") {
       let li = [
-        <button className="btn btn-secondary">View Order</button>,
-        <button className="btn btn-secondary">Pay</button>,
+        // <button className="btn btn-secondary">View Order</button>,
+        <Link className="btn btn-secondary" href="/payment/">Pay</Link>,
+        <Link className="btn btn-secondary" href="/order/orderReceive">Receive Order</Link>,
+
       ]
       return li
     }
@@ -373,8 +375,8 @@ export default function ChatSpecific() {
       
       let temp = "/order/"+slugs
       let li = [
-        <Link className="btn btn-secondary" href={temp}>Create Order</Link>,
-        <button className="btn btn-secondary" href="/shipment/create">Shipment</button>,
+        // <Link className="btn btn-secondary" href={temp}>Create Order</Link>,
+        // <button className="btn btn-secondary" href="/shipment/create">Shipment</button>,
       ]
       return li
     }
