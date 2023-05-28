@@ -56,8 +56,8 @@ const ProductCardSupa: React.FunctionComponent<ProductCardSupa> = ({ link ,title
               <div className="card-actions flex justify-end">
                 {product.price && (
                   <div>
-                    <label>{username}</label>
-                    <div className="badge badge-outline sm:text-ellipsis sm:text-xs md:text-sm">
+                    <label className="text-md text-emerald-500">Offered by {username} </label>
+                    <div className="badge badge-outline sm:text-ellipsis sm:text-xs md:text-md font-bold">
                       {product.price.toLocaleString()}฿
                     </div>
                   </div>
