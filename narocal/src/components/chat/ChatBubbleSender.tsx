@@ -23,7 +23,7 @@ const ChatBubbleSender: React.FunctionComponent<IChatBubbleSender> = ({
              {name}
             <time className="text-xs opacity-50">{timestamp}</time>
           </div>
-          <div className="chat-bubble chat-bubble-secondary">{message}</div>
+          <div className="chat-bubble chat-bubble-primary">{message}</div>
         </div>
     </>
   )
