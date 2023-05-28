@@ -68,43 +68,68 @@ function InitialNavbar(props){
                         <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-1 shadow bg-primary text-alternative rounded-box w-52">
 
                             <li tabIndex={0}>
-                                <a className="justify-between">
-                                    Brands
-                                    <svg className="fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"/></svg>
-                                </a>
-                                <ul className="p-1 bg-primary text-alternative">
-                                    <li><a>Submenu_1</a></li>
-                                    <li><a>Submenu_2</a></li>
-                                    <li><a>Submenu_3</a></li>
-                                </ul>
-                            </li>
-
-
-                            <li tabIndex={0}>
-                                <a className="justify-between">
+                                <a className="justify-between" href="/products/clothing/clothing">
                                     Clothing
                                     <svg className="fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"/></svg>
                                 </a>
-                                <ul className="p-1 bg-primary text-alternative">
-                                    <li><a>Submenu_1</a></li>
-                                    <li><a>Submenu_2</a></li>
-                                    <li><a>Submenu_3</a></li>
+                                <ul className="p-3 bg-primary text-alternative">
+                                    <li><a href="/products/clothing/shirts">Shirts</a></li>
+                                    <li><a href="/products/clothing/hoodie">Hoodie</a></li>
+                                    <li><a href="/products/clothing/coat">Coat</a></li>
+                                    <li><a href="/products/clothing/jeans">Jeans</a></li>
+                                    <li><a href="/products/clothing/shorts">Shorts</a></li>
+                                    <li><a href="/products/clothing/suit">Suit</a></li>
                                 </ul>
                             </li>
 
                             <li tabIndex={0}>
-                                <a className="justify-between">
+                                <a className="justify-between" href="/products/shoes/shoes">
                                     Shoes
                                     <svg className="fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"/></svg>
                                 </a>
-                                <ul className="p-1 bg-primary text-alternative">
-                                    <li><a>Submenu_1</a></li>
-                                    <li><a>Submenu_2</a></li>
-                                    <li><a>Submenu_3</a></li>
+                                <ul className="p-3 bg-primary text-alternative">
+                                    <li><a href="/products/shoes/sneakers">Sneakers</a></li>
+                                    <li><a href="/products/shoes/boots">Boots</a></li>
                                 </ul>
                             </li>
 
-                            <li><a>Item 3</a></li>
+                            <li tabIndex={0}>
+                                <a className="justify-between" href="/products/bags/bags">
+                                    Bags
+                                    <svg className="fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"/></svg>
+                                </a>
+                                <ul className="p-3 bg-primary text-alternative">
+                                    <li><a href="/products/bags/handbag">Handbag</a></li>                                
+                                    <li><a href="/products/bags/crossbodybag">Crossbody bag</a></li>
+                                    <li><a href="/products/bags/backpack">Backpack</a></li>
+                                </ul>
+                            </li>
+
+                            <li tabIndex={0}>
+                                <a className="justify-between" href="/products/accessories/accessories">
+                                    Accessories
+                                    <svg className="fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"/></svg>
+                                </a>
+                                <ul className="p-3 bg-primary text-alternative">
+                                    <li><a href="/products/accessories/belts">Belts</a></li>
+                                    <li><a href="/products/accessories/hats">Hats</a></li>                                        
+                                    <li><a href="/products/accessories/ties">Ties</a></li>
+                                </ul>
+                            </li>
+
+                            <li tabIndex={0}>
+                                <a className="justify-between" href="/products/food/food">
+                                    Food
+                                    <svg className="fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"/></svg>
+                                </a>
+                                <ul className="p-3 bg-primary text-alternative">
+                                    <li><a href="/products/food/snacks">Snacks</a></li>
+                                    <li><a href="/products/food/dryfood">Dry food</a></li>
+                                    <li><a href="/products/food/conveniencefood">Convenience food</a></li>
+                                </ul>
+                            </li>
+
+
                         </ul>
                     </div>
                 </div>
@@ -128,23 +153,6 @@ function InitialNavbar(props){
                 <div className="navbar-start"></div>
                 <div className="navbar-center">
                     <ul className="menu menu-horizontal rounded-box mx-auto">
-
-                        <li tabIndex={0} className="dropdown dropdown-hover">
-                            <span>BRANDS</span>
-
-                            <div className="dropdown-content menu card card-compact w-64 rounded-box bg-base-200 p-2 z-10 grid grid-cols-1">
-                                <div>
-                                    <ul>
-                                        <li className="text-lg font-medium"><a>BRANDS</a></li>
-                                        <li><a>Submenu_1</a></li>
-                                        <li><a>Submenu_2</a></li>
-                                        <li><a>Submenu_3</a></li>
-                                        <li><a>Submenu_4</a></li>
-                                        <li><a>Submenu_5</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </li>
 
                         <li tabIndex={0} className="dropdown dropdown-hover">
                             {/* <span>CLOTHING</span> */}
