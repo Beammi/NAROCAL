@@ -2,7 +2,7 @@ import React from "react"
 
 export default function Footer(){
     return(
-        <footer className="footer p-8 w-full z-20 bg-primary text-alternative">
+        <footer className="footer p-8 w-full bg-primary text-alternative">
             <div>
                 <a className="btn btn-ghost normal-case text-lg text-alternative" href="/">NAROCAL</a>
                 <p>Copyright © 2023 - All right reserved by NAROCAL</p>

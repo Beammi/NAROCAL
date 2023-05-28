@@ -126,7 +126,7 @@ export default function ProductFilter(){
         <>
             <InitialNavbar></InitialNavbar>
             <div className='flex flex-col justify-center bg-test pt-40 w-screen'>
-                <div className='flex flex-col gap-y-10 bg-background p-20 w-full h-screen'>
+                <div className='flex flex-col gap-y-10 bg-background p-20 w-full mb-8 min-h-screen'>
 
                     <div className="text-md breadcrumbs">
                         <ul>
@@ -146,29 +146,7 @@ export default function ProductFilter(){
                     </div>
                     <div className='flex flex-col justify-center'>
                         <EventsSearch onFilter={findFilterHandler} brand={brandChoice} category={categoryChoice}/>
-                        {/* <EventList items={filterProducts}/> */}
-                        {((!filterProducts || filterProducts.length === 0) ? 
-                            <p className="text-center text-2xl font-semibold">No products for these chosen filters</p>
-                            : <EventList items={filterProducts}/>)}
-
-                        {/* {filterProducts.then(
-                            (data) => {
-                                // if (data.length === 0) {
-                                //     return (
-                                //         <p className="text-center text-2xl font-semibold">
-                                //         No products for these chosen filters
-                                //         </p>
-                                //     );
-                                // } else {
-                                // // return <EventList items={data} />;
-                                // }
-                                console.log("D: ", data);
-                            }
-                        ).catch((error) => {
-                            console.error('Error occurred while fetching filtered products:', error);
-                            // Handle the error gracefully
-                            return null; // Or display an error message
-                        })} */}
+                        <EventList items={filterProducts}/>
 
                     </div>
 

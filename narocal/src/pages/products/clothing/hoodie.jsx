@@ -12,15 +12,15 @@ import {PRODUCTS, getFilteredProducts, getProductByCategory} from "../../../../d
 import { supabase } from "lib/supabaseClient"
 import { useEffect, useState } from 'react'
 
-export default function Shirts(){
+export default function Hoodie(){
 
     const router = useRouter();
     const [products, setProducts] = useState([""])
     let brandChoice = []
-    let categoryChoice = ["short sleeve", "long sleeve"]
+    let categoryChoice = []
 
     function findFilterHandler(brand, category, sortPrice){
-        const fullPath = `/products/clothing/shirts/${brand}/${category}/${sortPrice}`;
+        const fullPath = `/products/clothing/hoodie/${brand}/${category}/${sortPrice}`;
         // const fullPath = `/products/clothing/${brand}/${category}`;
 
         router.push(fullPath)
@@ -31,7 +31,7 @@ export default function Shirts(){
             const {data, error} = await supabase
                 .from('Product')
                 .select()
-                .eq('category', 'shirts')
+                .eq('category', 'hoodie')
                 // .in('category', ['Albania', 'Algeria'])
 
             if(data == null){
@@ -66,10 +66,10 @@ export default function Shirts(){
                         <ul>
                             <li><a href='/'>Home</a></li> 
                             <li><a href='/clothing/clothing'>Clothing</a></li> 
-                            <li>Shirts</li>
+                            <li>Hoodie</li>
                         </ul>
                     </div>
-                    <h2 className='text-3xl font-bold text-center'>Shirts</h2>
+                    <h2 className='text-3xl font-bold text-center'>Hoodie</h2>
                     <div className='flex flex-col justify-center'>
                         <EventsSearch onFilter={findFilterHandler} brand={brandChoice} category={categoryChoice}/>
                         {/* <EventList items={filterProducts}/> */}

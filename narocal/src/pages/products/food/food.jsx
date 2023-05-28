@@ -8,31 +8,40 @@ import EventsSearch from '@/components/events/events-search'
 // import EventList from '@/components/events/event-list'
 import EventList from '@/components/events/event-list-supa'
 import { useRouter } from 'next/router'
-import {PRODUCTS, getFilteredProducts, getProductByCategory} from "../../../../dummy-data"
+import {PRODUCTS, getFilteredProducts} from "../../../../dummy-data"
 import { supabase } from "lib/supabaseClient"
 import { useEffect, useState } from 'react'
 
-export default function Shirts(){
+export default function Food(){
 
-    const router = useRouter();
+    const router = useRouter()
     const [products, setProducts] = useState([""])
     let brandChoice = []
-    let categoryChoice = ["short sleeve", "long sleeve"]
+    let categoryChoice = []
+
+    let thisPageUpper = "Food"
+    let thisPageLower = "food"
 
     function findFilterHandler(brand, category, sortPrice){
-        const fullPath = `/products/clothing/shirts/${brand}/${category}/${sortPrice}`;
-        // const fullPath = `/products/clothing/${brand}/${category}`;
+        const fullPath = `/products/${thisPageLower}/${thisPageLower}/${brand}/${category}/${sortPrice}`;
 
         router.push(fullPath)
     }
+
+    products.map((p) => {
+        if(!brandChoice.includes(p.brand)){
+            brandChoice.push(p.brand)
+            // console.log(brandChoice);
+        }
+    })
 
     useEffect(() => {
         async function loadData(){
             const {data, error} = await supabase
                 .from('Product')
                 .select()
-                .eq('category', 'shirts')
-                // .in('category', ['Albania', 'Algeria'])
+                .eq('category', thisPageLower)
+                // .in('category', ["shirts", "dress", "blouse", "hoodie"])
 
             if(data == null){
                 console.log("pass");
@@ -40,48 +49,37 @@ export default function Shirts(){
                 setProducts(data)
             }
 
+
             if (error) {
                 console.log(JSON.stringify(error))
             }
 
         }
-
         loadData()
-    })
 
-    products.map((p) => {
-        if(!brandChoice.includes(p.brand)){
-            brandChoice.push(p.brand)
-        }
     })
-
 
     return (
         <>
             <InitialNavbar></InitialNavbar>
-            <div className='flex flex-col justify-center bg-test pt-40 w-screen'>
+            <div className='flex flex-col justify-center bg-test pt-40'>
                 <div className='flex flex-col gap-y-10 bg-background p-20 w-full mb-8 min-h-screen'>
 
                     <div className="text-md breadcrumbs">
                         <ul>
                             <li><a href='/'>Home</a></li> 
-                            <li><a href='/clothing/clothing'>Clothing</a></li> 
-                            <li>Shirts</li>
+                            <li>{thisPageUpper}</li> 
                         </ul>
                     </div>
-                    <h2 className='text-3xl font-bold text-center'>Shirts</h2>
+                    <h2 className='text-3xl font-bold text-center'>{thisPageUpper}</h2>
                     <div className='flex flex-col justify-center'>
                         <EventsSearch onFilter={findFilterHandler} brand={brandChoice} category={categoryChoice}/>
-                        {/* <EventList items={filterProducts}/> */}
                         <EventList items={products}/>
                     </div>
 
                 </div>
                 <Footer></Footer>
             </div>
-            
-
-            
             
         </>
     )

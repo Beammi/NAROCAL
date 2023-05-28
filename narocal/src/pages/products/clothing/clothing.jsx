@@ -59,7 +59,7 @@ export default function Clothing(){
         <>
             <InitialNavbar></InitialNavbar>
             <div className='flex flex-col justify-center bg-test pt-40'>
-                <div className='flex flex-col gap-y-10 bg-background p-20 w-full mb-8'>
+                <div className='flex flex-col gap-y-10 bg-background p-20 w-full mb-8 min-h-screen'>
 
                     <div className="text-md breadcrumbs">
                         <ul>

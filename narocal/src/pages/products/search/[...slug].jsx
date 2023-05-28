@@ -107,7 +107,7 @@ export default function SearchAndFilter(){
         <>
             <InitialNavbar></InitialNavbar>
             <div className='flex flex-col justify-center bg-test pt-40 w-screen'>
-                <div className='flex flex-col gap-y-10 bg-background p-20 w-full h-screen'>
+                <div className='flex flex-col gap-y-10 bg-background p-20 w-full mb-8'>
 
                     <div className="text-md breadcrumbs">
                         <ul>
@@ -119,7 +119,7 @@ export default function SearchAndFilter(){
                         <h3 className='text-3xl font-bold text-center'>Search results for "{strSearchKey}"</h3>
                         <h3 className='text-xl text-center mt-2'>
                             filtered by { filteredBrand == "None" ? "" : filteredBrand} 
-                            {Array.isArray(filteredCategory) ? "" : (filteredCategory + " ")}
+                            {Array.isArray(filteredCategory) || filteredCategory == "None" ? "" : (filteredCategory + " ")}
                             { filteredSortPrice == "None" ? "" : (filteredSortPrice + " ")}
                         </h3>
                     </div>
@@ -130,7 +130,6 @@ export default function SearchAndFilter(){
 
                 </div>
                 <Footer></Footer>
-
             </div>
             
         </>

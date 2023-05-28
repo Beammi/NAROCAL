@@ -12,15 +12,18 @@ import {PRODUCTS, getFilteredProducts, getProductByCategory} from "../../../../d
 import { supabase } from "lib/supabaseClient"
 import { useEffect, useState } from 'react'
 
-export default function Shirts(){
+export default function Crossbodybag(){
 
     const router = useRouter();
     const [products, setProducts] = useState([""])
     let brandChoice = []
-    let categoryChoice = ["short sleeve", "long sleeve"]
+    let categoryChoice = []
+
+    let thisPageUpper = "Crossbody bag"
+    let thisPageLower = "crossbodybag"
 
     function findFilterHandler(brand, category, sortPrice){
-        const fullPath = `/products/clothing/shirts/${brand}/${category}/${sortPrice}`;
+        const fullPath = `/products/bags/${thisPageLower}/${brand}/${category}/${sortPrice}`;
         // const fullPath = `/products/clothing/${brand}/${category}`;
 
         router.push(fullPath)
@@ -31,7 +34,7 @@ export default function Shirts(){
             const {data, error} = await supabase
                 .from('Product')
                 .select()
-                .eq('category', 'shirts')
+                .eq('category', thisPageLower)
                 // .in('category', ['Albania', 'Algeria'])
 
             if(data == null){
@@ -65,11 +68,11 @@ export default function Shirts(){
                     <div className="text-md breadcrumbs">
                         <ul>
                             <li><a href='/'>Home</a></li> 
-                            <li><a href='/clothing/clothing'>Clothing</a></li> 
-                            <li>Shirts</li>
+                            <li><a href='/bags/bags'>Bags</a></li> 
+                            <li>{thisPageUpper}</li>
                         </ul>
                     </div>
-                    <h2 className='text-3xl font-bold text-center'>Shirts</h2>
+                    <h2 className='text-3xl font-bold text-center'>{thisPageUpper}</h2>
                     <div className='flex flex-col justify-center'>
                         <EventsSearch onFilter={findFilterHandler} brand={brandChoice} category={categoryChoice}/>
                         {/* <EventList items={filterProducts}/> */}

@@ -150,132 +150,83 @@ function InitialNavbar(props){
                             {/* <span>CLOTHING</span> */}
                             <a href="/products/clothing/clothing">CLOTHING</a>
 
-                            <div className="dropdown-content card card-compact w-96 rounded-box bg-base-200 p-2 z-10 flex flex-row items-start">
+                            <div className="dropdown-content card card-compact w-48 rounded-box bg-base-200 p-2 z-10 grid grid-cols-1">
                                 <div>
                                     <ul>
                                         <li className="text-lg font-medium"><a href="/products/clothing/clothing">Clothing</a></li>
                                         <li><a href="/products/clothing/shirts">Shirts</a></li>
-                                        <li><a>Polo shirt</a></li>
-                                        <li><a>Coat</a></li>
-                                        <li><a>Jeans</a></li>
-                                        <li><a>Shorts</a></li>
-                                        <li><a>Suit</a></li>
-                                        <li><a>Pants</a></li>
+                                        <li><a href="/products/clothing/hoodie">Hoodie</a></li>
+                                        <li><a href="/products/clothing/coat">Coat</a></li>
+                                        <li><a href="/products/clothing/jeans">Jeans</a></li>
+                                        <li><a href="/products/clothing/shorts">Shorts</a></li>
+                                        <li><a href="/products/clothing/suit">Suit</a></li>
                                     </ul>
-                                </div>
+                                </div>                                
+                                
+                            </div>
+                        </li>
+
+                        <li tabIndex={0} className="dropdown dropdown-hover">        
+                            <a href="/products/shoes/shoes">SHOES</a>
+
+                            <div className="dropdown-content card card-compact w-48 rounded-box bg-base-200 p-2 z-10 grid grid-cols-2">
                                 <div>
                                     <ul>
-                                        <li className="text-lg font-medium"><a>Active Wear</a></li>
-                                        <li><a>Submenu_1</a></li>
-                                        <li><a>Submenu_2</a></li>
-                                        <li><a>Submenu_3</a></li>
+                                        <li className="text-lg font-medium "><a href="/products/shoes/shoes">Shoes</a></li>
+
+                                        <li><a href="/products/shoes/sneakers">Sneakers</a></li>
+                                        <li><a href="/products/shoes/boots">Boots</a></li>
                                     </ul>
                                 </div>
-                                <div>
-                                    <ul>
-                                        <li className="text-lg font-medium"><a>Clothing Brands</a></li>
-                                        <li><a>Submenu_1</a></li>
-                                        <li><a>Submenu_2</a></li>
-                                        <li><a>Submenu_3</a></li>
-                                    </ul>
-                                </div>
+                                
                                 
                             </div>
                         </li>
 
                         <li tabIndex={0} className="dropdown dropdown-hover">
-                            <span>SHOES</span>
+                            <a href="/products/bags/bags">BAGS</a>
 
-                            <div className="dropdown-content card card-compact w-72 rounded-box bg-base-200 p-2 z-10 grid grid-cols-2">
-                                <div>
-                                    <ul>
-                                        <li className="text-lg font-medium"><a>Shoes</a></li>
-                                        <li><a>Submenu_1</a></li>
-                                        <li><a>Submenu_2</a></li>
-                                        <li><a>Submenu_3</a></li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <ul>
-                                        <li className="text-lg font-medium"><a>Shoes Brands</a></li>
-                                        <li><a>Submenu_1</a></li>
-                                        <li><a>Submenu_2</a></li>
-                                        <li><a>Submenu_3</a></li>
-                                    </ul>
-                                </div>
-                                
-                            </div>
-                        </li>
-
-                        <li tabIndex={0} className="dropdown dropdown-hover">
-                            <span>BAGS</span>
-
-                            <div className="dropdown-content card card-compact w-72 rounded-box bg-base-200 p-2 z-10 grid grid-cols-2">
+                            <div className="dropdown-content card card-compact w-48 rounded-box bg-base-200 p-2 z-10 grid grid-cols-1">
                                 <div>
                                     <ul>
                                         <li className="text-lg font-medium"><a href="/products/bags/bags">Bags</a></li>
-                                        <li><a href="/products/bags/handbag">handbag</a></li>
-                                        <li><a href="/products/bags/shoulder bag">shoulder bag</a></li>
-                                        <li><a href="/products/bags/crossbody bag">crossbody bag</a></li>
-                                        <li><a href="/products/bags/backpack">backpack</a></li>
+                                        <li><a href="/products/bags/handbag">Handbag</a></li>                                
+                                        <li><a href="/products/bags/crossbodybag">Crossbody bag</a></li>
+                                        <li><a href="/products/bags/backpack">Backpack</a></li>
                                     </ul>
-                                </div>
-                                <div>
-                                    <ul>
-                                        <li className="text-lg font-medium"><a>Bags Brands</a></li>
-                                        <li><a>Submenu_1</a></li>
-                                        <li><a>Submenu_2</a></li>
-                                        <li><a>Submenu_3</a></li>
-                                    </ul>
-                                </div>
+                                </div>                            
                                 
                             </div>
                         </li>
 
                         <li tabIndex={0} className="dropdown dropdown-hover">
-                            <span>ACCESSORIES</span>
+                            <a href="/products/accessories/accessories">ACCESSORIES</a>
 
-                            <div className="dropdown-content card card-compact w-72 rounded-box bg-base-200 p-2 z-10 grid grid-cols-2">
+                            <div className="dropdown-content card card-compact w-48 rounded-box bg-base-200 p-2 z-10 grid grid-cols-2">
                                 <div>
                                     <ul>
-                                        <li className="text-lg font-medium"><a>Accessories</a></li>
-                                        <li><a>Submenu_1</a></li>
-                                        <li><a>Submenu_2</a></li>
-                                        <li><a>Submenu_3</a></li>
+                                        <li className="text-lg font-medium"><a href="/products/accessories/accessories">Accessories</a></li>
+                                        <li><a href="/products/accessories/belts">Belts</a></li>
+                                        <li><a href="/products/accessories/hats">Hats</a></li>                                        
+                                        <li><a href="/products/accessories/ties">Ties</a></li>
                                     </ul>
-                                </div>
-                                <div>
-                                    <ul>
-                                        <li className="text-lg font-medium"><a>Accessories Brands</a></li>
-                                        <li><a>Submenu_1</a></li>
-                                        <li><a>Submenu_2</a></li>
-                                        <li><a>Submenu_3</a></li>
-                                    </ul>
-                                </div>
+                                </div>                            
                                 
                             </div>
                         </li>
 
                         <li tabIndex={0} className="dropdown dropdown-hover">
-                            <span>FOOD</span>
+                            <a href="/products/food/food">FOOD</a>
 
-                            <div className="dropdown-content card card-compact w-72 rounded-box bg-base-200 p-2 z-10 grid grid-cols-2">
+                            <div className="dropdown-content card card-compact w-52 rounded-box bg-base-200 p-2 z-10 grid grid-cols-1">
                                 <div>
                                     <ul>
-                                        <li className="text-lg font-medium"><a>Snacks</a></li>
-                                        <li><a>Submenu_1</a></li>
-                                        <li><a>Submenu_2</a></li>
-                                        <li><a>Submenu_3</a></li>
+                                        <li className="text-lg font-medium"><a href="/products/food/food">Food</a></li>
+                                        <li><a href="/products/food/snacks">Snacks</a></li>
+                                        <li><a href="/products/food/dryfood">Dry food</a></li>
+                                        <li><a href="/products/food/conveniencefood">Convenience food</a></li>                                        
                                     </ul>
-                                </div>
-                                <div>
-                                    <ul>
-                                        <li className="text-lg font-medium"><a>Processed Food</a></li>
-                                        <li><a>Submenu_1</a></li>
-                                        <li><a>Submenu_2</a></li>
-                                        <li><a>Submenu_3</a></li>
-                                    </ul>
-                                </div>
+                                </div>                            
                                 
                             </div>
                         </li>
