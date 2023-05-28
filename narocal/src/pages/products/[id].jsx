@@ -17,6 +17,9 @@ export default function ProductPage() {
   const [email, setEmail] = useState("")
   const [recommend, setRecommend] = useState([])
 
+  const [productUsername, setProductUsername] = useState(null)
+  const [username, setUsername] = useState("")
+
   function convertStringFormatt(word) {
     if (word == "" || word == null) {
       return ""
@@ -97,7 +100,26 @@ export default function ProductPage() {
         }
 
     }
+
+    async function fetchUsername() {
+      const { data, error } = await supabase.from("Product").select().eq("id", router.query.id)
+      if (error) console.log("Error" + error)
+      if(data==null){
+        console.log("null")
+        return
+      }
+      const productData = data[0]
+      
+      setProductUsername(productData)
+
+      const { data: vendorData } = await supabase.from("VendorProfile").select().eq("id", productData.authorId)
+      const userId = vendorData[0].userId
+
+      const { data: userData } = await supabase.from("User").select().eq("id", userId)
+      setUsername(userData[0].firstname)
+    }
     
+    fetchUsername()
     loadRecommendProduct()
     renderInformation();
     getUserEmail();
@@ -159,15 +181,22 @@ export default function ProductPage() {
     //   router.push("/chat/" + userId);
     // }
 
+    const {data: vendorData, error: errorVendor} = await supabase
+      .from('VendorProfile')
+      .select()
+      .eq('id', vendorId)
+    
+    let venderUserId = vendorData[0].userId
+
     if (chat == null || chat.length == 0) {
       insertChat()
       console.log("null" + chat)
-      router.push("/chat/" + userId+"/"+vendorId)
+      router.push("/chat/" + userId+"/"+venderUserId)
     } else if (error) {
       console.log(error)
     } else {
       console.log(JSON.stringify(chat))
-      router.push("/chat/" + userId+"/"+vendorId)
+      router.push("/chat/" + userId+"/"+venderUserId)
     }
   };
 
@@ -189,7 +218,8 @@ export default function ProductPage() {
                 <div className="flex flex-col w-2/5">
                   <p className="text-xl font-bold">{p.brand}</p>
                   <p className="text-lg">{p.model}</p>
-                  <p className="text-2xl py-10">{p.price?.toLocaleString()}฿</p>
+                  <label className="text-md text-emerald-500 font-semibold mt-8">Offered by {username}</label>
+                  <p className="text-2xl pb-10">{p.price?.toLocaleString()}฿</p>
                   <select className="select w-full max-w-xs">
                     <option disabled selected>
                       Select size
@@ -202,10 +232,11 @@ export default function ProductPage() {
                   </select>
 
                   {/* <button className="btn btn-primary my-10 w-40" href="">CHAT</button> */}
+                  {/* <label className="text-md text-emerald-500 font-semibold mt-8">Offered by {username} </label> */}
                   <input
                     type="button"
                     value="Contact Vendor"
-                    className="btn btn-primary my-10 w-40 hover:btn-secondary"
+                    className="btn btn-primary my-8 w-40 hover:btn-secondary"
                     onClick={clickChat}
                   />
 
