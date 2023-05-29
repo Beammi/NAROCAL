@@ -90,7 +90,10 @@ export default function ChatSpecific() {
         setRole(convertStringFormatt(JSON.stringify(data[0].role)))
         setUserId(JSON.stringify(data[0].id, null, 2))
         setFirstName(convertStringFormatt(JSON.stringify(data[0].firstname)))
-
+        if(slugs[0]==userId){
+          alert("You cannot talk with yourself!!!")
+          router.back()
+        }
         if (role == "CUSTOMER") {
           setIsCustomer(true)
         }
@@ -198,7 +201,7 @@ export default function ChatSpecific() {
             .eq("userId", slugs[0])
           if (error || Vendor[0]==null) {
             console.log(JSON.stringify(error))
-            alert("This is your PRODUCT!!!")
+            alert("This is your PRODUCT! or Account!")
           } else {
             let { data: UserName, error } = await supabase
               .from("User")
@@ -384,9 +387,10 @@ export default function ChatSpecific() {
   }
 
   return (
-    <div className="bg-test min-h-screen">
+    <div className="bg-test min-h-screen space-y-20">
       {chooseNavBar()}
-      <div className="flex-col p-6 w-2/5 mx-auto bg-white rounded-xl shadow-md flex items-center space-x-4">
+      <br />
+      <div className="flex-col p-6 pt-36 w-3/5 mx-auto bg-white rounded-xl shadow-md flex items-center space-x-4">
         <div className="flex justify-start md:text-lg phone:text-sm">Chat with: {anotherUserName}</div>
         <div>{fetchChatBubble()}</div>
 
