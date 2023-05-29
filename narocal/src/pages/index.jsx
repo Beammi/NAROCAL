@@ -24,37 +24,40 @@ const inter = Inter({ subsets: ["latin"] })
 
 export default function Home() {
   const [products, setProducts] = useState([""])
+  const [vendorName, setVendorName] = useState(null)
+  const [vendors, setVendors] = useState([])
+  const [len, setLen] = useState(0)
 
-  const vendors = [
-    {
-      id: "1",
-      name: "Chris Evan",
-      language: "English",
-      exchange_rate: "1 pound = 40 Baht",
-      shopping_rate: "300 Baht",
-    },
-    {
-      id: "2",
-      name: "Yoko Ano",
-      language: "English",
-      exchange_rate: "1 pound = 40 Baht",
-      shopping_rate: "300 Baht",
-    },
-    {
-      id: "3",
-      name: "Yoshida",
-      language: "English",
-      exchange_rate: "1 pound = 40 Baht",
-      shopping_rate: "300 Baht",
-    },
-    {
-      id: "4",
-      name: "Miyawaki Sakura",
-      language: "English",
-      exchange_rate: "1 pound = 40 Baht",
-      shopping_rate: "300 Baht",
-    },
-  ]
+  // const vendors = [
+  //   {
+  //     id: "1",
+  //     name: "Chris Evan",
+  //     language: "English",
+  //     exchange_rate: "1 pound = 40 Baht",
+  //     shopping_rate: "300 Baht",
+  //   },
+  //   {
+  //     id: "2",
+  //     name: "Yoko Ano",
+  //     language: "English",
+  //     exchange_rate: "1 pound = 40 Baht",
+  //     shopping_rate: "300 Baht",
+  //   },
+  //   {
+  //     id: "3",
+  //     name: "Yoshida",
+  //     language: "English",
+  //     exchange_rate: "1 pound = 40 Baht",
+  //     shopping_rate: "300 Baht",
+  //   },
+  //   {
+  //     id: "4",
+  //     name: "Miyawaki Sakura",
+  //     language: "English",
+  //     exchange_rate: "1 pound = 40 Baht",
+  //     shopping_rate: "300 Baht",
+  //   },
+  // ]
 
   useEffect(() => {
       async function loadData(){
@@ -75,9 +78,66 @@ export default function Home() {
           
 
       }
+      async function matchVendors() {
+        let { data: VendorsName, error } = await supabase.from("VendorProfile")
+          .select(`
+              userId,
+                  User (
+                      firstname,lastname
+              )
+          `);
+        if (error) {
+          console.log("Error in match vendors" + JSON.stringify(error));
+        } else {
+          // console.log(JSON.stringify(VendorsName[0].User.firstname))
+          console.log(JSON.stringify(VendorsName));
+          setVendorName(VendorsName);
+        }
+      }
+      async function getAllVendors() {
+        let { data: VendorProfile, error } = await supabase
+          .from("VendorProfile")
+          .select("*");
+
+        if (error) {
+          console.log("Error Vendor Profile:" + error);
+        } else if (VendorProfile == null) {
+          console.log("can't find vendors");
+        } else {
+          setVendors(VendorProfile);
+          setLen(Object.keys(VendorProfile).length);
+          // console.log(JSON.stringify(vendors[0].userId))
+          console.log(JSON.stringify(vendors[0]));
+        }
+      }
+      getAllVendors()
+      matchVendors()
       loadData()
 
-  }, [])
+  }, [len])
+
+  const renderVendors = () => {
+    let li = []
+    if (vendorName == null) {
+      console.log("pass")
+      return
+    } else {
+      for (let i = 0; i < len; i++) {
+        console.log("render pass")
+        // let j = vendors[i].userId
+        li.push(
+          <VendorCard
+            name={vendorName[i].User.firstname}
+            language={vendors[i].languages}
+            // exchange_rate={vendors[i].currencies}
+            shopping_rate={vendors[i].shpRate}
+            link={vendors[i].id}
+          ></VendorCard>
+        )
+      }
+      return li
+    }
+  }
 
   // const renderProduct = () => {
   //   return <EventList items={products}/>
@@ -95,10 +155,7 @@ export default function Home() {
 
           {/* <div className='flex justify-center flex-col bg-secondary gap-5 overflow-y-auto p-10'> */}
           <div className='grid grid-cols-1 gap-5 bg-secondary overflow-y-auto h-[80vh] p-8 overscroll-contain'>
-            <VendorCard name='Chris Evans' language='English' exchange_rate='1 pound = 40 Baht' shopping_rate='300 Baht' link="1"></VendorCard>
-            <VendorCard name='Yoko Ano' language='Thai, Japanese' exchange_rate='1 Yen = 0.28 Baht' shopping_rate='350 Baht' link="2"></VendorCard>
-            <VendorCard name='Yoshida' language='Japanese' exchange_rate='1 Yen = 0.3 Baht' shopping_rate='400 Baht' link="3"></VendorCard>
-            <VendorCard name='Miyawaki Sakura' language='Japanese' exchange_rate='1 Yen = 0.3 Baht' shopping_rate='400 Baht' link="4"></VendorCard>
+            {renderVendors()}
           </div>
           {/* <div className="flex justify-center bg-test">
             <div className="flex flex-col m-6">

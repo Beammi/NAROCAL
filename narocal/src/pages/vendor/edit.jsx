@@ -216,10 +216,10 @@ export default function VendorEditProfile() {
   // getPublicUser()
   // insertVendorProfile()
   return (
-    <div className="bg-secondary h-full">
+    <div className="bg-secondary h-max">
       <VendorNavBar></VendorNavBar>
       <form onSubmit={updateProfile} className="form-widget h-max">
-        <div className="p-2 m-8 md:m-20 md:py-10 md:px-96 grid phone:gap-2 md:gap-6 md:grid-cols-2 phone:grid-cols-1 justify-items-stretch bg-background shadow-2xl rounded-2xl">
+        <div className="p-2 m-40 md:m-20 md:py-10 md:px-96 grid phone:gap-2 md:gap-6 md:grid-cols-2 phone:grid-cols-1 justify-items-stretch bg-background shadow-2xl rounded-2xl">
           <div className="md:place-self-start md:ml-40 md:pt-2">
             <Label label="Email" labelId="email"></Label>
           </div>
