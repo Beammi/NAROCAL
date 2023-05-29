@@ -141,7 +141,7 @@ function InitialNavbar(props){
                 {/* <div className="flex-none"> */}
                 <div className="navbar-end">
                     <ul className="menu menu-horizontal px-3">
-                        <li><a className="text-alternative hover:bg-secondary" href={nav1Link}>{nav1}</a></li>
+                        { (nav1 != "") && <li><a className="text-alternative hover:bg-secondary" href={nav1Link}>{nav1}</a></li>}
                         <li><a className="text-alternative hover:bg-secondary" href={nav2Link}>{nav2}</a></li>
                     </ul>
 
