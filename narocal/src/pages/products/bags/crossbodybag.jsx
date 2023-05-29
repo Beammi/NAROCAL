@@ -50,7 +50,7 @@ export default function Crossbodybag(){
         }
 
         loadData()
-    })
+    }, [])
 
     products.map((p) => {
         if(!brandChoice.includes(p.brand)){

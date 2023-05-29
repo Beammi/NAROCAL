@@ -31,7 +31,7 @@ export default function CustomerProfile() {
     <div>
       <CustomerNavbar></CustomerNavbar>
       <br />
-      <div className="p-6 pt-24">
+      <div className="p-6 pt-40">
         <Link
           href="/customer/edit"
           className="hover:text-secondary md:text-lg sm:text-sm"

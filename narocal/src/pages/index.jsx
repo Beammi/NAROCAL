@@ -77,7 +77,11 @@ export default function Home() {
       }
       loadData()
 
-  })
+  }, [])
+
+  // const renderProduct = () => {
+  //   return <EventList items={products}/>
+  // }
 
   return (
     <>
@@ -86,6 +90,7 @@ export default function Home() {
         <div className="flex flex-col gap-y-10 bg-background p-20 w-full">
           <Hero></Hero>
           <EventList items={products}/>
+          {/* {renderProduct()} */}
           
 
           {/* <div className='flex justify-center flex-col bg-secondary gap-5 overflow-y-auto p-10'> */}

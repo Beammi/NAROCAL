@@ -50,7 +50,7 @@ export default function Backpack(){
         }
 
         loadData()
-    })
+    }, [])
 
     products.map((p) => {
         if(!brandChoice.includes(p.brand)){

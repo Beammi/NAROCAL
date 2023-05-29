@@ -50,7 +50,7 @@ export default function Dryfood(){
         }
 
         loadData()
-    })
+    }, [])
 
     products.map((p) => {
         if(!brandChoice.includes(p.brand)){

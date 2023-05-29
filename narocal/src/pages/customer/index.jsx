@@ -117,7 +117,7 @@ export default function CustomerHome() {
   return (
     <>
       <CustomerNavbar></CustomerNavbar>
-      <div className="flex justify-center bg-test pt-24">
+      <div className="flex justify-center bg-test pt-40">
         <div className="flex flex-col gap-y-10 bg-background p-10 w-5/6">
           <div className="flex justify-center gap-x-10 bg-background">
             {/* <a className="btn btn-outline btn-secondary py-2 px-4" href='/searchproduct'>Product</a>

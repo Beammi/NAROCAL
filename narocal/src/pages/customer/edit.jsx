@@ -142,7 +142,7 @@ export default function CustomerEdit(){
     return (
       <div className="bg-secondary min-h-screen">
         <CustomerNavbar></CustomerNavbar>
-        <form onSubmit={updateProfile} className="form-widget">
+        <form onSubmit={updateProfile} className="form-widget pt-40">
           <div className="p-t m-8 lg:m-20 lg:p-8 grid phone:gap-2 md:gap-6 md:grid-cols-2 phone:grid-cols-1 justify-items-stretch bg-background shadow-2xl rounded-2xl">
             <div className="md:place-self-center">
               

@@ -50,7 +50,7 @@ export default function Sneakers(){
         }
 
         loadData()
-    })
+    }, [])
 
     products.map((p) => {
         if(!brandChoice.includes(p.brand)){

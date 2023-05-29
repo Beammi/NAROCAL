@@ -50,7 +50,7 @@ export default function Conveniencefood(){
         }
 
         loadData()
-    })
+    }, [])
 
     products.map((p) => {
         if(!brandChoice.includes(p.brand)){

@@ -47,7 +47,7 @@ export default function Hoodie(){
         }
 
         loadData()
-    })
+    }, [])
 
     products.map((p) => {
         if(!brandChoice.includes(p.brand)){

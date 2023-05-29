@@ -88,7 +88,7 @@ export default function SearchAndFilter(){
         }
         loadData()
 
-    })
+    }, [])
 
 
     // if(!filterProducts || filterProducts.length === 0){

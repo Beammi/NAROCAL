@@ -277,6 +277,20 @@ export default function CreateProduct() {
               onChange={(e) => setPrice(e.target.value)}
             />
           </div>
+          <div className="md:place-self-center">
+            <Label label="Picture File" labelId="price"></Label>
+          </div>
+          <div>
+            {/* <input
+              id="price"
+              className="input input-secondary w-full max-w-xs"
+              type="number"
+              step="any"
+              required
+              value={productData.price || ""}
+              onChange={(e) => setProductData({...productData, price: e.target.value})}              /> */}
+            <button className="btn bg-black">Choose file</button>
+          </div>
           <div className="md:place-self-end">
             <button
               className="btn btn-outline btn-secondary md:text-base phone:text-xs"

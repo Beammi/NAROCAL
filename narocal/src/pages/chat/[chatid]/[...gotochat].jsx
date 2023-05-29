@@ -386,7 +386,7 @@ export default function ChatSpecific() {
   return (
     <div className="bg-test min-h-screen">
       {chooseNavBar()}
-      <h1>Post: {slugs}</h1>
+      <h1 className="pt-40">Post: {slugs}</h1>
       <div className="flex-col p-6 w-2/5 mx-auto bg-white rounded-xl shadow-md flex items-center space-x-4">
         <div className="flex justify-start md:text-lg phone:text-sm">Chat with: {anotherUserName}</div>
         <div>{fetchChatBubble()}</div>

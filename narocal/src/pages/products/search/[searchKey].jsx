@@ -78,7 +78,7 @@ export default function Search(){
         }
         loadData()
 
-    })
+    }, [])
 
     function findFilterHandler(brand, category, sortPrice){
         const fullPath = `/products/search/${strSearchKey}/${brand}/${category}/${sortPrice}`;

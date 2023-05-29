@@ -57,7 +57,7 @@ export default function Clothing(){
         }
         loadData()
 
-    })
+    }, [])
 
     return (
         <>
