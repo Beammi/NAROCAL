@@ -37,20 +37,12 @@ export default function EventsSearch(props) {
     
 
     return  (
-        <form className="flex justify-center mb-8" onSubmit={submitHandler}>
-            <div className="flex justify-center mb-8">
-                {/* <div>
-                    <label htmlFor='brand' className="mx-3">Brand</label>
-                    <select id="brand" className="select select-bordered max-w-xs border-2 border-neutral-300" ref={brandInputRef}>
-                        <option value="None">Choose brand</option>
-                        <option value='Louis Vuitton'>Louis Vuitton</option>
-                        <option value='Maison Margiela'>Maison Margiela</option>
-                        <option value='Prada'>Prada</option>
-                        <option value='Gucci'>Gucci</option>
-                        <option value='Balenciaga'>Balenciaga</option>
-                        <option value='Dolce & Gabbana'>Dolce & Gabbana</option>
-                    </select>
-                </div> */}
+        <form className="md:flex md:justify-center sm:flex-col md:flex-row" onSubmit={submitHandler}>
+            <div className="md:flex md:justify-center sm:mb-6">
+        {/* // <form className="grid grid-cols-2" onSubmit={submitHandler}>
+        //     <div className="grid grid-rows-1"> */}
+        {/* // <form className="flex sm:flex-col sm:w-10/12 md:flex-row md:justify-center md:mb-8" onSubmit={submitHandler}>
+        //     <div className="flex sm:flex-col sm:w-10/12 md:flex-row md:justify-center md:mb-8 md:pl-14 md:w-max"> */}
 
                 { (props.brand) && <div>
                     <label htmlFor='brand' className="mx-3">Brand</label>
@@ -59,32 +51,7 @@ export default function EventsSearch(props) {
 
                         { props.brand.map((brand, index) => (
                             <option key={index} value={brand}>{brand}</option>
-                        ))}
-
-                        {/* {(props.brand instanceof Array) && props.brand.map((brand, index) => (
-                            <option key={index} value={brand}>{brand}</option>
-                        ))} */}
-
-                        {/* {
-                            props.brand.then(product => {
-                                return product.map((brand, index) => (
-                                    <option key={index} value={brand}>{brand}</option>
-                                ))
-                            })
-                        } */}
-
-                        {/* { props.brand instanceof Promise ? (
-                            props.brand.then((product) => {
-                                return product.map((brand, index) => (
-                                    <option key={index} value={brand}>{brand}</option>
-                                ));
-                            })
-                        ) : (
-                            props.brand.map((brand, index) => (
-                                <option key={index} value={brand}>{brand}</option>
-                            ))
-                        )} */}
-                    
+                        ))}             
 
                     </select>
                 </div>}

@@ -22,7 +22,7 @@ export default function EventList(props) {
   }, [items]);
 
   return (
-    <div className='grid grid-cols-4 gap-4 bg-none'>
+    <div className='grid md:grid-cols-4 gap-4 bg-none sm:grid-cols-2'>
       {productItems.map((product) => (
         <ProductCard
           link={product.id}

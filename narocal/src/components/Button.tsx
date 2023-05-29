@@ -10,7 +10,7 @@ function Button(props) {
     }
 
     return (
-        <button className='btn mx-3 bg-black hover:bg-secondary border-none hover:text-white' onClick={props.onClick}>
+        <button className='btn w-fit mx-3 bg-black hover:bg-secondary border-none hover:text-white' onClick={props.onClick}>
             {props.children}
         </button>
     );
