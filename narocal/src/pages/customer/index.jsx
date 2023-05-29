@@ -8,6 +8,7 @@ import { supabase } from "lib/supabaseClient"
 import CustomerNavbar from "@/components/CustomerNavbar"
 import Hero from "@/components/Hero"
 import InitialNavbar from "@/components/InitialNavbar"
+import EventList from '@/components/events/event-list-supa'
 
 export const revalidate = 60
 
@@ -120,21 +121,15 @@ export default function CustomerHome() {
     <>
       <CustomerNavbar></CustomerNavbar>
       <div className="flex justify-center bg-test pt-40">
-        <div className="flex flex-col gap-y-10 bg-background p-10 w-5/6">
-          <div className="flex justify-center gap-x-10 bg-background">
-            {/* <a className="btn btn-outline btn-secondary py-2 px-4" href='/searchproduct'>Product</a>
-            <a className="btn btn-outline btn-secondary py-2 px-4">Vendor</a> */}
-            <input
-              type="text"
-              placeholder="Search"
-              className="input input-bordered w-5/6 mt-7 bg-gray-200"
-            />
-          </div>
+        {/* <div className="flex flex-col gap-y-10 bg-background p-10 w-5/6"> */}
+        <div className="flex flex-col gap-y-10 bg-background p-20 w-full">
+          
           <Hero></Hero>
 
-          <div className="grid md:grid-cols-5 sm:grid-cols-1 gap-4 bg-background overflow-y-auto h-[50vh] overscroll-contain">
+          {/* <div className="grid md:grid-cols-5 sm:grid-cols-1 gap-4 bg-background overflow-y-auto h-[50vh] overscroll-contain">
             {renderProduct()}
-          </div>
+          </div> */}
+          <EventList items={products}/>
 
           <div className="grid grid-cols-1 gap-5 bg-secondary overflow-y-auto h-[80vh] p-8 overscroll-contain">
             {renderVendors()}
