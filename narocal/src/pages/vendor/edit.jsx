@@ -199,13 +199,13 @@ export default function VendorEditProfile() {
       const { dataUpSert, errorUpsert } = await supabase
         .from("VendorProfile")
         .insert(
-          [{ userId: userId, shpRate: shopping_rate, languages: [language] }],
+          [{ userId: userId, shpRate: shopping_rate, languages: language }],
           { upsert: true }
         )
     } else {
       const { errorUpdate } = await supabase
         .from("VendorProfile")
-        .update({ shpRate: shopping_rate, bio: bio, languages: [language] })
+        .update({ shpRate: shopping_rate, bio: bio, languages: language })
         .eq("userId", userId)
     }
   }
