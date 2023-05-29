@@ -17,13 +17,13 @@ export default function VendorEditProfile() {
   const [userId, setUserId] = useState(null)
   const [shopping_rate, setShoppingRate] = useState(0)
   const [bio, setBio] = useState(null)
-  const [currency,setCurrency] = useState("")
-  const [yen,setYen] = useState(0)
-  const [yuan,setYuan] = useState(0)
-  const [dollar,setDollar] = useState(0)
-  const [euro,setEuro] = useState(0)
-  const [vendorId,setVendorId] = useState(0)
-  const [won,setWon] = useState(0)
+  const [currency, setCurrency] = useState("")
+  const [yen, setYen] = useState(0)
+  const [yuan, setYuan] = useState(0)
+  const [dollar, setDollar] = useState(0)
+  const [euro, setEuro] = useState(0)
+  const [vendorId, setVendorId] = useState(0)
+  const [won, setWon] = useState(0)
   const [language, setLanguage] = useState(null)
 
   function convertStringFormatt(word) {
@@ -88,15 +88,34 @@ export default function VendorEditProfile() {
         .from("VendorProfile")
         .select()
         .eq("userId", userId)
-      if (error) {
+      const { data: language, error: languageError } = await supabase
+        .from("VendorProfile")
+        .select("languages")
+        .eq("userId", userId)
+
+      if (error || languageError) {
         console.log("Error Vendor Profile:" + error)
       } else if (data[0] == null) {
         console.log("pass")
       } else {
         setShoppingRate(JSON.stringify(data[0].shpRate))
         setBio(convertStringFormatt(JSON.stringify(data[0].bio)))
-        setLanguage(convertStringFormatt(JSON.stringify(data[0].language)))
-        setVendorId(JSON.stringify(data[0].id,null,2))
+        setLanguage(convertStringFormatt(JSON.stringify(language[0].languages)))
+        
+        setVendorId(JSON.stringify(data[0].id, null, 2))
+        const { data: currency, error: currencyError } = await supabase
+          .from("Currency")
+          .select()
+          .eq("vendorId", vendorId)
+          if(currency[0] == null || currencyError){
+            console.log("Currency null")
+          }else if(currency[0].currency=="yen"){
+            setYen(JSON.stringify(currency[0].rate))
+
+          }else if(currency[0].currency=="dollar"){
+            setDollar(JSON.stringify(currency[0].rate))
+          }
+        console.log(JSON.stringify(currency))
         if (data[0].bio == null) {
           setBio("")
         }
@@ -106,7 +125,7 @@ export default function VendorEditProfile() {
     getUserEmail()
     getPublicUser()
     getVendorProfile()
-  }, [email, userId])
+  }, [email, userId,vendorId])
 
   async function updateProfile(event) {
     event.preventDefault()
@@ -117,10 +136,11 @@ export default function VendorEditProfile() {
     if (error == null) {
       alert("Updated Complete")
       insertVendorProfile()
-      insertCurrency()
+      insertCurrencyYen()
+      insertCurrencyDollar()
     }
   }
-  async function insertCurrency(){
+  async function insertCurrencyYen() {
     const { data, error } = await supabase
       .from("Currency")
       .select()
@@ -128,13 +148,40 @@ export default function VendorEditProfile() {
     console.log(JSON.stringify(data))
     console.log(error)
     if (JSON.stringify(data).length == 2) {
-      const { dataUpSert, errorUpsert } = await supabase
+      const { dataYen, errorYen } = await supabase
         .from("Currency")
-        .insert([{ vendorId: vendorId, rate: yen ,currency:"yen"}], { upsert: true })
-    } else {
-      const { errorUpdate } = await supabase
+        .insert([{ vendorId: vendorId, rate: yen, currency: "yen" }], {
+          upsert: true,
+        })
+        
+    } else{
+      const { error } = await supabase
         .from("Currency")
-        .update({ rate: yen, bio: bio ,currency:"yen"})
+        .update({ rate: yen, currency: "yen" })
+        .eq("vendorId", vendorId)
+      
+      
+    }
+  }
+  async function insertCurrencyDollar(){
+    const { data, error } = await supabase
+      .from("Currency")
+      .select()
+      .eq("vendorId", vendorId)
+    console.log(JSON.stringify(data))
+    console.log(error)
+    if (JSON.stringify(data).length == 2) {
+      
+        const { dataDollar, errorDollar } = await supabase
+        .from("Currency")
+        .insert([{ vendorId: vendorId, rate: dollar, currency: "dollar" }], {
+          upsert: true,
+        })
+    } else{
+      
+      const { error:errorDollar } = await supabase
+        .from("Currency")
+        .update({ rate: dollar, currency: "dollar" })
         .eq("vendorId", vendorId)
       
     }
@@ -151,13 +198,15 @@ export default function VendorEditProfile() {
     if (JSON.stringify(data).length == 2) {
       const { dataUpSert, errorUpsert } = await supabase
         .from("VendorProfile")
-        .insert([{ userId: userId, shpRate: shopping_rate }], { upsert: true })
+        .insert(
+          [{ userId: userId, shpRate: shopping_rate, languages: [language] }],
+          { upsert: true }
+        )
     } else {
       const { errorUpdate } = await supabase
         .from("VendorProfile")
-        .update({ shpRate: shopping_rate, bio: bio })
+        .update({ shpRate: shopping_rate, bio: bio, languages: [language] })
         .eq("userId", userId)
-      
     }
   }
   async function signOut() {
@@ -172,7 +221,6 @@ export default function VendorEditProfile() {
       <form onSubmit={updateProfile} className="form-widget">
         <div className="p-2 m-8 lg:m-20 lg:p-8 grid phone:gap-2 md:gap-6 md:grid-cols-2 phone:grid-cols-1 justify-items-stretch bg-background shadow-2xl rounded-2xl">
           <div className="md:place-self-center">
-            
             <Label label="Email" labelId="email"></Label>
           </div>
           <div>
@@ -183,7 +231,6 @@ export default function VendorEditProfile() {
               disabled
               className="input input-secondary w-full max-w-xs disabled:bg-slate-50 disabled:text-secondary disabled:border-slate-200"
             />
-            
           </div>
           <div className="md:place-self-center">
             <Label label="Firstname" labelId="firstname"></Label>
@@ -224,7 +271,7 @@ export default function VendorEditProfile() {
           </div>
 
           <div className="md:place-self-center">
-           <Label label="Shopping Rate (THB)" labelId="shopping_rate"></Label>
+            <Label label="Shopping Rate (THB)" labelId="shopping_rate"></Label>
           </div>
           <div>
             <input
@@ -235,8 +282,8 @@ export default function VendorEditProfile() {
               className="input input-secondary w-full max-w-xs"
             />
           </div>
-          <div className="md:place-self-center">
-           <Label label="Yen" labelId="yen"></Label>
+          {/* <div className="md:place-self-center">
+            <Label label="Yen" labelId="yen"></Label>
           </div>
           <div>
             <input
@@ -246,9 +293,9 @@ export default function VendorEditProfile() {
               onChange={(e) => setYen(e.target.value)}
               className="input input-secondary w-full max-w-xs"
             />
-          </div>
+          </div> */}
           <div className="md:place-self-center">
-           <Label label="Dollar" labelId="dollar"></Label>
+            <Label label="Dollar" labelId="dollar"></Label>
           </div>
           <div>
             <input
@@ -259,7 +306,18 @@ export default function VendorEditProfile() {
               className="input input-secondary w-full max-w-xs"
             />
           </div>
-
+          <div className="md:place-self-center">
+            <Label label="Language" labelId="language"></Label>
+          </div>
+          <div>
+            <input
+              id="language"
+              type="text"
+              value={language || ""}
+              onChange={(e) => setLanguage(e.target.value)}
+              className="input input-secondary w-full max-w-xs"
+            />
+          </div>
           <div className="md:place-self-center">
             <Label label="BIO" labelId="bio"></Label>
           </div>
