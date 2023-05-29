@@ -140,13 +140,13 @@ export default function CustomerEdit(){
     // getPublicUser()
     // insertVendorProfile()
     return (
-      <div className="bg-secondary min-h-screen">
+      <div className="bg-secondary h-max">
         <CustomerNavbar></CustomerNavbar>
-        <form onSubmit={updateProfile} className="form-widget pt-40">
-          <div className="p-t m-8 lg:m-20 lg:p-8 grid phone:gap-2 md:gap-6 md:grid-cols-2 phone:grid-cols-1 justify-items-stretch bg-background shadow-2xl rounded-2xl">
-            <div className="md:place-self-center">
+        <form onSubmit={updateProfile} className="form-widget pt-40 h-max">
+          <div className="p-2 m-8 md:m-20 md:py-10 md:px-96 grid phone:gap-2 md:gap-6 md:grid-cols-2 phone:grid-cols-1 justify-items-stretch bg-background shadow-2xl rounded-2xl">
+            <div className="md:place-self-start md:ml-40 md:pt-2">
               
-              <Label label="Email" labelId="email"></Label>
+              <Label label="Email" labelId="email" labelStyle="justify-start"></Label>
             </div>
             <div>
               <input
@@ -158,8 +158,8 @@ export default function CustomerEdit(){
               />
               
             </div>
-            <div className="md:place-self-center">
-              <Label label="Firstname" labelId="firstname"></Label>
+            <div className="md:place-self-start md:ml-40 md:pt-2">
+              <Label label="Firstname" labelId="firstname" labelStyle="justify-start"></Label>
             </div>
             <div>
               <input
@@ -171,7 +171,7 @@ export default function CustomerEdit(){
                 onChange={(e) => setFirstName(e.target.value)}
               />
             </div>
-            <div className="md:place-self-center">
+            <div className="md:place-self-start md:ml-40 md:pt-2">
               <Label label="Lastname" labelId="lastname"></Label>
             </div>
             <div>
@@ -183,7 +183,7 @@ export default function CustomerEdit(){
                 className="input input-secondary w-full max-w-xs"
               />
             </div>
-            <div className="md:place-self-center">
+            <div className="md:place-self-start md:ml-40 md:pt-2">
               <Label label="Address" labelId="address"></Label>
             </div>
             <div>
@@ -198,7 +198,7 @@ export default function CustomerEdit(){
   
             
   
-            <div className="md:place-self-center">
+            <div className="md:place-self-start md:ml-40 md:pt-2">
               <Label label="BIO" labelId="bio"></Label>
             </div>
             <div>
