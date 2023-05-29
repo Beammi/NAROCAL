@@ -34,6 +34,8 @@ export default function CustomerHome() {
         setLen(Object.keys(VendorProfile).length)
         // console.log(JSON.stringify(vendors[0].userId))
         console.log(JSON.stringify(vendors[0]))
+        
+         
       }
     }
     async function matchVendors() {
@@ -85,8 +87,8 @@ export default function CustomerHome() {
         li.push(
           <VendorCard
             name={vendorName[i].User.firstname}
-            language={"English"}
-            exchange_rate={"1 Dollar = 35 Baht"}
+            language={vendors[i].languages}
+            // exchange_rate={vendors[i].currencies}
             shopping_rate={vendors[i].shpRate}
             link={vendors[i].id}
           ></VendorCard>
