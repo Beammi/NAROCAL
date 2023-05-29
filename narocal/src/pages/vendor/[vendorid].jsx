@@ -6,6 +6,8 @@ import ProfileVendorMock from "../../pages/assets/vendor_profile_mock.png"
 import { useRouter } from "next/router"
 import { useState, useEffect } from "react"
 import { supabase } from "lib/supabaseClient"
+import { useSession, useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
+
 export const revalidate = 60
 
 export default function VendorProfile() {
@@ -27,7 +29,11 @@ export default function VendorProfile() {
   const [cusId, setCusId] = useState(null)
   const [venRealId, setVenRealId] = useState(0)
   const [dollar, setDollar] = useState(null)
-
+  const [session, setSession] = useState(null)
+  const supabaseClient = useSupabaseClient()
+  const user = useUser()
+  const [data, setData] = useState()
+  
   function convertStringFormatt(word) {
     if (word == "" || word == null) {
       return ""
@@ -38,6 +44,16 @@ export default function VendorProfile() {
   }
 
   useEffect(() => {
+    async function checkUser(){
+      const { data: { user } } = await supabase.auth.getUser()
+
+      if (user) {
+        console.log("User is logged in:", user)
+      } else {
+        console.log("No user is currently logged in.")
+        router.push("/login")
+      }
+    }
     async function getUserEmail() {
       const { data } = await supabase.auth.getUser()
 
@@ -187,7 +203,7 @@ export default function VendorProfile() {
         console.log(JSON.stringify(error))
       }
     }
-
+    checkUser()
     getUserEmail()
     getPublicUser()
     getVendorName()
@@ -244,6 +260,7 @@ export default function VendorProfile() {
   }
   return (
     <div>
+      
       <VendorNavBar></VendorNavBar>
       <div className="flex justify-center p-4 bg-test min-h-screen min-w-fit">
         <div className="relative felx flex-row md:items-center sm:justify-center bg-background shadow-2xl rounded-2xl md:flex md:flex-col md:space-y-0 md:m-0 md:mx-auto md:w-3/4 sm:min-w-fit">
