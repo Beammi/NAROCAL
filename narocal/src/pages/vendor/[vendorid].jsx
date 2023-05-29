@@ -26,6 +26,8 @@ export default function VendorProfile() {
   const [len, setLen] = useState(0)
   const [cusId, setCusId] = useState(null)
   const [venRealId, setVenRealId] = useState(0)
+  const [dollar, setDollar] = useState(null)
+
   function convertStringFormatt(word) {
     if (word == "" || word == null) {
       return ""
@@ -138,54 +140,33 @@ export default function VendorProfile() {
         setShoppingRate(JSON.stringify(data[0].shpRate))
         setBio(convertStringFormatt(JSON.stringify(data[0].bio)))
         setLanguage(convertStringFormatt(JSON.stringify(data[0].language)))
-        // setVendorId(JSON.stringify(data[0].id, null, 2))
+        setVendorId(JSON.stringify(data[0].id, null, 2))
+        const { data: currency, error: currencyError } = await supabase
+          .from("Currency")
+          .select()
+          .eq("vendorId", vendorId)
+        if (currency == null || currencyError || currency[0] == null) {
+          console.log("Currency null")
+        } else if (currency[0].currency == "dollar") {
+          setDollar("1 Dollar = " + JSON.stringify(currency[0].rate + " Baht"))
+        }
         const { data: VenUser, error } = await supabase
           .from("User")
           .select()
           .eq("id", data[0].userId)
-        if(VenUser==null){
+        if (VenUser == null) {
           console.log("Ven user null")
-        }else{
-          console.log("see"+JSON.stringify(data[0].userId))
+        } else {
+          console.log("see" + JSON.stringify(data[0].userId))
           setVenRealId(VenUser[0].id)
         }
-        
+
         if (data[0].bio == null) {
           setBio("")
         }
       }
     }
 
-    // async function isExisted() {
-    //   let slug = router.query
-    //   console.log("check " + userId + vendorId)
-    //   const { data, error } = await supabase
-    //     .from("Chat")
-    //     .select()
-    //     .eq("customer", cusId)
-    //     .eq("vendor", slug.vendor)
-    //   if (data == null) {
-    //     insertChat()
-    //     console.log("null" + data)
-    //   } else if (error) {
-    //     console.log(error)
-    //   } else {
-    //     console.log(JSON.stringify(data))
-
-    //     router.push("/chat")
-    //   }
-    // }
-    // async function insertChat() {
-    //   let slug = router.query
-    //   console.log("check " + cusId + vendorId)
-
-    //   const { data, error } = await supabase
-    //     .from("Chat")
-    //     .upsert([{ vendor: slug.vendorid, customer: cusId }])
-    //   if (error) {
-    //     console.log("error in insert chat")
-    //   }
-    // }
     async function getProducts() {
       let slug = router.query
       const { data, error } = await supabase
@@ -214,7 +195,7 @@ export default function VendorProfile() {
     // isExisted()
     getProducts()
     // getCustomerId()
-  }, [email, userId, venRealId, cusId])
+  }, [email, userId, venRealId, cusId, dollar])
 
   const insertChat = async () => {
     let slug = router.query
@@ -238,12 +219,12 @@ export default function VendorProfile() {
     if (data == null || data.length == 0) {
       insertChat()
       console.log("null" + data)
-      router.push("/chat/" + userId+"/"+venRealId)
+      router.push("/chat/" + userId + "/" + venRealId)
     } else if (error) {
       console.log(error)
     } else {
       console.log(JSON.stringify(data))
-      router.push("/chat/" + userId+"/"+venRealId)
+      router.push("/chat/" + userId + "/" + venRealId)
     }
   }
   const renderProduct = () => {
@@ -252,8 +233,10 @@ export default function VendorProfile() {
       console.log("render pass")
       li.push(
         <ProductCard
-          title={products[i].name}
-          body={products[i].description}
+          link={products[i].id}
+          title={products[i].brand}
+          body={products[i].model}
+          authorId={products[i].authorId}
         ></ProductCard>
       )
     }
@@ -300,13 +283,13 @@ export default function VendorProfile() {
               style="font-light md:text-sm sm:text-xs p-2"
             ></P>
             <P
-              text="1 US Dollar = 35 Baht"
+              text={dollar}
               style="font-light bg-secondary text-white rounded-xl md:text-sm sm:text-xs p-2"
             ></P>
-            <P
+            {/* <P
               text="1 Yen = 0.3 Baht"
               style="font-light bg-secondary text-white rounded-xl md:text-sm sm:text-xs p-2"
-            ></P>
+            ></P> */}
           </div>
           <div className="flex md:flex-row space-x-2 p-4">
             <input

@@ -1,150 +1,148 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-datasource db {
-  provider          = "postgresql"
-  url               = env("DATABASE_URL")
-  directUrl         = env("DIRECT_URL")
-  schemas           = ["public"]
-}
-
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["multiSchema"]
 }
 
-// enum Role{
-//   VENDOR
-//   CUSTOMER
-//   ADMIN
-//   @@schema("public")
-
-// }
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+  schemas   = ["public"]
+}
 
 model User {
-  id              Int     @id @default(autoincrement())
+  id              Int              @id @default(autoincrement())
+  address         String?
+  email           String
   firstname       String?
-  lastname        String?    
+  lastname        String?
+  role            String
   customerProfile CustomerProfile?
   vendorProfile   VendorProfile?
-  role            String            
-  email           String          
-  address         String?
-  @@schema("public") // or @@schema("public")
+
+  @@schema("public")
 }
 
 model CustomerProfile {
-  id     Int    @id @default(autoincrement())
-  bio    String?
-  image  String?
-  order  Order[]
-  payment Payment[]
-  user   User   @relation(fields: [userId], references: [id])
-  userId Int    @unique
+  id      Int      @id @default(autoincrement())
+  bio     String?
+  image   String?
+  userId  Int      @unique
+  user    User     @relation(fields: [userId], references: [id])
+  order   Order[]
+  payment Payment?
+
   @@schema("public")
 }
 
-model VendorProfile{
-  id          Int    @id @default(autoincrement())
-  bio         String?
-  image       String?
-  shpRate     Int
-  // languages Language[]
-  languages   String[]
-  currencies  Currency[]
-  user        User   @relation(fields: [userId], references: [id])
-  userId      Int    @unique
-  products    Product[]
-  payment     Payment[]
-  order       Order[]
-  rating      Int?
+model VendorProfile {
+  id         Int        @id @default(autoincrement())
+  bio        String?
+  image      String?
+  shpRate    Int
+  languages  String?
+  userId     Int        @unique
+  rating     Int?
+  currencies Currency[]
+  order      Order[]
+  payment    Payment?
+  products   Product[]
+  user       User       @relation(fields: [userId], references: [id])
+
   @@schema("public")
 }
 
-model Currency{
-  id          Int             @id @default(autoincrement())
-  currency    String
-  rate        Float
-  vendor      VendorProfile   @relation(fields: [vendorId], references: [id])
-  vendorId    Int             
+model Currency {
+  id       Int           @id @default(autoincrement())
+  currency String
+  rate     Float
+  vendorId Int
+  vendor   VendorProfile @relation(fields: [vendorId], references: [id])
+
   @@schema("public")
 }
 
 model Order {
-  id          Int       @id @default(autoincrement())
-  name        String
-  customerId  Int
-  vendorId    Int
-  status      String
-  contact     String
-  shipment    Shipment?
-  price       Float
-  updatedAt   DateTime @default(now())
-  customer    CustomerProfile @relation(fields: [customerId], references: [id])
-  vendor      VendorProfile   @relation(fields: [vendorId], references: [id])
+  id         Int             @id @default(autoincrement())
+  customerId Int
+  vendorId   Int
+  status     String
+  contact    String
+  updatedAt  DateTime        @default(now())
+  name       String
+  price      Float
+  customer   CustomerProfile @relation(fields: [customerId], references: [id])
+  vendor     VendorProfile   @relation(fields: [vendorId], references: [id])
+  shipment   Shipment?
+
   @@schema("public")
 }
 
-model Shipment{
-  id              Int     @id @default(autoincrement())
+model Shipment {
+  id              Int      @id @default(autoincrement())
   vendorAddress   String
   customerAddress String
   vendorContact   String
   customerContact String
   trackingNo      String
-  order           Order   @relation(fields: [shipId], references: [id])
-  shipId          Int     @unique
+  shipId          Int      @unique
   createdAt       DateTime @default(now())
+  order           Order    @relation(fields: [shipId], references: [id])
+
   @@schema("public")
 }
 
 model Product {
-  id          Int       @id @default(autoincrement())
+  id          Int           @id @default(autoincrement())
   name        String
   description String?
   brand       String
   category    String
-  subCategory String?
-  city        String?
   country     String
-  image       String?
-  price       Float
   code        String?
   model       String
   color       String?
   gender      String?
-  createdAt   DateTime  @default(now())
-  // published   Boolean   @default(false)
-  author      VendorProfile?   @relation(fields: [authorId], references: [id])
   authorId    Int
+  createdAt   DateTime      @default(now())
+  subCategory String?
+  price       Float
+  city        String?
+  image       String?
+  author      VendorProfile @relation(fields: [authorId], references: [id])
+
   @@schema("public")
 }
 
-model Payment{
-  id  Int @id @default(autoincrement())
-  status   String
-  updatedAt DateTime @default(now())
-  customer CustomerProfile  @relation(fields: [cusPayId], references: [id])
-  vendor   VendorProfile    @relation(fields: [venPayId], references: [id])
-  cusPayId    Int @unique
-  venPayId    Int @unique
+model Payment {
+  id        Int             @id @default(autoincrement())
+  cusPayId  Int             @unique
+  venPayId  Int             @unique
+  status    String
+  updatedAt DateTime        @default(now())
+  customer  CustomerProfile @relation(fields: [cusPayId], references: [id])
+  vendor    VendorProfile   @relation(fields: [venPayId], references: [id])
+
   @@schema("public")
 }
 
-model Chat{
-  id      Int @id @default(autoincrement())
-  vendor  Int
-  customer  Int
-  messages  Message[]
+model Chat {
+  id       Int       @id @default(autoincrement())
+  vendor   Int
+  customer Int
+  messages Message[]
+
   @@schema("public")
 }
 
-model Message{
+model Message {
   id        Int      @id @default(autoincrement())
-  sender    Int
-  receiver  Int
   text      String
   timestamp DateTime @default(now())
-  chat      Chat @relation(fields: [chatId],references: [id])
-  chatId    Int  
+  chatId    Int
+  sender    Int
+  receiver  Int
+  chat      Chat     @relation(fields: [chatId], references: [id])
+
   @@schema("public")
 }

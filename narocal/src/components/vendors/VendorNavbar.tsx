@@ -108,7 +108,7 @@ function VendorNavbar() {
       <div className="flex-1">
         <a
           className="btn btn-ghost normal-case text-l text-alternative"
-          href="/vendor"
+          href="/vendor/profile"
         >
           NAROCAL
         </a>
