@@ -35,7 +35,7 @@ const VendorCard: React.FunctionComponent<VendorCard> = ({
                         {/* .map(l => (
                         <p className="font-light md:text-sm m:text-xs p-2">{l}</p>)) */}
                         </p>
-                        <p className="sm:text-ellipsis sm:text-xs md:text-base">Exchange Rate: {exchange_rate}</p>
+                        {/* <p className="sm:text-ellipsis sm:text-xs md:text-base">Exchange Rate: {exchange_rate}</p> */}
                         <p className="sm:text-ellipsis sm:text-xs md:text-base">Shopping Rate: {shopping_rate}</p>
                         <div className="card-actions justify-start rating">
                             <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" />
