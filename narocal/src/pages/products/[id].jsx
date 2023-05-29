@@ -207,7 +207,7 @@ export default function ProductPage() {
           <div>
             <InitialNavbar></InitialNavbar>
             <div className="flex flex-col justify-center gap-10">
-              <div className="flex flex-row justify-center pt-40">
+              <div className="flex md:flex-row justify-center pt-40 sm:flex-col">
                 <Image
                   className="mx-14"
                   src={p.image}
@@ -215,7 +215,7 @@ export default function ProductPage() {
                   width={450}
                   height={640}
                 />
-                <div className="flex flex-col w-2/5">
+                <div className="flex flex-col w-2/5 sm:ml-14">
                   <p className="text-xl font-bold">{p.brand}</p>
                   <p className="text-lg">{p.model}</p>
                   <label className="text-md text-emerald-500 font-semibold mt-8">Offered by {username}</label>
